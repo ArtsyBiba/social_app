@@ -23,4 +23,5 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
   console.log('MongoDB connection established');
 });
 
-module.exports = app;
+// set up routes
+app.use('/users', require('./routes/userRouter'));
