@@ -1,9 +1,10 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 
 router.post('/register', async (req, res) => {
     try {
-        const { email, password, passwordCheck, displayName } = req.body;
+        let { email, password, passwordCheck, displayName } = req.body;
 
         // validation
         if (!email || !password || !passwordCheck) {
@@ -22,7 +23,7 @@ router.post('/register', async (req, res) => {
                 .json({ msg: 'Passowrds do not match.' });
         }
 
-        const existingUser = await User.find({ email: email })
+        const existingUser = await User.findOne({ email: email })
         if (existingUser) {
             return res
                 .status(400)
@@ -32,8 +33,19 @@ router.post('/register', async (req, res) => {
         if (!displayName) {
             displayName = email;
         }
+
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+        
+        const newUser = new User({
+            email,
+            password: passwordHash,
+            displayName,
+        });
+        const savedUser = await newUser.save();
+        res.json(savedUser);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({ error: err.message });
     }
 });
 
