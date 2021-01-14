@@ -8,7 +8,6 @@ router.post('/register', async (req, res) => {
     try {
         let { email, password, passwordCheck, displayName } = req.body;
 
-        // validation
         if (!email || !password || !passwordCheck) {
             return res
                 .status(400)
@@ -55,7 +54,6 @@ router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // validation
         if (!email || !password) {
             return res
                 .status(400)
