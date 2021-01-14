@@ -36,6 +36,8 @@ export default function SignIn() {
      // to be populated
     };
 
+    const isValid = user.email === '' || user.password === '';
+
     return (
         <Grid container component='main' className={classes.root}>
             <CssBaseline />
@@ -87,6 +89,7 @@ export default function SignIn() {
                             color='primary'
                             className={classes.submit}
                             onClick={handleSubmit}
+                            disabled={isValid}
                         >
                             Sign In
                         </Button>
