@@ -26,6 +26,7 @@ export default function SignUp() {
         email: '', 
         password: '',
         passwordCheck: '',
+        error: null,
     };
 
     const [user, setUser] = useState(initialUser);
@@ -38,18 +39,22 @@ export default function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await axios.post('http://localhost:5000/users/register', user);
-        const loginRes = await axios.post('http://localhost:5000/users/login', {
-            email: user.email, 
-            password: user.password,
-        });
-        setUserData({
-            token: loginRes.data.token,
-            user: loginRes.data.user,
-        });
-        localStorage.setItem('auth-token', loginRes.data.token);
+        try {
+            await axios.post('http://localhost:5000/users/register', user);
+            const loginRes = await axios.post('http://localhost:5000/users/login', {
+                email: user.email, 
+                password: user.password,
+            });
+            setUserData({
+                token: loginRes.data.token,
+                user: loginRes.data.user,
+            });
+            localStorage.setItem('auth-token', loginRes.data.token);
 
-        history.push('/profile');
+            history.push('/profile');
+        } catch (err) {
+            err.response.data.msg && setUser({ ...user, error: err.response.data.msg });
+        }
     };
 
     const isValid = user.name === '' || user.email === '' || user.password === '';
@@ -116,6 +121,9 @@ export default function SignUp() {
                             autoComplete='passwordCheck'
                             onChange={handleChange}
                         />
+                        <Typography className={classes.error} color='secondary'>
+                            {user.error ? user.error : ''}
+                        </Typography>
                         <Button
                             type='submit'
                             fullWidth

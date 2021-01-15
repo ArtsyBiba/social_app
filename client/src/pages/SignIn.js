@@ -24,6 +24,7 @@ export default function SignIn() {
     const initialUser = {
         email: '', 
         password: '', 
+        error: null,
     };
 
     const [user, setUser] = useState(initialUser);
@@ -36,17 +37,21 @@ export default function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const loginRes = await axios.post('http://localhost:5000/users/login', {
-            email: user.email, 
-            password: user.password,
-        });
-        setUserData({
-            token: loginRes.data.token,
-            user: loginRes.data.user,
-        });
-        localStorage.setItem('auth-token', loginRes.data.token);
+        try {
+            const loginRes = await axios.post('http://localhost:5000/users/login', {
+                email: user.email, 
+                password: user.password,
+            });
+            setUserData({
+                token: loginRes.data.token,
+                user: loginRes.data.user,
+            });
+            localStorage.setItem('auth-token', loginRes.data.token);
 
-        history.push('/profile');
+            history.push('/profile');
+        } catch (err) {
+            err.response.data.msg && setUser({ ...user, error: err.response.data.msg });
+        }
     };
 
     const isValid = user.email === '' || user.password === '';
