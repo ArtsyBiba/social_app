@@ -33,7 +33,12 @@ export default function SignUp() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUser({ ...user, [name]: value });
+        setUser(prevUser => {
+            return { 
+                ...prevUser, 
+                [name]: value, 
+            }
+        });
     };
 
     const handleSubmit = async (e) => {
