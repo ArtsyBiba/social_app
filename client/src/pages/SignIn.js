@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,16 +14,16 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from '../themes/theme.signinup';
 import Copyright from '../Copyright/index';
+import UserContext from '../context/UserContext';
 
 export default function SignIn() {
     const classes = useStyles();
+    const { setUserData } = useContext(UserContext);
+    const history = useHistory();
 
     const initialUser = {
-        id: null, 
         email: '', 
         password: '', 
-        error: null, 
-        auth: null
     };
 
     const [user, setUser] = useState(initialUser);
@@ -32,8 +33,20 @@ export default function SignIn() {
         setUser({ ...user, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-     // to be populated
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const loginRes = await axios.post('http://localhost:5000/users/login', {
+            email: user.email, 
+            password: user.password,
+        });
+        setUserData({
+            token: loginRes.data.token,
+            user: loginRes.data.user,
+        });
+        localStorage.setItem('auth-token', loginRes.data.token);
+
+        history.push('/profile');
     };
 
     const isValid = user.email === '' || user.password === '';

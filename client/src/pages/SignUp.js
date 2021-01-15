@@ -50,7 +50,7 @@ export default function SignUp() {
         localStorage.setItem('auth-token', loginRes.data.token);
 
         history.push('/profile');
-    }
+    };
 
     const isValid = user.name === '' || user.email === '' || user.password === '';
 
