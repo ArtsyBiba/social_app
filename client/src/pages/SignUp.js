@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,17 +14,18 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from '../themes/theme.signinup';
 import Copyright from '../Copyright/index';
+import UserContext from '../context/UserContext';
 
 export default function SignUp() {
     const classes = useStyles();
+    const { setUserData } = useContext(UserContext);
+    const history = useHistory();
 
     const initialUser = {
-        id: null, 
-        name: '',
+        displayName: '',
         email: '', 
-        password: '', 
-        error: null, 
-        auth: null
+        password: '',
+        passwordCheck: '',
     };
 
     const [user, setUser] = useState(initialUser);
@@ -33,9 +35,22 @@ export default function SignUp() {
         setUser({ ...user, [name]: value });
     };
 
-    const handleSubmit = e => {
-        // to be updated
-      }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        await axios.post('http://localhost:5000/users/register', user);
+        const loginRes = await axios.post('http://localhost:5000/users/login', {
+            email: user.email, 
+            password: user.password,
+        });
+        setUserData({
+            token: loginRes.data.token,
+            user: loginRes.data.user,
+        });
+        localStorage.setItem('auth-token', loginRes.data.token);
+
+        history.push('/profile');
+    }
 
     const isValid = user.name === '' || user.email === '' || user.password === '';
 
@@ -60,9 +75,9 @@ export default function SignUp() {
                             fullWidth
                             id='name'
                             label='Name'
-                            name='name'
+                            name='displayName'
                             autoFocus
-                            value={user.name}
+                            value={user.displayName}
                             onChange={handleChange}
                         />
                         <TextField
@@ -89,9 +104,18 @@ export default function SignUp() {
                             autoComplete='current-password'
                             onChange={handleChange}
                         />
-                        <Typography className={classes.error} color='secondary'>
-                            {user.error ? user.error : ''}
-                        </Typography>
+                        <TextField
+                            variant='outlined'
+                            margin='normal'
+                            required
+                            fullWidth
+                            name='passwordCheck'
+                            label='Password Confirmation'
+                            type='password'
+                            id='passwordCheck'
+                            autoComplete='passwordCheck'
+                            onChange={handleChange}
+                        />
                         <Button
                             type='submit'
                             fullWidth
