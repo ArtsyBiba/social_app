@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 
 import useStyles from '../themes/theme.signinup';
-import Copyright from '../Copyright/index';
+import Copyright from '../components/Copyright/index';
 import UserContext from '../context/UserContext';
 
 export default function SignUp() {
