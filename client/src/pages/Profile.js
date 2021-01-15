@@ -51,7 +51,7 @@ export default function Profile () {
                     <IconsWrapper>
                         <IconButton color='inherit'>
                             <Badge badgeContent={0} color='secondary'>
-                                <User userName={userData.user.displayName} />
+                                <User userData={userData} />
                             </Badge>
                         </IconButton>
                         <IconButton color='inherit' onClick={logout}>
