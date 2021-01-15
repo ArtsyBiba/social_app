@@ -1,10 +1,16 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
  
 export default function Profile () {
     const { userData, setUserData } = useContext(UserContext);
     const history = useHistory();
+
+    useEffect(() => {
+        if (!userData.user) {
+            history.push('/');
+        }
+    }, [userData, history]);
 
     const logout = () => {
         setUserData({
@@ -17,13 +23,9 @@ export default function Profile () {
     };
     
     return (
-        userData.user ? (
-            <>
-                <div>Profile</div>
-                <button onClick={logout}>Log Out</button> 
-            </>
-        ) : (
-            <div>Unauthorized access</div>
-        )
+        <>
+            <div>Profile</div>
+            <button onClick={logout}>Log Out</button> 
+        </>
     )
 }
