@@ -30,6 +30,11 @@ export default function UserMenu () {
         history.push('/');
     };
 
+    const goToProfile = () => {
+        history.push('/profile');
+        setAnchorEl(null);
+    }
+
     const openUserMenu = (e) => {
         setAnchorEl(e.currentTarget);
     };
@@ -42,10 +47,10 @@ export default function UserMenu () {
         <>
             <IconButton color='inherit' onClick={openUserMenu}>
                 <Badge badgeContent={0} color='secondary'>
-                    <Typography component='p' style={{paddingRight: '15px'}}>
+                    <AccountBoxIcon />
+                    <Typography component='p' style={{paddingLeft: '10px'}}>
                         {currentUser}
                     </Typography>
-                    <AccountBoxIcon />
                 </Badge>
             </IconButton>
             <Menu
@@ -55,8 +60,8 @@ export default function UserMenu () {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>My Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={goToProfile}>My Profile</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
         </>
     )
