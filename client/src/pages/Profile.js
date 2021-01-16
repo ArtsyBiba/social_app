@@ -1,32 +1,17 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import UserContext from '../context/UserContext';
 import styled from 'styled-components';
+import UserContext from '../context/UserContext';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 
-import Icon from '../components/Toolbar/Icon';
-import SignOut from '../components/Toolbar/SignOut';
-import User from '../components/Toolbar/User';
+import Icon from '../components/Navbar/Icon';
+import UserMenu from '../components/Navbar/UserMenu';
  
-export default function Profile () {
-    const { userData, setUserData } = useContext(UserContext);
-    const history = useHistory();
+export default function Profile () {   
+    const { userData } = useContext(UserContext);
 
-    const logout = () => {
-        setUserData({
-            token: undefined,
-            user: undefined,
-        });
-        
-        localStorage.setItem('auth-token', '');
-        history.push('/');
-    };
-    
     return (
         <StyledPage>
             {userData.user ? (
@@ -44,16 +29,7 @@ export default function Profile () {
                             </Typography>
                         </AppName>
                         <IconsWrapper>
-                            <IconButton color='inherit'>
-                                <Badge badgeContent={0} color='secondary'>
-                                    <User userData={userData} />
-                                </Badge>
-                            </IconButton>
-                            <IconButton color='inherit' onClick={logout}>
-                                <Badge badgeContent={0} color='secondary'>
-                                    <SignOut />
-                                </Badge>
-                            </IconButton>
+                            <UserMenu />
                         </IconsWrapper>
                     </StyledToolbar>
                 </AppBar>

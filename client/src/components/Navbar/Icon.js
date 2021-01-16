@@ -17,7 +17,7 @@ const wobble = keyframes`
 
 const Label = styled.div`
     font-size: 1.5rem;
-    margin: 0.7rem 0.5rem 0.5rem 0.5rem;
+    margin: 0.5rem;
 
     &:hover {
         animation: ${wobble} 1s 1;
