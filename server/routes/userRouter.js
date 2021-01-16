@@ -7,21 +7,27 @@ const User = require('../models/userModel');
 router.post('/register', async (req, res) => {
     try {
         let { email, password, passwordCheck, displayName } = req.body;
+        const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (!email || !password || !passwordCheck) {
             return res
                 .status(400)
                 .json({ msg: 'Not all required fields have been entered.' });
         }
-        if (password.length < 5) {
+        if (password.length < 6) {
             return res
                 .status(400)
-                .json({ msg: 'The password has to be at least 5 characters long.' });
+                .json({ msg: 'The password has to be at least 6 characters long.' });
         }
         if (password !== passwordCheck) {
             return res
                 .status(400)
                 .json({ msg: 'Passowrds do not match.' });
+        }
+        if (!regexp.test(email)) {
+            return res
+                .status(400)
+                .json({ msg: 'The email is not valid.' });
         }
 
         const existingUser = await User.findOne({ email: email })

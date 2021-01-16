@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import styled from 'styled-components';
@@ -17,12 +17,6 @@ export default function Profile () {
     const { userData, setUserData } = useContext(UserContext);
     const history = useHistory();
 
-    useEffect(() => {
-        if (!userData.user) {
-            history.push('/');
-        }
-    }, [userData, history]);
-
     const logout = () => {
         setUserData({
             token: undefined,
@@ -35,33 +29,37 @@ export default function Profile () {
     
     return (
         <StyledPage>
-            <AppBar position='absolute'>
-                <StyledToolbar>
-                    <AppName>
-                        <Icon>💬 </Icon>
-                        <Typography 
-                            component='h1' 
-                            variant='h6' 
-                            color='inherit' 
-                            noWrap 
-                        >
-                            Social App
-                        </Typography>
-                    </AppName>
-                    <IconsWrapper>
-                        <IconButton color='inherit'>
-                            <Badge badgeContent={0} color='secondary'>
-                                <User userData={userData} />
-                            </Badge>
-                        </IconButton>
-                        <IconButton color='inherit' onClick={logout}>
-                            <Badge badgeContent={0} color='secondary'>
-                                <SignOut />
-                            </Badge>
-                        </IconButton>
-                    </IconsWrapper>
-                </StyledToolbar>
-            </AppBar>
+            {userData.user ? (
+                <AppBar position='absolute'>
+                    <StyledToolbar>
+                        <AppName>
+                            <Icon>💬 </Icon>
+                            <Typography 
+                                component='h1' 
+                                variant='h6' 
+                                color='inherit' 
+                                noWrap 
+                            >
+                                Social App
+                            </Typography>
+                        </AppName>
+                        <IconsWrapper>
+                            <IconButton color='inherit'>
+                                <Badge badgeContent={0} color='secondary'>
+                                    <User userData={userData} />
+                                </Badge>
+                            </IconButton>
+                            <IconButton color='inherit' onClick={logout}>
+                                <Badge badgeContent={0} color='secondary'>
+                                    <SignOut />
+                                </Badge>
+                            </IconButton>
+                        </IconsWrapper>
+                    </StyledToolbar>
+                </AppBar>
+            ) : (
+                <div>Not authorized</div>
+            )}
     </StyledPage>
     )
 }

@@ -62,7 +62,7 @@ export default function SignUp() {
         }
     };
 
-    const isValid = user.name === '' || user.email === '' || user.password === '';
+    const isValid = user.name === '' || user.email === '' || user.password === '' || user.passwordCheck === '';
 
     return (
         <Grid container component='main' className={classes.root}>
