@@ -7,11 +7,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 
 import Icon from '../components/Navbar/Icon';
 import UserMenu from '../components/Navbar/UserMenu';
 import Sidebar from '../components/Sidebar/index';
+import Pools from '../components/Pools/index';
+import FriendsList from '../components/FriendsList/index';
 
  
 export default function Profile () {   
@@ -36,39 +37,36 @@ export default function Profile () {
                                 </Typography>
                             </AppName>
                             <IconsWrapper>
-                                <StyledIconButton>
-                                    <Badge badgeContent={0} color='secondary'>
-                                        <Typography component='p'>
-                                            Friends
-                                        </Typography>
-                                    </Badge>
-                                </StyledIconButton>
-                                <StyledIconButton>
-                                    <Badge badgeContent={0} color='secondary'>
-                                        <Typography component='p'>
-                                            Friends posts
-                                        </Typography>
-                                    </Badge>
-                                </StyledIconButton>
-                                <StyledIconButton>
-                                    <Badge badgeContent={0} color='secondary'>
-                                        <Typography component='p'>
-                                            Opinions
-                                        </Typography>
-                                    </Badge>
-                                </StyledIconButton>
-                                <StyledIconButton>
-                                    <Badge badgeContent={0} color='secondary'>
-                                        <Typography component='p'>
-                                            Create Pool
-                                        </Typography>
-                                    </Badge>
-                                </StyledIconButton>
+                                <IconButton color='inherit'>
+                                    <Typography component='p'>
+                                        Friends
+                                    </Typography>
+                                </IconButton>
+                                <IconButton color='inherit'>
+                                    <Typography>
+                                        Friends posts
+                                    </Typography>
+                                </IconButton>
+                                <IconButton color='inherit'>
+                                    <Typography component='p'>
+                                        Opinions
+                                    </Typography>
+                                </IconButton>
+                                <IconButton color='inherit'>
+                                    <Typography component='p'>
+                                        Create Pool
+                                    </Typography>
+                                </IconButton>
                                 <UserMenu />
                             </IconsWrapper>
                         </StyledToolbar>
                     </AppBar>
                     <Sidebar /> 
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        <Pools />
+                        <FriendsList />
+                    </main>
               </>
             ) : (
                 <div>Not authorized</div>
@@ -96,8 +94,4 @@ const IconsWrapper = styled.div`
 
 const StyledToolbar = styled(Toolbar)`
     justify-content: space-between;
-`;
-
-const StyledIconButton = styled(IconButton)`
-    color: white;
 `;

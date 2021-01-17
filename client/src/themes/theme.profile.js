@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 200;
+const drawerWidth = 170;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     drawerContainer: {
         overflow: 'auto',
     },
+    toolbar: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
