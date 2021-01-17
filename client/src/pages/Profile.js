@@ -77,6 +77,8 @@ export default function Profile () {
 
 const StyledPage = styled.div`
     display: flex;
+    background-color: #fafafa;
+    height: 100vh;
 `;
 
 const AppName = styled.div`
