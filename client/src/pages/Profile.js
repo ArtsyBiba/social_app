@@ -1,86 +1,44 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import UserContext from '../context/UserContext';
 import styled from 'styled-components';
+import UserContext from '../context/UserContext';
+import useStyles from '../themes/theme.profile';
 
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 
-import Icon from '../components/Toolbar/Icon';
-import SignOut from '../components/Toolbar/SignOut';
-import User from '../components/Toolbar/User';
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar/index';
+import Pools from '../components/Pools/index';
+import FriendsList from '../components/FriendsList/index';
+
  
-export default function Profile () {
-    const { userData, setUserData } = useContext(UserContext);
-    const history = useHistory();
+export default function Profile () {   
+    const { userData } = useContext(UserContext);
+    const classes = useStyles();
 
-    const logout = () => {
-        setUserData({
-            token: undefined,
-            user: undefined,
-        });
-        
-        localStorage.setItem('auth-token', '');
-        history.push('/');
-    };
-    
     return (
         <StyledPage>
             {userData.user ? (
-                <AppBar position='absolute'>
-                    <StyledToolbar>
-                        <AppName>
-                            <Icon>💬 </Icon>
-                            <Typography 
-                                component='h1' 
-                                variant='h6' 
-                                color='inherit' 
-                                noWrap 
-                            >
-                                Social App
-                            </Typography>
-                        </AppName>
-                        <IconsWrapper>
-                            <IconButton color='inherit'>
-                                <Badge badgeContent={0} color='secondary'>
-                                    <User userData={userData} />
-                                </Badge>
-                            </IconButton>
-                            <IconButton color='inherit' onClick={logout}>
-                                <Badge badgeContent={0} color='secondary'>
-                                    <SignOut />
-                                </Badge>
-                            </IconButton>
-                        </IconsWrapper>
-                    </StyledToolbar>
-                </AppBar>
+                <>
+                    <AppBar position='fixed' className={classes.appBar}>
+                        <Navbar />
+                    </AppBar>
+                    <Sidebar /> 
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        <Pools />
+                        <FriendsList />
+                    </main>
+              </>
             ) : (
                 <div>Not authorized</div>
             )}
-    </StyledPage>
+        </StyledPage>
     )
 }
 
 const StyledPage = styled.div`
     display: flex;
-    background-color: #f5f3ed;
+    background-color: #fafafa;
+    height: 100%;
 `;
 
-const AppName = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-`;
-
-const IconsWrapper = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-`;
-
-const StyledToolbar = styled(Toolbar)`
-    justify-content: space-between;
-`;
