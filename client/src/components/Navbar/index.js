@@ -39,7 +39,7 @@ export default function Navbar () {
                 </IconButton>
                 <IconButton color='inherit'>
                     <Typography component='p'>
-                        Create Pool
+                        Create Poll
                     </Typography>
                 </IconButton>
                 <UserMenu />

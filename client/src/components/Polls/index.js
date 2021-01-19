@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Pool from './Pool';
+import Poll from './Poll';
 
 import Button from '@material-ui/core/Button';
 
@@ -7,12 +7,12 @@ export default function Pools () {
     return (
         <Container>
             <HeaderWrapper>
-                <Header>Pools</Header>
-                <SyledButton variant="outlined">Create Pool</SyledButton>
+                <Header>Polls</Header>
+                <SyledButton variant="outlined">Create Poll</SyledButton>
             </HeaderWrapper>
-            <PoolsWrapper>
-                <Pool />
-            </PoolsWrapper>
+            <PollsWrapper>
+                <Poll />
+            </PollsWrapper>
         </Container>
     )
 };
@@ -39,7 +39,7 @@ const SyledButton = styled(Button)`
     width: 120px;
 `;
 
-const PoolsWrapper = styled.div`
+const PollsWrapper = styled.div`
     display: flex;
     margin: 1em;
 `;

@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
-import Pools from '../components/Pools/index';
+import Polls from '../components/Polls/index';
 import FriendsList from '../components/FriendsList/index';
 
  
@@ -25,7 +25,7 @@ export default function Profile () {
                     <Sidebar /> 
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Pools />
+                        <Polls />
                         <FriendsList />
                     </main>
               </>

@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 import Image from './Image';
 
-export default function Pool () {
+export default function Poll () {
     return (
-        <PoolCard>
+        <PollCard>
             <Header>Question</Header>
             <Subheader># of answers</Subheader>
             <Images>
                 <Image />
                 <Image />
             </Images>
-        </PoolCard>
+        </PollCard>
     )
 }
 
-const PoolCard = styled.div`
+const PollCard = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
