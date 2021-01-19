@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import UserContext from '../context/UserContext';
 import useStyles from '../themes/theme.profile';
@@ -9,26 +9,32 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import Polls from '../components/Polls/index';
 import FriendsList from '../components/FriendsList/index';
+import CreatePoll from '../components/CreatePoll/index';
 
  
 export default function Profile () {   
     const { userData } = useContext(UserContext);
     const classes = useStyles();
+    const [openCreatePoll, setOpenCreatePoll] = useState(false);
 
     return (
         <StyledPage>
             {userData.user ? (
                 <>
                     <AppBar position='fixed' className={classes.appBar}>
-                        <Navbar />
+                        <Navbar setOpenCreatePoll={setOpenCreatePoll} />
                     </AppBar>
                     <Sidebar /> 
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Polls />
+                        <Polls setOpenCreatePoll={setOpenCreatePoll} />
                         <FriendsList />
                     </main>
-              </>
+                    <CreatePoll 
+                        openCreatePoll={openCreatePoll}
+                        setOpenCreatePoll={setOpenCreatePoll}
+                    />
+                </>
             ) : (
                 <div>Not authorized</div>
             )}

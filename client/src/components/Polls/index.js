@@ -3,12 +3,18 @@ import Poll from './Poll';
 
 import Button from '@material-ui/core/Button';
 
-export default function Pools () {
+export default function Pools ({ setOpenCreatePoll }) {
+    const handleCreatePoll = () => {
+        setOpenCreatePoll(true);
+    };
+    
     return (
         <Container>
             <HeaderWrapper>
                 <Header>Polls</Header>
-                <SyledButton variant="outlined">Create Poll</SyledButton>
+                <SyledButton variant='outlined' onClick={handleCreatePoll}>
+                    Create Poll
+                </SyledButton>
             </HeaderWrapper>
             <PollsWrapper>
                 <Poll />
