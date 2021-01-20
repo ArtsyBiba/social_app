@@ -9,9 +9,9 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
-    const initialUser = {
-        email: '', 
-        password: '', 
+    const initialPoll = {
+        question: '', 
+        friendlist: '', 
         error: null,
     };
 
@@ -27,7 +27,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         },
       ];
 
-    const [user, setUser] = useState(initialUser);
+    const [newPoll, setNewPoll] = useState(initialPoll);
     const [friendList, setFriendList] = useState('List 1');
 
     const handleClose = () => {
@@ -35,13 +35,25 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     };
 
     const handleChange = (e) => {
-        // const { name, value } = e.target;
-        // setUser(prevUser => {
-        //     return { 
-        //         ...prevUser, 
-        //         [name]: value, 
-        //     }
-        // });
+        const { name, value } = e.target;
+        setNewPoll(prevPoll => {
+            return { 
+                ...prevPoll, 
+                [name]: value, 
+            }
+        });
+    };
+
+    const handleSelect = (e) => {
+        const { name, value } = e.target;
+        setNewPoll(prevPoll => {
+            return { 
+                ...prevPoll, 
+                [name]: value, 
+            }
+        });
+
+        setFriendList(e.target.value);
     };
     
     return (
@@ -74,8 +86,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                                 id='standard-select-friendlist'
                                 select
                                 label='Select your friend list'
+                                name='friendlist'
                                 value={friendList}
-                                onChange={handleChange}
+                                onChange={handleSelect}
                             >
                                 {friendLists.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
@@ -85,7 +98,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                             </TextField>
                         </InputsWrapper>
                         <ImagesWrapper>
-                            Upload Images
+                            Upload Image
                         </ImagesWrapper>
                     </PollData>
                     <SyledButton variant='outlined'>
@@ -137,5 +150,4 @@ const InputsWrapper = styled.div`
     flex-direction: column;
     width: 40vh;
     margin: 1em;
-    margin-top: 2em;
 `;
