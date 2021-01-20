@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import axios from 'axios';
 
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -11,7 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     const initialPoll = {
         question: '', 
-        friendlist: '', 
+        friendlist: '',
+        image: '',
         error: null,
     };
 
@@ -29,6 +31,8 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
 
     const [newPoll, setNewPoll] = useState(initialPoll);
     const [friendList, setFriendList] = useState('List 1');
+    const [fileInputState, setFileInputState] = useState('');
+    const [previewSource, setPreviewSource] = useState();
 
     const handleClose = () => {
         setOpenCreatePoll(false);
@@ -55,7 +59,39 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
 
         setFriendList(e.target.value);
     };
+
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        previewFile(file);
+    };
+
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        }
+    };
     
+    const handleSubmitPoll = (e) => {
+        e.preventDefault();
+        if(!newPoll) return;
+        uploadImage(previewSource);
+    };
+
+    const uploadImage = (base64EncodedImage) => {
+        try {
+            // const loginRes = await axios.post('http://localhost:5000/users/login', {
+            //     email: user.email, 
+            //     password: user.password,
+            // });
+
+            setOpenCreatePoll(false);
+        } catch (err) {
+            err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
+        }
+    };
+
     return (
         <StyledModal
             aria-labelledby='transition-modal-title'
@@ -98,10 +134,20 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                             </TextField>
                         </InputsWrapper>
                         <ImagesWrapper>
-                            Upload Image
+                            <StyledForm>
+                                <StyledInput 
+                                    type='file' 
+                                    name='image' 
+                                    onChange={handleFileInputChange}
+                                    value={fileInputState}
+                                />
+                            </StyledForm>
+                            {previewSource && (
+                                <img src={previewSource} alt='chosen' style={{height: '150px'}} />
+                            )}
                         </ImagesWrapper>
                     </PollData>
-                    <SyledButton variant='outlined'>
+                    <SyledButton variant='outlined' onClick={handleSubmitPoll}>
                         Create Poll
                     </SyledButton>
                 </CustomContainer>
@@ -151,3 +197,13 @@ const InputsWrapper = styled.div`
     width: 40vh;
     margin: 1em;
 `;
+
+const StyledForm = styled.form`
+    margin-bottom: 2rem;
+`;
+
+const StyledInput = styled.input`
+    display: block;
+    margin-bottom: 10px;
+`;
+
