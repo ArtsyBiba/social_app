@@ -79,12 +79,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         uploadImage(previewSource);
     };
 
-    const uploadImage = (base64EncodedImage) => {
+    const uploadImage = async (base64EncodedImage) => {
         try {
-            // const loginRes = await axios.post('http://localhost:5000/users/login', {
-            //     email: user.email, 
-            //     password: user.password,
-            // });
+            await axios.post('http://localhost:5000/polls/api/upload', newPoll);
 
             setOpenCreatePoll(false);
         } catch (err) {
