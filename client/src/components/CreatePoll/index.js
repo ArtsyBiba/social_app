@@ -8,6 +8,7 @@ import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 
 export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     const initialPoll = {
@@ -81,11 +82,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
 
     const uploadImage = async (base64EncodedImage) => {
         try {
-            await axios.post('http://localhost:5000/polls/api/upload', newPoll);
-
-            setOpenCreatePoll(false);
+            await axios.post('http://localhost:5000/polls/api/upload', {data: base64EncodedImage});  
         } catch (err) {
-            err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
+            err.response.data.error && setNewPoll({ ...newPoll, error: err.response.data.error });
         }
     };
 
@@ -144,6 +143,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                             )}
                         </ImagesWrapper>
                     </PollData>
+                    <Typography color='secondary'>
+                        {newPoll.error ? newPoll.error : ''}
+                    </Typography>
                     <SyledButton variant='outlined' onClick={handleSubmitPoll}>
                         Create Poll
                     </SyledButton>

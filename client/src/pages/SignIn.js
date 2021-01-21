@@ -102,7 +102,7 @@ export default function SignIn() {
                             helperText='For testing you can use: password'
                             FormHelperTextProps={{className: classes.helper}}
                         />
-                        <Typography className={classes.error} color='secondary'>
+                        <Typography color='secondary'>
                             {user.error ? user.error : ''}
                         </Typography>
                         <Button

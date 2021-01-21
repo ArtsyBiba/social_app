@@ -8,6 +8,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// set up configuration for uploading files
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`the server has started on port: ${PORT}`));
@@ -25,3 +29,4 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 
 // set up routes
 app.use('/users', require('./routes/userRouter'));
+app.use('/polls', require('./routes/pollRouter'));
