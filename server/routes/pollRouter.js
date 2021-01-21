@@ -4,27 +4,40 @@ const Poll = require('../models/pollModel');
 
 router.post('/upload', async (req, res) => {
     try {
-        let { image, question, friendlist } = req.body;
+        let { imageOne, imageTwo, question, friendlist } = req.body;
 
         if (!question || !friendlist) {
             return res
                 .status(400)
                 .json({ msg: 'Not all required fields have been entered.' });
         }
-        if (!image) {
+        if (!imageOne || !imageTwo) {
             return res
                 .status(400)
-                .json({ msg: 'Image is required.' });
+                .json({ msg: 'Both images are required.' });
         }
 
-        const uploadedResponse = await cloudinary.uploader.upload(image, {
+        const uploadedResponseOne = await cloudinary.uploader.upload(imageOne, {
+            upload_preset: 'social_app'
+        });
+
+        const uploadedResponseTwo = await cloudinary.uploader.upload(imageTwo, {
             upload_preset: 'social_app'
         });
         
-        const imageUrl = uploadedResponse.secure_url;
-        console.log(imageUrl);
+        const imageOneUrl = uploadedResponseOne.secure_url;
+        const imageTwoUrl = uploadedResponseTwo.secure_url;
+
+        const newPoll = new Poll({
+            question,
+            friendlist,
+            imageOneUrl,
+            imageTwoUrl,
+        });
+        const savedPoll = await newPoll.save();
+        res.json(savedPoll);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ msg: err.message });
     }
 });
 

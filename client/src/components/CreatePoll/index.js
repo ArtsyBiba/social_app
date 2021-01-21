@@ -31,8 +31,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
 
     const [newPoll, setNewPoll] = useState(initialPoll);
     const [friendList, setFriendList] = useState('List 1');
-    const [fileInputState, setFileInputState] = useState('');
-    const [previewSource, setPreviewSource] = useState();
+    const [fileInputStateOne, setFileInputStateOne] = useState('');
+    const [fileInputStateTwo, setFileInputStateTwo] = useState('');
+    const [previewSourceOne, setPreviewSourceOne] = useState();
+    const [previewSourceTwo, setPreviewSourceTwo] = useState();
 
     const handleClose = () => {
         setOpenCreatePoll(false);
@@ -60,29 +62,43 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         setFriendList(e.target.value);
     };
 
-    const handleFileInputChange = (e) => {
+    const handleFileInputChangeOne = (e) => {
         const file = e.target.files[0];
-        previewFile(file);
+        previewFileOne(file);
     };
 
-    const previewFile = (file) => {
+    const previewFileOne = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setPreviewSource(reader.result);
-        }
+            setPreviewSourceOne(reader.result);
+        };
+    };
+
+    const handleFileInputChangeTwo = (e) => {
+        const file = e.target.files[0];
+        previewFileTwo(file);
+    };
+
+    const previewFileTwo = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSourceTwo(reader.result);
+        };
     };
     
     const handleSubmitPoll = (e) => {
         e.preventDefault();
         if(!newPoll) return;
-        uploadImage(previewSource, newPoll);
+        uploadImage(previewSourceOne, previewSourceTwo, newPoll);
     };
 
-    const uploadImage = async (base64EncodedImage, newPoll) => {
+    const uploadImage = async (previewSourceOne, previewSourceTwo, newPoll) => {
         try {
             await axios.post('http://localhost:5000/polls/upload', {
-                image: base64EncodedImage, 
+                imageOne: previewSourceOne, 
+                imageTwo: previewSourceTwo,
                 question: newPoll.question,
                 friendlist: newPoll.friendlist,
             });
@@ -136,13 +152,24 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                             <StyledForm>
                                 <StyledInput 
                                     type='file' 
-                                    name='image' 
-                                    onChange={handleFileInputChange}
-                                    value={fileInputState}
+                                    name='imageOne' 
+                                    onChange={handleFileInputChangeOne}
+                                    value={fileInputStateOne}
                                 />
                             </StyledForm>
-                            {previewSource && (
-                                <img src={previewSource} alt='chosen' style={{height: '150px'}} />
+                            {previewSourceOne && (
+                                <img src={previewSourceOne} alt='chosenOne' style={{height: '50px'}} />
+                            )}
+                            <StyledForm>
+                                <StyledInput 
+                                    type='file' 
+                                    name='imageTwo' 
+                                    onChange={handleFileInputChangeTwo}
+                                    value={fileInputStateTwo}
+                                />
+                            </StyledForm>
+                            {previewSourceTwo && (
+                                <img src={previewSourceTwo} alt='chosenTwo' style={{height: '50px'}} />
                             )}
                         </ImagesWrapper>
                     </PollData>
