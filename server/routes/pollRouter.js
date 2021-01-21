@@ -1,15 +1,28 @@
 const router = require('express').Router();
 const { cloudinary } = require('../utils/cloudinary');
+const Poll = require('../models/pollModel');
 
-// upload image to cloudinary
-router.post('/api/upload', async (req, res) => {
+router.post('/upload', async (req, res) => {
     try {
-        const fileStr = req.body.data;
-        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+        let { image, question, friendlist } = req.body;
+
+        if (!question || !friendlist) {
+            return res
+                .status(400)
+                .json({ msg: 'Not all required fields have been entered.' });
+        }
+        if (!image) {
+            return res
+                .status(400)
+                .json({ msg: 'Image is required.' });
+        }
+
+        const uploadedResponse = await cloudinary.uploader.upload(image, {
             upload_preset: 'social_app'
         });
-        console.log(uploadedResponse)
-        res.json({msg: 'yay'})
+        
+        const imageUrl = uploadedResponse.secure_url;
+        console.log(imageUrl);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

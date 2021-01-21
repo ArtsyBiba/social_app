@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, minlength: 5 },
-    displayName: { type: String },
+const pollSchema = new mongoose.Schema({
+    question: { type: String, required: true },
+    friendlist: { type: String, required: true },
+    image: { type: String, required: true },
 });
 
-module.exports = User = mongoose.model('user', userSchema);
+module.exports = Poll = mongoose.model('poll', pollSchema);

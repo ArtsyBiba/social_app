@@ -13,8 +13,7 @@ import Typography from '@material-ui/core/Typography';
 export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     const initialPoll = {
         question: '', 
-        friendlist: '',
-        image: '',
+        friendlist: 'List 1',
         error: null,
     };
 
@@ -77,14 +76,18 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     const handleSubmitPoll = (e) => {
         e.preventDefault();
         if(!newPoll) return;
-        uploadImage(previewSource);
+        uploadImage(previewSource, newPoll);
     };
 
-    const uploadImage = async (base64EncodedImage) => {
+    const uploadImage = async (base64EncodedImage, newPoll) => {
         try {
-            await axios.post('http://localhost:5000/polls/api/upload', {data: base64EncodedImage});  
+            await axios.post('http://localhost:5000/polls/upload', {
+                image: base64EncodedImage, 
+                question: newPoll.question,
+                friendlist: newPoll.friendlist,
+            });
         } catch (err) {
-            err.response.data.error && setNewPoll({ ...newPoll, error: err.response.data.error });
+            err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
         }
     };
 
