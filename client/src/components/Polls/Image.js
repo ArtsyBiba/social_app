@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export default function Image () {
+export default function Image ({ source }) {
     return (
         <ImageWrapper>
-            <StyledImage />
+            <StyledImage src={source} />
             <div>❤️ 10</div>
         </ImageWrapper>
     )
@@ -16,9 +16,7 @@ const ImageWrapper = styled.div`
 `;
 
 const StyledImage = styled.img`
-    height: 20vh;
-    width: 15vh;
-    margin-left: 0.2em;
-    margin-right: 0.2em;
-    margin-bottom: 0.5em;
+    height: 70px;
+    width: 70px;
+    margin: 1.5em 0.2em 1.5em 0.2em
 `;

@@ -126,10 +126,11 @@ router.post('/tokenIsValid', async (req, res) => {
 });
 
 router.get('/', auth, async (req, res) => {
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user).populate('polls');
     res.json({
         displayName: user.displayName,
         id: user._id,
+        polls: user.polls,
     });
 });
 

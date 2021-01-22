@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import Image from './Image';
 
-export default function Poll () {
+export default function Poll ({ poll }) {
     return (
         <PollCard>
-            <Header>Question</Header>
+            <Header>{poll.question}</Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <Image />
-                <Image />
+                <Image source={poll.imageOneUrl} />
+                <Image source={poll.imageTwoUrl} />
             </Images>
         </PollCard>
     )
@@ -23,6 +23,7 @@ const PollCard = styled.div`
     height: 40vh;
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 2px;
+    margin-right: 1em;
 `;
 
 const Header = styled.h4`
