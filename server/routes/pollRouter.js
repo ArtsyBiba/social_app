@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { cloudinary } = require('../utils/cloudinary');
 const Poll = require('../models/pollModel');
+const User = require('../models/userModel');
 
 router.post('/upload', async (req, res) => {
     try {
@@ -36,6 +37,11 @@ router.post('/upload', async (req, res) => {
             userId,
         });
         const savedPoll = await newPoll.save();
+        
+        const updatedUser = await User.findOne({ _id: userId });
+        updatedUser.polls.push(newPoll);
+        await updatedUser.save();
+
         res.json(savedPoll);
     } catch (err) {
         res.status(500).json({ msg: err.message });
