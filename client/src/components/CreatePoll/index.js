@@ -92,6 +92,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         e.preventDefault();
         if(!newPoll) return;
         uploadImage(previewSourceOne, previewSourceTwo, newPoll);
+        setNewPoll(initialPoll);
+        setPreviewSourceOne('');
+        setPreviewSourceTwo('');
+        setOpenCreatePoll(false);
     };
 
     const uploadImage = async (previewSourceOne, previewSourceTwo, newPoll) => {
@@ -149,6 +153,13 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                             </TextField>
                         </InputsWrapper>
                         <ImagesWrapper>
+                            {previewSourceOne ? (
+                                <ImageContainer>
+                                    <Image src={previewSourceOne} alt='chosenOne' />
+                                </ImageContainer>
+                            ) : (
+                                <Prompt>Select Image #1</Prompt>
+                            )}
                             <StyledForm>
                                 <StyledInput 
                                     type='file' 
@@ -157,8 +168,12 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                                     value={fileInputStateOne}
                                 />
                             </StyledForm>
-                            {previewSourceOne && (
-                                <img src={previewSourceOne} alt='chosenOne' style={{height: '50px'}} />
+                            {previewSourceTwo ? (
+                                <ImageContainer>
+                                    <Image src={previewSourceTwo} alt='chosenTwo' />
+                                </ImageContainer>
+                            ) : (
+                                <Prompt>Select Image #2</Prompt>
                             )}
                             <StyledForm>
                                 <StyledInput 
@@ -168,9 +183,6 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                                     value={fileInputStateTwo}
                                 />
                             </StyledForm>
-                            {previewSourceTwo && (
-                                <img src={previewSourceTwo} alt='chosenTwo' style={{height: '50px'}} />
-                            )}
                         </ImagesWrapper>
                     </PollData>
                     <Typography color='secondary'>
@@ -195,6 +207,7 @@ const StyledModal = styled(Modal)`
 const CustomContainer = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     height: 60vh;
     width: 100vh;
     background-color: white;
@@ -205,7 +218,9 @@ const CustomContainer = styled.div`
 const PollData = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     width: 100%;
+    height: 50vh;
 `;
 
 const SyledButton = styled(Button)`
@@ -213,22 +228,31 @@ const SyledButton = styled(Button)`
     text-transform: uppercase;
     width: 120px;
     margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
 `;
 
 const ImagesWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    margin: 1em;
+    margin-left: 1em;
 `;
 
 const InputsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     width: 40vh;
     margin: 1em;
+    margin-left: 2em;
 `;
 
 const StyledForm = styled.form`
-    margin-bottom: 2rem;
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 `;
 
 const StyledInput = styled.input`
@@ -236,3 +260,22 @@ const StyledInput = styled.input`
     margin-bottom: 10px;
 `;
 
+const Prompt = styled.div`
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    color: lightgray;
+`;
+
+const Image = styled.img`
+    height: 70px;
+    width: 70px;
+`;
+
+const ImageContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+`;
