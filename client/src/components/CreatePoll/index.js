@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
 import Modal from '@material-ui/core/Modal';
@@ -10,11 +10,16 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 
+import UserContext from '../../context/UserContext';
+
 export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
+    const { userData } = useContext(UserContext);
+    
     const initialPoll = {
         question: '', 
         friendlist: 'List 1',
         error: null,
+        userId: userData.user.id,
     };
 
     const friendLists = [
@@ -105,6 +110,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                 imageTwo: previewSourceTwo,
                 question: newPoll.question,
                 friendlist: newPoll.friendlist,
+                userId: newPoll.userId,
             });
         } catch (err) {
             err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });

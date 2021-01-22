@@ -4,7 +4,7 @@ const Poll = require('../models/pollModel');
 
 router.post('/upload', async (req, res) => {
     try {
-        let { imageOne, imageTwo, question, friendlist } = req.body;
+        let { imageOne, imageTwo, question, friendlist, userId } = req.body;
 
         if (!question || !friendlist) {
             return res
@@ -33,6 +33,7 @@ router.post('/upload', async (req, res) => {
             friendlist,
             imageOneUrl,
             imageTwoUrl,
+            userId,
         });
         const savedPoll = await newPoll.save();
         res.json(savedPoll);
