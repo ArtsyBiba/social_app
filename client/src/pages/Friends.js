@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import CreatePoll from '../components/CreatePoll/index';
+import FriendsDashboard from '../components/FriendsDashboard/index';
 
  
 export default function Friends () {   
@@ -32,7 +33,7 @@ export default function Friends () {
                     <Sidebar /> 
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        Conent
+                        <FriendsDashboard />
                     </main>
                     <CreatePoll 
                         openCreatePoll={openCreatePoll}
@@ -51,5 +52,5 @@ export default function Friends () {
 const StyledPage = styled.div`
     display: flex;
     background-color: #fafafa;
-    height: 100%;
+    height: 100vh;
 `;
