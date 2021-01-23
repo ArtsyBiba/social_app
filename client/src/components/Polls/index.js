@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Poll from './Poll';
-import UserContext from '../../context/UserContext';
 
 import Button from '@material-ui/core/Button';
 
@@ -19,10 +18,10 @@ export default function Pools ({ setOpenCreatePoll, savedPolls, setSavedPolls })
             </HeaderWrapper>
             <PollsWrapper>
                 {savedPolls
-                    ? savedPolls.map((poll) => (
+                    ? savedPolls.map((poll, index) => (
                         <Poll 
                             poll={poll} 
-                            key={poll._id}
+                            key={index}
                             setSavedPolls={setSavedPolls}
                             savedPolls={savedPolls}
                         />

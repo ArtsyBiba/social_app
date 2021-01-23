@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
                 .json({ msg: 'Not all required fields have been entered.' });
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate('polls');
         if (!user) {
             return res
                 .status(400)
@@ -86,6 +86,7 @@ router.post('/login', async (req, res) => {
             user: {
                 id: user._id,
                 displayName: user.displayName,
+                polls: user.polls,
             }
         })
     } catch (err) {

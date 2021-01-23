@@ -17,7 +17,7 @@ export default function Profile () {
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const [savedPolls, setSavedPolls] = useState('');
-    
+    console.log(userData.user)
     useEffect(() => {
         if(userData.user) {
             setSavedPolls(userData.user.polls);
