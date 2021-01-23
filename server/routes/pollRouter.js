@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { cloudinary } = require('../utils/cloudinary');
 const Poll = require('../models/pollModel');
 const User = require('../models/userModel');
+const auth = require('../middleware/auth');
 
 router.post('/upload', async (req, res) => {
     try {
@@ -45,6 +46,23 @@ router.post('/upload', async (req, res) => {
         res.json(savedPoll);
     } catch (err) {
         res.status(500).json({ msg: err.message });
+    }
+});
+
+router.delete('/delete', async (req, res) => {
+    try {
+        let { pollId, userId } = req.body;
+        
+        const deletedPoll = await Poll.findByIdAndDelete(pollId);
+
+        await User.updateOne(
+            { '_id': userId }, 
+            { $pull: { 'polls' : pollId } }
+        );
+
+        res.json(deletedPoll);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 

@@ -27,7 +27,7 @@ export default function Pools ({ setOpenCreatePoll }) {
                 </SyledButton>
             </HeaderWrapper>
             <PollsWrapper>
-                {savedPolls.length > 0 
+                {savedPolls
                     ? savedPolls.map((poll) => (
                         <Poll poll={poll} key={poll._id} />
                     )) : (

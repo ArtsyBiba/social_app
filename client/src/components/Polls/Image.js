@@ -18,5 +18,5 @@ const ImageWrapper = styled.div`
 const StyledImage = styled.img`
     height: 70px;
     width: 70px;
-    margin: 1.5em 0.2em 1.5em 0.2em
+    margin: 1em 0.5em 1.5em 0.5em;
 `;

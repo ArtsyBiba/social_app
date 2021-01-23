@@ -97,10 +97,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         e.preventDefault();
         if(!newPoll) return;
         uploadImage(previewSourceOne, previewSourceTwo, newPoll);
-        setNewPoll(initialPoll);
         setPreviewSourceOne('');
         setPreviewSourceTwo('');
-        setOpenCreatePoll(false);
+        
     };
 
     const uploadImage = async (previewSourceOne, previewSourceTwo, newPoll) => {
@@ -111,7 +110,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                 question: newPoll.question,
                 friendlist: newPoll.friendlist,
                 userId: newPoll.userId,
-            });
+            })
+            .then(setOpenCreatePoll(false))
+            .then(setNewPoll(initialPoll));
         } catch (err) {
             err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
         }
