@@ -39,8 +39,8 @@ export default function Poll ({ poll, savedPolls, setSavedPolls }) {
             </Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <Image source={poll.imageOneUrl} />
-                <Image source={poll.imageTwoUrl} />
+                <Image source={poll.imageOneUrl} alt='imageOne' />
+                <Image source={poll.imageTwoUrl} alt='imageTwo' />
             </Images>
         </PollCard>
     )

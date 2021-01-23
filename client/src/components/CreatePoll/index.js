@@ -113,7 +113,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll, savedPo
         setOpenCreatePoll(false);
         setNewPoll(initialPoll);
     };
-
+    
     const uploadPoll = async (newPollForUpload) => {
         try {
             await axios.post('http://localhost:5000/polls/upload', {
