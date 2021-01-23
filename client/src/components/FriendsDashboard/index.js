@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useContext, useState, useEffect } from 'react';
 import UserContext from '../../context/UserContext';
+import SearchArea from './SearchArea';
 
 export default function FriendsDashboard () {
     const { userData } = useContext(UserContext);
@@ -13,7 +14,7 @@ export default function FriendsDashboard () {
                 <Subheader>Followings</Subheader>
             </HeaderWrapper>
             <Dashboard>
-                Friends Dashboard
+                <SearchArea />
             </Dashboard>
         </Container>
     )

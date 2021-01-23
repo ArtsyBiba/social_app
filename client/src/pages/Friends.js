@@ -52,5 +52,5 @@ export default function Friends () {
 const StyledPage = styled.div`
     display: flex;
     background-color: #fafafa;
-    height: 100vh;
+    height: 100%;
 `;
