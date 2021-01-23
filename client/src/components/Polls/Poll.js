@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import UserContext from '../../context/UserContext';
 
-export default function Poll ({ poll }) {
+export default function Poll ({ poll, savedPolls, setSavedPolls }) {
     const { userData } = useContext(UserContext);
     
     const handleDeletePoll = async () => {
@@ -16,10 +16,19 @@ export default function Poll ({ poll }) {
                     pollId: poll._id,
                     userId: userData.user.id,
                 }
-            });
+            })
+            .then(removePoll(poll))
         } catch (err) {
             console.log(err);
         }
+    };
+
+    const removePoll = (poll) => {
+        const pollId = poll._id;
+
+        const updatedPolls = savedPolls.filter((item) => item._id !== pollId);
+
+        setSavedPolls(updatedPolls);
     };
     
     return (

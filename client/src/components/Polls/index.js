@@ -1,19 +1,10 @@
-import { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import Poll from './Poll';
 import UserContext from '../../context/UserContext';
 
 import Button from '@material-ui/core/Button';
 
-export default function Pools ({ setOpenCreatePoll }) {
-    const { userData } = useContext(UserContext);
-
-    const [savedPolls, setSavedPolls] = useState('');
-    
-    useEffect(() => {
-        setSavedPolls(userData.user.polls);
-    }, [userData])
-    
+export default function Pools ({ setOpenCreatePoll, savedPolls, setSavedPolls }) {
     const handleCreatePoll = () => {
         setOpenCreatePoll(true);
     };
@@ -29,7 +20,12 @@ export default function Pools ({ setOpenCreatePoll }) {
             <PollsWrapper>
                 {savedPolls
                     ? savedPolls.map((poll) => (
-                        <Poll poll={poll} key={poll._id} />
+                        <Poll 
+                            poll={poll} 
+                            key={poll._id}
+                            setSavedPolls={setSavedPolls}
+                            savedPolls={savedPolls}
+                        />
                     )) : (
                         <div>Create your first poll</div>
                     )

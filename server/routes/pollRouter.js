@@ -2,11 +2,10 @@ const router = require('express').Router();
 const { cloudinary } = require('../utils/cloudinary');
 const Poll = require('../models/pollModel');
 const User = require('../models/userModel');
-const auth = require('../middleware/auth');
 
 router.post('/upload', async (req, res) => {
     try {
-        let { imageOne, imageTwo, question, friendlist, userId } = req.body;
+        let { imageOne, imageTwo, question, friendlist, userId } = req.body.newPollForUpload;
 
         if (!question || !friendlist) {
             return res
