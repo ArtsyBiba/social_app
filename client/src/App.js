@@ -7,6 +7,7 @@ import { theme } from "./themes/theme";
 import SignIn from './pages/SignIn'; 
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
+import Friends from './pages/Friends';
 import UserContext from './context/UserContext';
 
 import "./App.css";
@@ -59,6 +60,9 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile />
+              </Route>
+              <Route exact path='/friends'>
+                <Friends />
               </Route>
             </Switch>
           </UserContext.Provider>
