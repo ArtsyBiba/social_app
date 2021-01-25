@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UserContext from '../context/UserContext';
 import useStyles from '../themes/theme.profile';
@@ -7,28 +7,47 @@ import AppBar from '@material-ui/core/AppBar';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
-import Pools from '../components/Pools/index';
+import Polls from '../components/Polls/index';
 import FriendsList from '../components/FriendsList/index';
+import CreatePoll from '../components/CreatePoll/index';
 
  
 export default function Profile () {   
     const { userData } = useContext(UserContext);
     const classes = useStyles();
+    const [openCreatePoll, setOpenCreatePoll] = useState(false);
+    const [savedPolls, setSavedPolls] = useState('');
+    
+    useEffect(() => {
+        if(userData.user) {
+            setSavedPolls(userData.user.polls);
+        }
+    }, [userData]);
 
     return (
         <StyledPage>
             {userData.user ? (
                 <>
                     <AppBar position='fixed' className={classes.appBar}>
-                        <Navbar />
+                        <Navbar setOpenCreatePoll={setOpenCreatePoll} />
                     </AppBar>
                     <Sidebar /> 
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Pools />
+                        <Polls 
+                            setOpenCreatePoll={setOpenCreatePoll} 
+                            savedPolls={savedPolls}
+                            setSavedPolls={setSavedPolls}
+                        />
                         <FriendsList />
                     </main>
-              </>
+                    <CreatePoll 
+                        openCreatePoll={openCreatePoll}
+                        setOpenCreatePoll={setOpenCreatePoll}
+                        savedPolls={savedPolls}
+                        setSavedPolls={setSavedPolls}
+                    />
+                </>
             ) : (
                 <div>Not authorized</div>
             )}

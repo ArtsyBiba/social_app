@@ -126,7 +126,7 @@ export default function SignUp() {
                             autoComplete='passwordCheck'
                             onChange={handleChange}
                         />
-                        <Typography className={classes.error} color='secondary'>
+                        <Typography color='secondary'>
                             {user.error ? user.error : ''}
                         </Typography>
                         <Button

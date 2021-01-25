@@ -7,7 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from './Icon';
 import UserMenu from './UserMenu';
 
-export default function Navbar () {
+export default function Navbar ({ setOpenCreatePoll }) {
+    const handleCreatePoll = () => {
+        setOpenCreatePoll(true);
+    };
+    
     return (
         <StyledToolbar>
             <AppName>
@@ -37,9 +41,9 @@ export default function Navbar () {
                         Opinions
                     </Typography>
                 </IconButton>
-                <IconButton color='inherit'>
+                <IconButton color='inherit' onClick={handleCreatePoll}>
                     <Typography component='p'>
-                        Create Pool
+                        Create Poll
                     </Typography>
                 </IconButton>
                 <UserMenu />
