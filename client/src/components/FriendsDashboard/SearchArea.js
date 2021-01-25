@@ -23,7 +23,6 @@ export default function SearchArea () {
 
 const SearchBox = styled.div`
     justify-content: flex-start;
-    margin-bottom: 1rem;
     display: flex;
 
 	@media(max-width: 600px) {
