@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import UserContext from '../../context/UserContext';
 
-export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
+export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll, savedPolls, setSavedPolls }) {
     const { userData } = useContext(UserContext);
     
     const initialPoll = {
@@ -36,10 +36,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
 
     const [newPoll, setNewPoll] = useState(initialPoll);
     const [friendList, setFriendList] = useState('List 1');
-    const [fileInputStateOne, setFileInputStateOne] = useState('');
-    const [fileInputStateTwo, setFileInputStateTwo] = useState('');
     const [previewSourceOne, setPreviewSourceOne] = useState();
     const [previewSourceTwo, setPreviewSourceTwo] = useState();
+    const fileInputStateOne = '';
+    const fileInputStateTwo = '';
 
     const handleClose = () => {
         setOpenCreatePoll(false);
@@ -92,26 +92,33 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
             setPreviewSourceTwo(reader.result);
         };
     };
-    
-    const handleSubmitPoll = (e) => {
+  
+    const handleSubmitPoll = async (e) => {
         e.preventDefault();
         if(!newPoll) return;
-        uploadImage(previewSourceOne, previewSourceTwo, newPoll);
-        setNewPoll(initialPoll);
+        
+        const newPollForUpload = {
+            imageOne: previewSourceOne, 
+            imageTwo: previewSourceTwo,
+            question: newPoll.question,
+            friendlist: newPoll.friendlist,
+            userId: newPoll.userId,
+        }
+
+        await uploadPoll(newPollForUpload);
+        setSavedPolls(oldPolls => [...oldPolls, newPollForUpload]);
+        
         setPreviewSourceOne('');
         setPreviewSourceTwo('');
         setOpenCreatePoll(false);
+        setNewPoll(initialPoll);
     };
-
-    const uploadImage = async (previewSourceOne, previewSourceTwo, newPoll) => {
+    
+    const uploadPoll = async (newPollForUpload) => {
         try {
             await axios.post('http://localhost:5000/polls/upload', {
-                imageOne: previewSourceOne, 
-                imageTwo: previewSourceTwo,
-                question: newPoll.question,
-                friendlist: newPoll.friendlist,
-                userId: newPoll.userId,
-            });
+                newPollForUpload
+            })
         } catch (err) {
             err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
         }

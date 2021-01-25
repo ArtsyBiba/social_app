@@ -3,7 +3,7 @@ import Poll from './Poll';
 
 import Button from '@material-ui/core/Button';
 
-export default function Pools ({ setOpenCreatePoll }) {
+export default function Pools ({ setOpenCreatePoll, savedPolls, setSavedPolls }) {
     const handleCreatePoll = () => {
         setOpenCreatePoll(true);
     };
@@ -17,7 +17,18 @@ export default function Pools ({ setOpenCreatePoll }) {
                 </SyledButton>
             </HeaderWrapper>
             <PollsWrapper>
-                <Poll />
+                {savedPolls
+                    ? savedPolls.map((poll, index) => (
+                        <Poll 
+                            poll={poll} 
+                            key={index}
+                            setSavedPolls={setSavedPolls}
+                            savedPolls={savedPolls}
+                        />
+                    )) : (
+                        <div>Create your first poll</div>
+                    )
+                }
             </PollsWrapper>
         </Container>
     )

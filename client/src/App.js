@@ -15,6 +15,7 @@ function App() {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
+    polls: undefined,
   });
 
   useEffect(() => {

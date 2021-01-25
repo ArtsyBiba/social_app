@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UserContext from '../context/UserContext';
 import useStyles from '../themes/theme.profile';
@@ -16,6 +16,13 @@ export default function Profile () {
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
+    const [savedPolls, setSavedPolls] = useState('');
+    
+    useEffect(() => {
+        if(userData.user) {
+            setSavedPolls(userData.user.polls);
+        }
+    }, [userData]);
 
     return (
         <StyledPage>
@@ -27,12 +34,18 @@ export default function Profile () {
                     <Sidebar /> 
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Polls setOpenCreatePoll={setOpenCreatePoll} />
+                        <Polls 
+                            setOpenCreatePoll={setOpenCreatePoll} 
+                            savedPolls={savedPolls}
+                            setSavedPolls={setSavedPolls}
+                        />
                         <FriendsList />
                     </main>
                     <CreatePoll 
                         openCreatePoll={openCreatePoll}
                         setOpenCreatePoll={setOpenCreatePoll}
+                        savedPolls={savedPolls}
+                        setSavedPolls={setSavedPolls}
                     />
                 </>
             ) : (
