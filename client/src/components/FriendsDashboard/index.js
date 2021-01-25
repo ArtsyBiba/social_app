@@ -26,7 +26,7 @@ const Container = styled.div`
     height: 90vh;
     width: 75%;
     margin: auto;
-    margin-top: 2em;
+    margin-top: 0.5em;
 `;
 
 const HeaderWrapper = styled.div`
