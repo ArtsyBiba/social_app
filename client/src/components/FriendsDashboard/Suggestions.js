@@ -4,11 +4,8 @@ import SearchArea from './SearchArea';
 import axios from 'axios';
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 
+import User from './User';
 import UserContext from '../../context/UserContext';
 
 export default function Suggestions () {
@@ -45,16 +42,7 @@ export default function Suggestions () {
                         else return false
                     })
                     .map((user) => (
-                        <div key={user._id}>
-                            <ListItem button>
-                                <Avatar>{user.displayName[0]}</Avatar>
-                                <Name>{user.displayName}</Name>
-                                <SyledButton variant='outlined'>
-                                    Follow
-                                </SyledButton>
-                            </ListItem>
-                            <Divider />
-                        </div>
+                        <User key={user._id} user={user} />
                     ))
                 }
             </List>
@@ -70,20 +58,4 @@ const Dashboard = styled.div`
     background-color: white;
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 4px;
-`;
-
-const Name = styled.div`
-    display: flex;
-    margin-left: 1em;
-    font-size: 0.9em;
-    font-weight: 600;
-`;
-
-const SyledButton = styled(Button)`
-    text-transform: uppercase;
-    width: 100px;
-    height: 25px;
-    background-color: lightgreen;
-    position: absolute;
-    right: 16px;
 `;
