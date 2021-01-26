@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import SearchArea from './SearchArea';
 import axios from 'axios';
 
@@ -9,22 +9,30 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
+import UserContext from '../../context/UserContext';
+
 export default function Suggestions () {
+    const { userData } = useContext(UserContext);
+    
     const [users, setUsers] = useState('');
     const [query, setQuery] = useState('');
 
     useEffect(() => {
+        const getUsers = async () => {
+            try {
+                await axios.get('http://localhost:5000/friends/usersList')
+                    .then(
+                        resp => {
+                            const filtered = resp.data.user.filter((user) => user._id !== userData.user.id)
+                            setUsers(filtered);
+                        })
+            } catch (err) {
+                console.log(err.response.data.msg);
+            }
+        };
+        
         getUsers();
-    }, []);
-    
-    const getUsers = async () => {
-        try {
-            await axios.get('http://localhost:5000/friends/usersList')
-                .then(resp => setUsers(resp.data.user))
-        } catch (err) {
-            console.log(err.response.data.msg);
-        }
-    };
+    }, [userData.user.id]);
 
     return (
         <Dashboard>

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import SearchArea from './SearchArea';
-import axios from 'axios';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,22 +8,17 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
+import UserContext from '../../context/UserContext';
+
 export default function Followings () {
+    const { userData } = useContext(UserContext);
+    
     const [users, setUsers] = useState('');
     const [query, setQuery] = useState('');
 
     useEffect(() => {
-        getUsers();
-    }, []);
-    
-    const getUsers = async () => {
-        try {
-            await axios.get('http://localhost:5000/friends/usersList')
-                .then(resp => setUsers(resp.data.user))
-        } catch (err) {
-            console.log(err.response.data.msg);
-        }
-    };
+        setUsers(userData.user.followings);
+    }, [userData]);
 
     return (
         <Dashboard>
