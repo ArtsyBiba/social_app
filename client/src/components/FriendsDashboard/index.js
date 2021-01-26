@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 export default function FriendsDashboard () {
     const { userData } = useContext(UserContext);
@@ -43,13 +42,11 @@ export default function FriendsDashboard () {
                     {users && users.map((user) => (
                         <>
                             <ListItem button key={user._id}>
-                                <Avatar>AP</Avatar>
+                                <Avatar>{user.displayName[0]}</Avatar>
                                 <Name>{user.displayName}</Name>
-                                <ListItemSecondaryAction>
-                                    <SyledButton variant='outlined'>
-                                        Follow
-                                    </SyledButton>
-                                </ListItemSecondaryAction>
+                                <SyledButton variant='outlined'>
+                                    Follow
+                                </SyledButton>
                             </ListItem>
                             <Divider />
                         </>
@@ -115,4 +112,6 @@ const SyledButton = styled(Button)`
     width: 100px;
     height: 25px;
     background-color: lightgreen;
+    position: absolute;
+    right: 16px;
 `;
