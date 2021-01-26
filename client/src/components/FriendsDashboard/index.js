@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useContext, useState, useEffect } from 'react';
 import UserContext from '../../context/UserContext';
 import SearchArea from './SearchArea';
+import axios from 'axios';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,6 +14,22 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 export default function FriendsDashboard () {
     const { userData } = useContext(UserContext);
 
+    const [users, setUsers] = useState('');
+    console.log(users);
+
+    useEffect(() => {
+        getUsers();
+    }, []);
+    
+    const getUsers = async () => {
+        try {
+            await axios.get('http://localhost:5000/friends/usersList')
+                .then(resp => setUsers(resp.data.user))
+        } catch (err) {
+            console.log(err.response.data.msg);
+        }
+    };
+
     return (
         <Container>
             <HeaderWrapper>
@@ -23,11 +40,11 @@ export default function FriendsDashboard () {
             <Dashboard>
                 <SearchArea />
                 <List>
-                    {['Friend 1', 'Friend 2', 'Friend 3', 'Friend 4'].map((name) => (
+                    {users && users.map((user) => (
                         <>
-                            <ListItem button key={name}>
+                            <ListItem button key={user._id}>
                                 <Avatar>AP</Avatar>
-                                <Name>{name}</Name>
+                                <Name>{user.displayName}</Name>
                                 <ListItemSecondaryAction>
                                     <SyledButton variant='outlined'>
                                         Follow

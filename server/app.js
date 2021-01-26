@@ -30,3 +30,4 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 // set up routes
 app.use('/users', require('./routes/userRouter'));
 app.use('/polls', require('./routes/pollRouter'));
+app.use('/friends', require('./routes/friendRouter'));
