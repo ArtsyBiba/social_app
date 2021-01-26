@@ -14,7 +14,7 @@ export default function FriendsDashboard () {
     const { userData } = useContext(UserContext);
 
     const [users, setUsers] = useState('');
-    console.log(users);
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
         getUsers();
@@ -37,19 +37,25 @@ export default function FriendsDashboard () {
                 <Subheader>Followings</Subheader>
             </HeaderWrapper>
             <Dashboard>
-                <SearchArea />
+                <SearchArea query={query} setQuery={setQuery} />
                 <List>
-                    {users && users.map((user) => (
-                        <>
-                            <ListItem button key={user._id}>
-                                <Avatar>{user.displayName[0]}</Avatar>
-                                <Name>{user.displayName}</Name>
-                                <SyledButton variant='outlined'>
-                                    Follow
-                                </SyledButton>
-                            </ListItem>
-                            <Divider />
-                        </>
+                    {users && users
+                        .filter((user) => {
+                            if (!query) return true
+                            if (user.displayName.toLowerCase().includes(query)) return true
+                            else return false
+                        })
+                        .map((user) => (
+                            <div key={user._id}>
+                                <ListItem button>
+                                    <Avatar>{user.displayName[0]}</Avatar>
+                                    <Name>{user.displayName}</Name>
+                                    <SyledButton variant='outlined'>
+                                        Follow
+                                    </SyledButton>
+                                </ListItem>
+                                <Divider />
+                            </div>
                     ))}
                 </List>
             </Dashboard>

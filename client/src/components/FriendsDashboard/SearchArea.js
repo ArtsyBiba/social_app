@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function SearchArea () {
-    const [query, setQuery] = useState('');
-
+export default function SearchArea ({ setQuery, query }) {
     const handleChange = (e) => {
         const nextValue = e.target.value;
         setQuery(nextValue);
