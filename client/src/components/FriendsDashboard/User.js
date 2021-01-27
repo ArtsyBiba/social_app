@@ -10,18 +10,37 @@ import Button from '@material-ui/core/Button';
 import UserContext from '../../context/UserContext';
 
 export default function Suggestions ({ user }) {
-    const { userData } = useContext(UserContext);
+    const { userData, setUserData } = useContext(UserContext);
     console.log(userData)
 
-    const handleUserButton = async () => {
+    const handleFollowButton = async () => {
         await uploadFollower();
 
         userData.user.followings.push(user);
     };
 
+    const handleUnfollowButton = async () => {
+        await removeFollower();
+        
+
+        setUserData(updatedPolls);
+        userData.user.followings.push(user);
+    };
+
     const uploadFollower = async () => {
         try {
-            await axios.post('http://localhost:5000/friends/follow', {
+            await axios.put('http://localhost:5000/friends/follow', {
+                userToFollow: user,
+                currentUser: userData.user,
+            })
+        } catch (err) {
+            console.log(err.response.data.msg);
+        }
+    };
+
+    const removeFollower = async () => {
+        try {
+            await axios.put('http://localhost:5000/friends/unfollow', {
                 userToFollow: user,
                 currentUser: userData.user,
             })
@@ -35,8 +54,11 @@ export default function Suggestions ({ user }) {
             <ListItem button>
                 <Avatar>{user.displayName[0]}</Avatar>
                 <Name>{user.displayName}</Name>
-                <SyledButton variant='outlined' onClick={handleUserButton}>
+                <SyledButton variant='outlined' onClick={handleFollowButton}>
                     Follow
+                </SyledButton>
+                <SyledButton variant='contained' onClick={handleUnfollowButton}>
+                    Unfollow
                 </SyledButton>
             </ListItem>
             <Divider />
