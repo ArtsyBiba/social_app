@@ -132,6 +132,8 @@ router.get('/', auth, async (req, res) => {
         displayName: user.displayName,
         id: user._id,
         polls: user.polls,
+        followers: user.followers,
+        followings: user.followings,
     });
 });
 

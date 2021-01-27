@@ -17,6 +17,8 @@ function App() {
     token: undefined,
     user: undefined,
     polls: undefined,
+    followers: undefined,
+    followings: undefined,
   });
 
   useEffect(() => {
