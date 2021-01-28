@@ -19,7 +19,7 @@ export default function Profile () {
     const [savedPolls, setSavedPolls] = useState('');
     
     useEffect(() => {
-        if(userData.user) {
+        if (userData.user) {
             setSavedPolls(userData.user.polls);
         }
     }, [userData]);

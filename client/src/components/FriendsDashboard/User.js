@@ -10,15 +10,16 @@ import Button from '@material-ui/core/Button';
 import UserContext from '../../context/UserContext';
 
 export default function Suggestions ({ user }) {
-    const { userData, reload, setReload} = useContext(UserContext);
+    const { userData, reload, setReload } = useContext(UserContext);
     const [followed, setFollowed] = useState(false);
     
     useEffect(() => {
         const checkIfFollowed = () => {
             return (
-                userData.user.followings.includes(user._id) 
-                    ? setFollowed(true)
-                    : setFollowed(false)
+                userData.user.followings && 
+                    userData.user.followings.some(e => e._id === user._id) 
+                        ? setFollowed(true)
+                        : setFollowed(false)
             )
         };
 

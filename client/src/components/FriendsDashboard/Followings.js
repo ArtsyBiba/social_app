@@ -1,41 +1,26 @@
 import styled from 'styled-components';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import SearchArea from './SearchArea';
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
+import User from './User';
 import UserContext from '../../context/UserContext';
 
 export default function Followings () {
     const { userData } = useContext(UserContext);
+    const savedFollowings = userData.user.followings;
     
-    const [followings, setFollowings] = useState('');
     const [query, setQuery] = useState('');
-
-    useEffect(() => {
-        userData.user.followings && setFollowings(userData.user.followings);
-    }, [userData]);
 
     return (
         <Dashboard>
             <SearchArea query={query} setQuery={setQuery} />
             <List>
-                {followings && followings
+                {savedFollowings.length > 0 && savedFollowings
                     .map((user) => (
-                        <div key={user._id}>
-                            <ListItem button>
-                                <Avatar>{user.displayName[0]}</Avatar>
-                                <Name>{user.displayName}</Name>
-                                <SyledButton variant='outlined'>
-                                    Follow
-                                </SyledButton>
-                            </ListItem>
-                            <Divider />
-                        </div>
+                        <User key={user._id} user={user} />
                     ))
                 }
             </List>

@@ -35,7 +35,7 @@ export default function Suggestions () {
         <Dashboard>
             <SearchArea query={query} setQuery={setQuery} />
             <List>
-                {users && users
+                {users.length > 0 && users
                     .filter((user) => {
                         if (!query) return true
                         if (user.displayName.toLowerCase().includes(query)) return true

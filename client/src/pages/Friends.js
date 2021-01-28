@@ -15,13 +15,6 @@ export default function Friends () {
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
-    const [savedPolls, setSavedPolls] = useState('');
-    
-    useEffect(() => {
-        if(userData.user) {
-            setSavedPolls(userData.user.polls);
-        }
-    }, [userData]);
 
     return (
         <StyledPage>
@@ -38,8 +31,6 @@ export default function Friends () {
                     <CreatePoll 
                         openCreatePoll={openCreatePoll}
                         setOpenCreatePoll={setOpenCreatePoll}
-                        savedPolls={savedPolls}
-                        setSavedPolls={setSavedPolls}
                     />
                 </>
             ) : (

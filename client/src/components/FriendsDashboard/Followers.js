@@ -1,46 +1,26 @@
 import styled from 'styled-components';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import SearchArea from './SearchArea';
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
+import User from './User';
 import UserContext from '../../context/UserContext';
 
 export default function Followers () {
     const { userData } = useContext(UserContext);
+    const savedFollowers = userData.user.followers;
     
-    const [users, setUsers] = useState('');
     const [query, setQuery] = useState('');
-
-    useEffect(() => {
-        setUsers(userData.user.followers);
-    }, [userData]);
 
     return (
         <Dashboard>
             <SearchArea query={query} setQuery={setQuery} />
             <List>
-                {users && users
-                    .filter((user) => {
-                        if (!query) return true
-                        if (user.displayName.toLowerCase().includes(query)) return true
-                        else return false
-                    })
+                {savedFollowers.length > 0 && savedFollowers
                     .map((user) => (
-                        <div key={user._id}>
-                            <ListItem button>
-                                <Avatar>{user.displayName[0]}</Avatar>
-                                <Name>{user.displayName}</Name>
-                                <SyledButton variant='outlined'>
-                                    Follow
-                                </SyledButton>
-                            </ListItem>
-                            <Divider />
-                        </div>
+                        <User key={user._id} user={user} />
                     ))
                 }
             </List>

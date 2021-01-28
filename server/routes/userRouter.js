@@ -127,7 +127,7 @@ router.post('/tokenIsValid', async (req, res) => {
 });
 
 router.get('/', auth, async (req, res) => {
-    const user = await User.findById(req.user).populate('polls');
+    const user = await User.findById(req.user).populate('polls').populate('followers').populate('followings');
     res.json({
         displayName: user.displayName,
         id: user._id,
