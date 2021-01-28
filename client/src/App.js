@@ -20,6 +20,7 @@ function App() {
     followers: undefined,
     followings: undefined,
   });
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -47,12 +48,12 @@ function App() {
     };
 
     checkLoggedIn();
-  }, []);
+  }, [reload]);
 
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
-        <UserContext.Provider value={{ userData, setUserData }}>
+        <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
           <Switch>
               <Route exact path='/'>
                 <SignIn />

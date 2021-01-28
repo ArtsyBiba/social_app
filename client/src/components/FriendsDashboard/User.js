@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
 
 import ListItem from '@material-ui/core/ListItem';
@@ -10,19 +10,20 @@ import Button from '@material-ui/core/Button';
 import UserContext from '../../context/UserContext';
 
 export default function Suggestions ({ user }) {
-    const { userData, setUserData } = useContext(UserContext);
+    const { userData, setUserData, reload, setReload} = useContext(UserContext);
+    const [followed, setFollowed] = useState(null);
     console.log(userData)
 
     const handleFollowButton = async () => {
         await uploadFollower();
-
-        // setUserData(oldData => [...oldData, user.followings.push(user)]);
+        
+        setReload(!reload);
     };
 
     const handleUnfollowButton = async () => {
         await removeFollower();
-        
-        // setUserData(oldData => [...oldData, userData.user.followings.pop(user)]);
+
+        setReload(!reload);
     };
 
     const uploadFollower = async () => {
