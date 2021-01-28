@@ -16,15 +16,13 @@ export default function Suggestions ({ user }) {
     const handleFollowButton = async () => {
         await uploadFollower();
 
-        userData.user.followings.push(user);
+        // setUserData(oldData => [...oldData, user.followings.push(user)]);
     };
 
     const handleUnfollowButton = async () => {
         await removeFollower();
         
-
-        setUserData(updatedPolls);
-        userData.user.followings.push(user);
+        // setUserData(oldData => [...oldData, userData.user.followings.pop(user)]);
     };
 
     const uploadFollower = async () => {
@@ -41,7 +39,7 @@ export default function Suggestions ({ user }) {
     const removeFollower = async () => {
         try {
             await axios.put('http://localhost:5000/friends/unfollow', {
-                userToFollow: user,
+                userToUnfollow: user,
                 currentUser: userData.user,
             })
         } catch (err) {
@@ -57,9 +55,9 @@ export default function Suggestions ({ user }) {
                 <SyledButton variant='outlined' onClick={handleFollowButton}>
                     Follow
                 </SyledButton>
-                <SyledButton variant='contained' onClick={handleUnfollowButton}>
+                <Button variant='contained' onClick={handleUnfollowButton}>
                     Unfollow
-                </SyledButton>
+                </Button>
             </ListItem>
             <Divider />
         </>
