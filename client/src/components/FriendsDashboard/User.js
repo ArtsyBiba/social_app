@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 import ListItem from '@material-ui/core/ListItem';
@@ -10,9 +10,22 @@ import Button from '@material-ui/core/Button';
 import UserContext from '../../context/UserContext';
 
 export default function Suggestions ({ user }) {
-    const { userData, setUserData, reload, setReload} = useContext(UserContext);
-    const [followed, setFollowed] = useState(null);
+    const { userData, reload, setReload} = useContext(UserContext);
+    const [followed, setFollowed] = useState(false);
     console.log(userData)
+    console.log(followed)
+    
+    useEffect(() => {
+        const checkIfFollowed = () => {
+            return (
+                userData.user.followings.includes(user._id) 
+                    ? setFollowed(true)
+                    : setFollowed(false)
+            )
+        };
+
+        checkIfFollowed();
+    });
 
     const handleFollowButton = async () => {
         await uploadFollower();
@@ -53,12 +66,14 @@ export default function Suggestions ({ user }) {
             <ListItem button>
                 <Avatar>{user.displayName[0]}</Avatar>
                 <Name>{user.displayName}</Name>
-                <SyledButton variant='outlined' onClick={handleFollowButton}>
-                    Follow
-                </SyledButton>
-                <Button variant='contained' onClick={handleUnfollowButton}>
-                    Unfollow
-                </Button>
+                {followed ? 
+                    <SyledButton active variant='contained' onClick={handleUnfollowButton}>
+                        Unfollow
+                    </SyledButton> :
+                    <SyledButton variant='outlined' onClick={handleFollowButton}>
+                        Follow
+                    </SyledButton>
+                }
             </ListItem>
             <Divider />
         </>
@@ -76,7 +91,7 @@ const SyledButton = styled(Button)`
     text-transform: uppercase;
     width: 100px;
     height: 25px;
-    background-color: lightgreen;
+    background-color: ${props => props.active ? 'lightred' : 'lightgreen'};
     position: absolute;
     right: 16px;
 `;
