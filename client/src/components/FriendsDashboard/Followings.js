@@ -13,23 +13,18 @@ import UserContext from '../../context/UserContext';
 export default function Followings () {
     const { userData } = useContext(UserContext);
     
-    const [users, setUsers] = useState('');
+    const [followings, setFollowings] = useState('');
     const [query, setQuery] = useState('');
 
     useEffect(() => {
-        setUsers(userData.user.followings);
+        userData.user.followings && setFollowings(userData.user.followings);
     }, [userData]);
 
     return (
         <Dashboard>
             <SearchArea query={query} setQuery={setQuery} />
             <List>
-                {users && users
-                    .filter((user) => {
-                        if (!query) return true
-                        if (user.displayName.toLowerCase().includes(query)) return true
-                        else return false
-                    })
+                {followings && followings
                     .map((user) => (
                         <div key={user._id}>
                             <ListItem button>

@@ -12,8 +12,6 @@ import UserContext from '../../context/UserContext';
 export default function Suggestions ({ user }) {
     const { userData, reload, setReload} = useContext(UserContext);
     const [followed, setFollowed] = useState(false);
-    console.log(userData)
-    console.log(followed)
     
     useEffect(() => {
         const checkIfFollowed = () => {
@@ -67,7 +65,7 @@ export default function Suggestions ({ user }) {
                 <Avatar>{user.displayName[0]}</Avatar>
                 <Name>{user.displayName}</Name>
                 {followed ? 
-                    <SyledButton active variant='contained' onClick={handleUnfollowButton}>
+                    <SyledButton active='active' variant='contained' onClick={handleUnfollowButton}>
                         Unfollow
                     </SyledButton> :
                     <SyledButton variant='outlined' onClick={handleFollowButton}>
