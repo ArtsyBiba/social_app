@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 
 router.post('/upload', async (req, res) => {
     try {
-        let { imageOne, imageTwo, question, friendlist, userId } = req.body.newPollForUpload;
+        const { imageOne, imageTwo, question, friendlist, userId } = req.body.newPollForUpload;
 
         if (!question || !friendlist) {
             return res
@@ -50,7 +50,7 @@ router.post('/upload', async (req, res) => {
 
 router.delete('/delete', async (req, res) => {
     try {
-        let { pollId, userId } = req.body;
+        const { pollId, userId } = req.body;
         
         const deletedPoll = await Poll.findByIdAndDelete(pollId);
 

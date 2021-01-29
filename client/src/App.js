@@ -7,6 +7,7 @@ import { theme } from "./themes/theme";
 import SignIn from './pages/SignIn'; 
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
+import Friends from './pages/Friends';
 import UserContext from './context/UserContext';
 
 import "./App.css";
@@ -16,7 +17,10 @@ function App() {
     token: undefined,
     user: undefined,
     polls: undefined,
+    followers: undefined,
+    followings: undefined,
   });
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -44,12 +48,12 @@ function App() {
     };
 
     checkLoggedIn();
-  }, []);
+  }, [reload]);
 
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
-        <UserContext.Provider value={{ userData, setUserData }}>
+        <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
           <Switch>
               <Route exact path='/'>
                 <SignIn />
@@ -59,6 +63,9 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile />
+              </Route>
+              <Route exact path='/friends'>
+                <Friends />
               </Route>
             </Switch>
           </UserContext.Provider>
