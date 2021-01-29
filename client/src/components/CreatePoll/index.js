@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 
 import UserContext from '../../context/UserContext';
 
-export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll, savedPolls, setSavedPolls }) {
-    const { userData } = useContext(UserContext);
+export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
+    const { userData, reload, setReload } = useContext(UserContext);
     
     const initialPoll = {
         question: '', 
@@ -106,7 +106,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll, savedPo
         }
 
         await uploadPoll(newPollForUpload);
-        setSavedPolls(oldPolls => [...oldPolls, newPollForUpload]);
+        setReload(!reload);
         
         setPreviewSourceOne('');
         setPreviewSourceTwo('');
