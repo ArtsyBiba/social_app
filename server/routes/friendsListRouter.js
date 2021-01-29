@@ -34,21 +34,21 @@ router.post('/upload', async (req, res) => {
     }
 });
 
-// router.delete('/delete', async (req, res) => {
-//     try {
-//         const { pollId, userId } = req.body;
+router.delete('/delete', async (req, res) => {
+    try {
+        const { friendsListId, userId } = req.body;
         
-//         const deletedPoll = await Poll.findByIdAndDelete(pollId);
+        const deletedFriendsList = await FriendsList.findByIdAndDelete(friendsListId);
 
-//         await User.updateOne(
-//             { '_id': userId }, 
-//             { $pull: { 'polls' : pollId } }
-//         );
+        await User.updateOne(
+            { '_id': userId }, 
+            { $pull: { 'friendsLists' : friendsListId } }
+        );
 
-//         res.json(deletedPoll);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// });
+        res.json(deletedFriendsList);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 module.exports = router;
