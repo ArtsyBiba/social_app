@@ -1,9 +1,16 @@
 import styled from 'styled-components';
-import List from './List';
+import { useContext } from 'react';
 
 import Button from '@material-ui/core/Button';
 
+import List from './List';
+import UserContext from '../../context/UserContext';
+
 export default function FriendsList ({ setOpenCreateFriendsList }) {
+    const { userData } = useContext(UserContext);
+    console.log(userData)
+    const savedLists = userData.user.friendsLists;
+    
     const handleCreateFriendsList = () => {
         setOpenCreateFriendsList(true);
     };
@@ -17,7 +24,16 @@ export default function FriendsList ({ setOpenCreateFriendsList }) {
                 </SyledButton>
             </HeaderWrapper>
             <ListsWrapper>
-                <List />
+                {savedLists
+                    ? savedLists.map((list, index) => (
+                        <List 
+                            list={list} 
+                            key={index}
+                        />
+                    )) : (
+                        <div>Create your first poll</div>
+                    )
+                }
             </ListsWrapper>
         </Container>
     )

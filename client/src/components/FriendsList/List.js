@@ -6,22 +6,23 @@ import GenericList from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 
-export default function List () {
+export default function List ({ list }) {
+
     return (
         <ListCard>
             <Header>
                 <Subheader>
-                    <Name>List</Name>
+                    <Name>{list.listName}</Name>
                     <Info>4 online</Info>
                 </Subheader>
                 <StyledSettingsIcon color='disabled' />
             </Header>
             <Divider />
             <GenericList>
-                {['Friend 1', 'Friend 2', 'Friend 3', 'Friend 4'].map((name) => (
-                    <ListItem button key={name}>
-                        <Avatar>AP</Avatar>
-                        <FriendName>{name}</FriendName>
+                {list.friends.map((friend) => (
+                    <ListItem button key={friend._id}>
+                        <Avatar>{friend.displayName[0]}</Avatar>
+                        <FriendName>{friend.displayName}</FriendName>
                     </ListItem>
                 ))}
             </GenericList>

@@ -26,7 +26,6 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
     };
 
     const [newFriendsList, setNewFriendsList] = useState(initialFriendsList);
-    console.log(newFriendsList)
 
     const handleClose = () => {
         setOpenCreateFriendsList(false);
