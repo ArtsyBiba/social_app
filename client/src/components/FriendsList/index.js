@@ -8,7 +8,6 @@ import UserContext from '../../context/UserContext';
 
 export default function FriendsList ({ setOpenCreateFriendsList }) {
     const { userData } = useContext(UserContext);
-    console.log(userData)
     const savedLists = userData.user.friendsLists;
     
     const handleCreateFriendsList = () => {
