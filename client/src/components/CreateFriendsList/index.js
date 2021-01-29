@@ -8,14 +8,19 @@ import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 
 import UserContext from '../../context/UserContext';
+import User from './User';
 
 export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreateFriendsList }) {
     const { userData, reload, setReload } = useContext(UserContext);
+
+    const followers = userData.user.followers;
     
     const initialFriendsList = {
         listName: '', 
+        friends: [],
         error: null,
     };
 
@@ -23,11 +28,12 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
 
     const handleClose = () => {
         setOpenCreateFriendsList(false);
+        setNewFriendsList(initialFriendsList);
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        newFriendsList(prevList => {
+        setNewFriendsList(prevList => {
             return { 
                 ...prevList, 
                 [name]: value, 
@@ -76,13 +82,27 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
                                 margin='normal'
                                 required
                                 fullWidth
-                                id='question'
-                                label='Enter your question'
-                                name='question'
+                                id='listName'
+                                label='Enter the list name'
+                                name='listName'
                                 autoFocus
                                 onChange={handleChange}
                             />
                         </InputsWrapper>
+                        <FriendsContainer>
+                            <List>
+                                {followers && followers
+                                    .map((user) => (
+                                        <User 
+                                            key={user._id} 
+                                            user={user} 
+                                            newFriendsList={newFriendsList} 
+                                            setNewFriendsList={setNewFriendsList}
+                                        />
+                                    ))
+                                }
+                            </List>
+                        </FriendsContainer>
                     </PollData>
                     <Typography color='secondary'>
                         {newFriendsList.error ? newFriendsList.error : ''}
@@ -107,8 +127,8 @@ const CustomContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 60vh;
-    width: 100vh;
+    height: 80vh;
+    width: 70vh;
     background-color: white;
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 4px;
@@ -116,10 +136,17 @@ const CustomContainer = styled.div`
 
 const PollData = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
     width: 100%;
-    height: 50vh;
+    height: 70vh;
+`;
+
+const FriendsContainer = styled.div`
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 1em;
+    width: 85%;
 `;
 
 const SyledButton = styled(Button)`
@@ -133,9 +160,8 @@ const SyledButton = styled(Button)`
 
 const InputsWrapper = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
     width: 40vh;
-    margin: 1em;
-    margin-left: 2em;
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
 `;

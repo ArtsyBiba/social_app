@@ -37,19 +37,3 @@ const Dashboard = styled.div`
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 4px;
 `;
-
-const Name = styled.div`
-    display: flex;
-    margin-left: 1em;
-    font-size: 0.9em;
-    font-weight: 600;
-`;
-
-const SyledButton = styled(Button)`
-    text-transform: uppercase;
-    width: 100px;
-    height: 25px;
-    background-color: lightgreen;
-    position: absolute;
-    right: 16px;
-`;
