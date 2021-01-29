@@ -17,7 +17,7 @@ export default function Followers () {
         <Dashboard>
             <SearchArea query={query} setQuery={setQuery} />
             <List>
-                {savedFollowers.length > 0 && savedFollowers
+                {savedFollowers && savedFollowers
                     .map((user) => (
                         <User key={user._id} user={user} />
                     ))

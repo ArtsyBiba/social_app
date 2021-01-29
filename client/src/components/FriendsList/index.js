@@ -3,12 +3,18 @@ import List from './List';
 
 import Button from '@material-ui/core/Button';
 
-export default function FriendsList () {
+export default function FriendsList ({ setOpenCreateFriendsList }) {
+    const handleCreateFriendsList = () => {
+        setOpenCreateFriendsList(true);
+    };
+    
     return (
         <Container>
             <HeaderWrapper>
                 <Header>Friends List</Header>
-                <SyledButton variant="outlined">Create List</SyledButton>
+                <SyledButton variant='outlined' onClick={handleCreateFriendsList}>
+                    Create List
+                </SyledButton>
             </HeaderWrapper>
             <ListsWrapper>
                 <List />
