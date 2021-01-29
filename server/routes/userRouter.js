@@ -89,6 +89,7 @@ router.post('/login', async (req, res) => {
                 polls: user.polls,
                 followers: user.followers,
                 followings: user.followings,
+                friendsLists: user.friendsLists,
             }
         })
     } catch (err) {
@@ -136,6 +137,7 @@ router.get('/', auth, async (req, res) => {
         polls: user.polls,
         followers: user.followers,
         followings: user.followings,
+        friendsLists: user.friendsLists,
     });
 });
 

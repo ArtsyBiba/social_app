@@ -25,6 +25,7 @@ export default function Suggestions ({ user, newFriendsList, setNewFriendsList }
     const handleAddButton = () => {  
         setNewFriendsList(prevList => {
             return { 
+                ...prevList,
                 friends: prevList.friends.concat(user), 
             }
         });

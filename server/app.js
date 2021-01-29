@@ -31,3 +31,4 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 app.use('/users', require('./routes/userRouter'));
 app.use('/polls', require('./routes/pollRouter'));
 app.use('/friends', require('./routes/friendRouter'));
+app.use('/friendsList', require('./routes/friendsListRouter'));

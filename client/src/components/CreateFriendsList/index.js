@@ -22,9 +22,11 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
         listName: '', 
         friends: [],
         error: null,
+        userId: userData.user.id,
     };
 
     const [newFriendsList, setNewFriendsList] = useState(initialFriendsList);
+    console.log(newFriendsList)
 
     const handleClose = () => {
         setOpenCreateFriendsList(false);
@@ -43,23 +45,22 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
   
     const handleSubmitFriendsList = async (e) => {
         e.preventDefault();
-        // if (!newPoll) return;
 
-        // await uploadFriendsList(newPollForUpload);
+        await uploadFriendsList(newFriendsList);
         setReload(!reload);
         
-        setOpenCreateFriendsList(false);
         setNewFriendsList(initialFriendsList);
+        setOpenCreateFriendsList(false);
     };
     
-    const uploadFriendsList = async (newPollForUpload) => {
-        // try {
-        //     await axios.post('http://localhost:5000/polls/upload', {
-        //         newPollForUpload
-        //     })
-        // } catch (err) {
-        //     err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
-        // }
+    const uploadFriendsList = async (newFriendsList) => {
+        try {
+            await axios.post('http://localhost:5000/friendsList/upload', {
+                newFriendsList,
+            })
+        } catch (err) {
+            err.response.data.msg && setNewFriendsList({ ...newFriendsList, error: err.response.data.msg });
+        }
     };
 
     return (
@@ -155,7 +156,7 @@ const SyledButton = styled(Button)`
     width: 120px;
     margin: auto;
     margin-top: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
 `;
 
 const InputsWrapper = styled.div`

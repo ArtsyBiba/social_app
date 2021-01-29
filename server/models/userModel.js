@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     polls: [{ type: mongoose.Schema.Types.ObjectId, ref: 'poll' }],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+    friendsLists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'friendsList' }],
 });
 
 module.exports = User = mongoose.model('user', userSchema);

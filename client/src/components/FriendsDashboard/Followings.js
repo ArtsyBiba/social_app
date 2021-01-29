@@ -3,7 +3,6 @@ import { useState, useContext } from 'react';
 import SearchArea from './SearchArea';
 
 import List from '@material-ui/core/List';
-import Button from '@material-ui/core/Button';
 
 import User from './User';
 import UserContext from '../../context/UserContext';
