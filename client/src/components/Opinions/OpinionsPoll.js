@@ -4,9 +4,7 @@ import { useContext } from 'react';
 import Image from '../Polls/Image';
 import UserContext from '../../context/UserContext';
 
-export default function OpinionsPoll ({ poll }) {
-    const { userData, reload, setReload } = useContext(UserContext);
-    
+export default function OpinionsPoll ({ poll }) {   
     return (
         <PollCard>
             <Header>

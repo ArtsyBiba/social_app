@@ -17,25 +17,14 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     
     const initialPoll = {
         question: '', 
-        friendlist: 'List 1',
+        friendlist: '',
         error: null,
         userId: userData.user.id,
     };
 
-    const friendLists = [
-        {
-          value: 'List 1',
-        },
-        {
-          value: 'List 2',
-        },
-        {
-          value: 'List 3',
-        },
-      ];
-
+    const allFriendsLists = userData.user.friendsLists;
     const [newPoll, setNewPoll] = useState(initialPoll);
-    const [friendList, setFriendList] = useState('List 1');
+    const [friendList, setFriendList] = useState(allFriendsLists[0]);
     const [previewSourceOne, setPreviewSourceOne] = useState();
     const [previewSourceTwo, setPreviewSourceTwo] = useState();
     const fileInputStateOne = '';
@@ -158,9 +147,9 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                                 value={friendList}
                                 onChange={handleSelect}
                             >
-                                {friendLists.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.value}
+                                {allFriendsLists && allFriendsLists.map((list) => (
+                                    <MenuItem key={list._id} value={list}>
+                                        {list.listName}
                                     </MenuItem>
                                 ))}
                             </TextField>
