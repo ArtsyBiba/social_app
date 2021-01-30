@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Friends from './pages/Friends';
+import Opinions from './pages/Opinions';
 import UserContext from './context/UserContext';
 
 import "./App.css";
@@ -66,6 +67,9 @@ function App() {
               </Route>
               <Route exact path='/friends'>
                 <Friends />
+              </Route>
+              <Route exact path='/opinions'>
+                <Opinions />
               </Route>
             </Switch>
           </UserContext.Provider>
