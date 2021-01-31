@@ -14,6 +14,8 @@ export default function Profile () {
     const { userData, reload, setReload } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
+    const [previewSource, setPreviewSource] = useState();
+    const fileInputState = '';
 
     const dataToUpdate = {
         displayName: '',
@@ -29,6 +31,19 @@ export default function Profile () {
                 [name]: value, 
             }
         });
+    };
+
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        previewFile(file);
+    };
+
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        };
     };
 
     console.log(updatedUser)
@@ -55,6 +70,23 @@ export default function Profile () {
                                 />
                                 {userData && <SavedData>{userData.user.displayName}</SavedData>}
                             </UserInputLine>
+                            <ImageUploader>
+                                {previewSource ? (
+                                    <ImageContainer>
+                                        <Image src={previewSource} alt='chosenOne' />
+                                    </ImageContainer>
+                                ) : (
+                                    <Prompt>Select Your Avatar</Prompt>
+                                )}
+                                <StyledForm>
+                                    <StyledInput 
+                                        type='file' 
+                                        name='imageOne' 
+                                        onChange={handleFileInputChange}
+                                        value={fileInputState}
+                                    />
+                                </StyledForm>
+                            </ImageUploader>
                         </UserInputForm>
                     </main>
                     <CreatePoll 
@@ -100,4 +132,43 @@ const SavedData = styled.div`
     padding-top: 10px;
     flex: 3;
     text-align: center;
+`;
+
+const Image = styled.img`
+    height: 70px;
+    width: 70px;
+`;
+
+const ImageContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 2em;
+`;
+
+const StyledForm = styled.form`
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width: 50%;
+`;
+
+const StyledInput = styled.input`
+    margin-top: 1em;
+`;
+
+const Prompt = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    color: lightgray;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+`;
+
+const ImageUploader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
 `;
