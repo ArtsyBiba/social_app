@@ -19,8 +19,8 @@ export default function Navbar ({ setOpenCreatePoll }) {
         history.push('/friends');
     };
 
-    const handleOpenProfile = () => {
-        history.push('/profile');
+    const handleOpenDashboard = () => {
+        history.push('/dashboard');
     };
 
     const handleOpenOpinions = () => {
@@ -29,7 +29,7 @@ export default function Navbar ({ setOpenCreatePoll }) {
     
     return (
         <StyledToolbar>
-            <AppName onClick={handleOpenProfile}>
+            <AppName onClick={handleOpenDashboard}>
                 <Icon>💬 </Icon>
                 <Typography 
                     component='h1' 

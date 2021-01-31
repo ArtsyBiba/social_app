@@ -6,7 +6,7 @@ import axios from 'axios';
 import { theme } from "./themes/theme";
 import SignIn from './pages/SignIn'; 
 import SignUp from './pages/SignUp';
-import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
 import Friends from './pages/Friends';
 import Opinions from './pages/Opinions';
 import UserContext from './context/UserContext';
@@ -62,8 +62,8 @@ function App() {
               <Route exact path='/signup'>
                 <SignUp />
               </Route>
-              <Route exact path='/profile'>
-                <Profile />
+              <Route exact path='/dashboard'>
+                <Dashboard />
               </Route>
               <Route exact path='/friends'>
                 <Friends />

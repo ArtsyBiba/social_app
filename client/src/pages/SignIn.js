@@ -53,7 +53,7 @@ export default function SignIn() {
             });
             localStorage.setItem('auth-token', loginRes.data.token);
 
-            history.push('/profile');
+            history.push('/dashboard');
         } catch (err) {
             console.log(err);
             err.response.data.msg && setUser({ ...user, error: err.response.data.msg });
