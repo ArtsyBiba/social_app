@@ -62,7 +62,7 @@ export default function List ({ list }) {
             <GenericList>
                 {list.friends.map((friend) => (
                     <ListItem button key={friend._id}>
-                        <Avatar>{friend.displayName[0]}</Avatar>
+                        <Avatar src={friend.avatar} />
                         <FriendName>{friend.displayName}</FriendName>
                     </ListItem>
                 ))}

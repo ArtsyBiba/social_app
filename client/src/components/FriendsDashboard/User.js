@@ -63,7 +63,7 @@ export default function Suggestions ({ user }) {
     return (
         <>
             <ListItem button>
-                <Avatar>{user.displayName[0]}</Avatar>
+                <Avatar src={user.avatar} />
                 <Name>{user.displayName}</Name>
                 {followed ? 
                     <SyledButton active='active' variant='contained' onClick={handleUnfollowButton}>
