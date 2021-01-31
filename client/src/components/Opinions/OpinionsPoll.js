@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
 
 import Image from '../Polls/Image';
-import UserContext from '../../context/UserContext';
 
 export default function OpinionsPoll ({ poll }) {   
     return (
