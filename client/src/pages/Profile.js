@@ -1,6 +1,7 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import useStyles from '../themes/theme.profile';
+import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
 
@@ -8,6 +9,7 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import CreatePoll from '../components/CreatePoll/index';
 import UserContext from '../context/UserContext';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
  
 export default function Profile () {   
@@ -19,6 +21,8 @@ export default function Profile () {
 
     const dataToUpdate = {
         displayName: '',
+        avatar: '',
+        error: null,
     };
 
     const [updatedUser, setUpdatedUser] = useState(dataToUpdate);
@@ -46,7 +50,32 @@ export default function Profile () {
         };
     };
 
-    console.log(updatedUser)
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        if(!updatedUser) return;
+
+        const updatedUserForUpload = {
+            displayName: updatedUser.displayName,
+            avatar: previewSource,
+            userId: userData.user.id,
+        }
+
+        await updateUser(updatedUserForUpload);
+        setReload(!reload);
+
+        setPreviewSource('');
+        setUpdatedUser(dataToUpdate);
+    };
+
+    const updateUser = async (updatedUserForUpload) => {
+        try {
+            await axios.put('http://localhost:5000/users/update', {
+                updatedUserForUpload
+            })
+        } catch (err) {
+            err.response.data.msg && setUpdatedUser({ ...updatedUser, error: err.response.data.msg });
+        }
+    };
 
     return (
         <StyledPage>
@@ -87,6 +116,9 @@ export default function Profile () {
                                     />
                                 </StyledForm>
                             </ImageUploader>
+                            <SyledButton variant='outlined' onClick={handleUpdateProfile}>
+                                Update Profile
+                            </SyledButton>
                         </UserInputForm>
                     </main>
                     <CreatePoll 
@@ -146,7 +178,7 @@ const ImageContainer = styled.div`
     margin-top: 2em;
 `;
 
-const StyledForm = styled.form`
+const StyledForm = styled.div`
     margin: auto;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -171,4 +203,13 @@ const ImageUploader = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 1em;
+`;
+
+const SyledButton = styled(Button)`
+    align-self: flex-end;
+    text-transform: uppercase;
+    width: 140px;
+    margin: auto;
+    margin-top: 1.5em;
+    margin-bottom: 0;
 `;

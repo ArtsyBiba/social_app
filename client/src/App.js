@@ -21,6 +21,7 @@ function App() {
     polls: undefined,
     followers: undefined,
     followings: undefined,
+    avatar: undefined,
   });
   const [reload, setReload] = useState(true);
 

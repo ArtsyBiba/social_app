@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
+const { cloudinary } = require('../utils/cloudinary');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const User = require('../models/userModel');
@@ -94,6 +95,7 @@ router.post('/login', async (req, res) => {
                 followers: user.followers,
                 followings: user.followings,
                 friendsLists: user.friendsLists,
+                avatar: user.avatar,
             }
         })
     } catch (err) {
@@ -133,6 +135,27 @@ router.post('/tokenIsValid', async (req, res) => {
     }
 });
 
+router.put('/update', async (req, res) => {
+    try {
+        const { displayName, avatar, userId } = req.body.updatedUserForUpload;
+
+        const uploadedResponse = await cloudinary.uploader.upload(avatar, {
+            upload_preset: 'social_app'
+        });
+        
+        const imageUrl = uploadedResponse.secure_url;
+
+        const updatedUser = await User.findOne({ _id: userId });
+        updatedUser.avatar = imageUrl;
+        updatedUser.displayName = displayName;
+        await updatedUser.save();
+
+        res.json(updatedUser);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 router.get('/', auth, async (req, res) => {
     const user = await User.findById(req.user)
         .populate('polls')
@@ -146,6 +169,7 @@ router.get('/', auth, async (req, res) => {
         followers: user.followers,
         followings: user.followings,
         friendsLists: user.friendsLists,
+        avatar: user.avatar,
     });
 });
 
