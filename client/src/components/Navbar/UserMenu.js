@@ -31,8 +31,8 @@ export default function UserMenu () {
     };
 
     const goToProfile = () => {
-        // history.push('/profile');
-        // setAnchorEl(null);
+        history.push('/profile');
+        setAnchorEl(null);
     }
 
     const openUserMenu = (e) => {

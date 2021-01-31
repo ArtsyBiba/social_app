@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
-import { MuiThemeProvider } from "@material-ui/core";
+import { MuiThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 
-import { theme } from "./themes/theme";
+import { theme } from './themes/theme';
 import SignIn from './pages/SignIn'; 
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Friends from './pages/Friends';
 import Opinions from './pages/Opinions';
+import Profile from './pages/Profile';
 import UserContext from './context/UserContext';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   const [userData, setUserData] = useState({
@@ -70,6 +71,9 @@ function App() {
               </Route>
               <Route exact path='/opinions'>
                 <Opinions />
+              </Route>
+              <Route exact path='/profile'>
+                <Profile />
               </Route>
             </Switch>
           </UserContext.Provider>
