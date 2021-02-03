@@ -45,16 +45,16 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
     const handleSubmitFriendsList = async (e) => {
         e.preventDefault();
 
-        await uploadFriendsList(newFriendsList);
+        await createFriendsList(newFriendsList);
         setReload(!reload);
         
         setNewFriendsList(initialFriendsList);
         setOpenCreateFriendsList(false);
     };
     
-    const uploadFriendsList = async (newFriendsList) => {
+    const createFriendsList = async (newFriendsList) => {
         try {
-            await axios.post('http://localhost:5000/friendsList/upload', {
+            await axios.post('http://localhost:5000/friendsList/', {
                 newFriendsList,
             })
         } catch (err) {

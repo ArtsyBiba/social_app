@@ -16,10 +16,7 @@ export default function Suggestions ({ user }) {
     useEffect(() => {
         const checkIfFollowed = () => {
             return (
-                userData.user.followings && 
-                    userData.user.followings.some(e => e._id === user._id) 
-                        ? setFollowed(true)
-                        : setFollowed(false)
+                setFollowed(userData.user.followings.some(e => e._id === user._id))
             )
         };
 

@@ -1,13 +1,14 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
+import styled from 'styled-components';
 
 import Typography from '@material-ui/core/Typography';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
 
 export default function UserMenu () { 
     const { userData, setUserData } = useContext(UserContext);
@@ -47,8 +48,8 @@ export default function UserMenu () {
         <>
             <IconButton color='inherit' onClick={openUserMenu}>
                 <Badge badgeContent={0} color='secondary'>
-                    <AccountBoxIcon />
-                    <Typography component='p' style={{paddingLeft: '10px'}}>
+                    <StyledAvatar src={userData.user.avatar} />
+                    <Typography component='p' style={{paddingLeft: '10px', paddingTop: '5px'}}>
                         {currentUser}
                     </Typography>
                 </Badge>
@@ -66,3 +67,8 @@ export default function UserMenu () {
         </>
     )
 };
+
+const StyledAvatar = styled(Avatar)`
+    width: 30px;
+    height: 30px;
+`;

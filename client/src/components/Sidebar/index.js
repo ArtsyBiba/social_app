@@ -30,7 +30,7 @@ export default function Sidebar () {
                     {followings.length > 0 && 
                         followings.map((user) => (
                             <ListItem button key={user._id}>
-                                <Avatar>{user.displayName[0]}</Avatar>
+                                <Avatar src={user.avatar} />
                                 <Name>{user.displayName}</Name>
                             </ListItem>
                         ))

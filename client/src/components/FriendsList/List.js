@@ -62,7 +62,7 @@ export default function List ({ list }) {
             <GenericList>
                 {list.friends.map((friend) => (
                     <ListItem button key={friend._id}>
-                        <Avatar>{friend.displayName[0]}</Avatar>
+                        <Avatar src={friend.avatar} />
                         <FriendName>{friend.displayName}</FriendName>
                     </ListItem>
                 ))}
@@ -80,6 +80,7 @@ const ListCard = styled.div`
     height: auto;
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 2px;
+    margin-right: 0.5em;
 `;
 
 const Header = styled.div`

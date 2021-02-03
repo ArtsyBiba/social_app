@@ -17,12 +17,15 @@ export default function Suggestions () {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                await axios.get('http://localhost:5000/friends/usersList')
-                    .then(
-                        resp => {
-                            const filtered = resp.data.user.filter((user) => user._id !== userData.user.id)
-                            setUsers(filtered);
-                        })
+                await axios.get('http://localhost:5000/friends/usersList', {
+                    params: {
+                        currentUserId: userData.user.id,
+                    }
+                })
+                .then(
+                    resp => {
+                        setUsers(resp.data.filteredUsers);
+                    })
             } catch (err) {
                 console.log(err.response.data.msg);
             }

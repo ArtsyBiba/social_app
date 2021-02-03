@@ -3,9 +3,11 @@ const User = require('../models/userModel');
 
 router.get('/usersList', async (req, res) => {
     try {
-        const user = await User.find({});
+        const { currentUserId } = req.query;
+        const users = await User.find({});
+        const filteredUsers = users.filter((user) => user._id != currentUserId);
         res.json({
-            user: user,
+            filteredUsers: filteredUsers,
         });
     } catch (err) {
         res.status(500).json({ msg: err.message });

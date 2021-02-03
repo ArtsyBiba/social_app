@@ -6,16 +6,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
-export default function Suggestions ({ user, newFriendsList, setNewFriendsList }) {
+export default function User ({ user, newFriendsList, setNewFriendsList }) {
     const [added, setAdded] = useState(false);
     
     useEffect(() => {
         const checkIfAdded = () => {
             return (
-                newFriendsList.friends.length > 0 && 
-                    newFriendsList.friends.some(e => e._id === user._id) 
-                            ? setAdded(true)
-                            : setAdded(false)
+                setAdded(newFriendsList.friends.some(e => e._id === user._id))
             )
         };
 
@@ -45,7 +42,7 @@ export default function Suggestions ({ user, newFriendsList, setNewFriendsList }
     return (
         <>
             <ListItem button>
-                <Avatar>{user.displayName[0]}</Avatar>
+                <Avatar src={user.avatar} />
                 <Name>{user.displayName}</Name>
                 {added ? 
                     <SyledButton active='active' variant='contained' onClick={handleRemoveButton}>
