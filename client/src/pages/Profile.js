@@ -11,6 +11,7 @@ import CreatePoll from '../components/CreatePoll/index';
 import UserContext from '../context/UserContext';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
  
 export default function Profile () {   
     const { userData, reload, setReload } = useContext(UserContext);
@@ -52,12 +53,11 @@ export default function Profile () {
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
-        if(!updatedUser) return;
+        if (!updatedUser) return;
 
         const updatedUserForUpload = {
             displayName: updatedUser.displayName,
             avatar: previewSource,
-            userId: userData.user.id,
         }
 
         await updateUser(updatedUserForUpload);
@@ -68,15 +68,18 @@ export default function Profile () {
     };
 
     const updateUser = async (updatedUserForUpload) => {
+        let token = localStorage.getItem('auth-token');
+        
         try {
-            await axios.put('http://localhost:5000/users/update', {
-                updatedUserForUpload
-            })
+            await axios.put('http://localhost:5000/users/update', 
+                { updatedUserForUpload }, 
+                { headers: { 'x-auth-token': token } },
+            )
         } catch (err) {
             err.response.data.msg && setUpdatedUser({ ...updatedUser, error: err.response.data.msg });
         }
     };
-
+console.log(updatedUser)
     return (
         <StyledPage>
             {userData.user ? (
