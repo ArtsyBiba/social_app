@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import UserContext from '../context/UserContext';
 import useStyles from '../themes/theme.profile';

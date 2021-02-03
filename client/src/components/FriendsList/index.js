@@ -1,17 +1,38 @@
 import styled from 'styled-components';
-import List from './List';
+import { useContext } from 'react';
 
 import Button from '@material-ui/core/Button';
 
-export default function FriendsList () {
+import List from './List';
+import UserContext from '../../context/UserContext';
+
+export default function FriendsList ({ setOpenCreateFriendsList }) {
+    const { userData } = useContext(UserContext);
+    const savedLists = userData.user.friendsLists;
+    
+    const handleCreateFriendsList = () => {
+        setOpenCreateFriendsList(true);
+    };
+    
     return (
         <Container>
             <HeaderWrapper>
                 <Header>Friends List</Header>
-                <SyledButton variant="outlined">Create List</SyledButton>
+                <SyledButton variant='outlined' onClick={handleCreateFriendsList}>
+                    Create List
+                </SyledButton>
             </HeaderWrapper>
             <ListsWrapper>
-                <List />
+                {savedLists
+                    ? savedLists.map((list, index) => (
+                        <List 
+                            list={list} 
+                            key={index}
+                        />
+                    )) : (
+                        <div>Create your first poll</div>
+                    )
+                }
             </ListsWrapper>
         </Container>
     )

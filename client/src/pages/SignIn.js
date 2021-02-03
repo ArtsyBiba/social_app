@@ -55,6 +55,7 @@ export default function SignIn() {
 
             history.push('/profile');
         } catch (err) {
+            console.log(err);
             err.response.data.msg && setUser({ ...user, error: err.response.data.msg });
         }
     };

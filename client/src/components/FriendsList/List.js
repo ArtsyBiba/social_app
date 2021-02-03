@@ -1,27 +1,69 @@
 import styled from 'styled-components';
+import { useContext, useState } from 'react';
+import axios from 'axios';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Divider } from '@material-ui/core';
 import GenericList from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-export default function List () {
+import UserContext from '../../context/UserContext';
+
+export default function List ({ list }) {
+    const { userData, reload, setReload } = useContext(UserContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    
+    const handleDelete = async () => {
+        try {
+            await axios.delete('http://localhost:5000/friendsList/delete', {
+                data: {
+                    friendsListId: list._id,
+                    userId: userData.user.id,
+                }
+            })
+            .then(setReload(!reload))
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const openUserMenu = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <ListCard>
             <Header>
                 <Subheader>
-                    <Name>List</Name>
+                    <Name>{list.listName}</Name>
                     <Info>4 online</Info>
                 </Subheader>
-                <StyledSettingsIcon color='disabled' />
+                <StyledSettingsIcon color='disabled' onClick={openUserMenu} />
+                <Menu
+                    id='simple-menu'
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                <MenuItem onClick={handleDelete}>
+                    Delete List
+                </MenuItem>
+            </Menu>
             </Header>
             <Divider />
             <GenericList>
-                {['Friend 1', 'Friend 2', 'Friend 3', 'Friend 4'].map((name) => (
-                    <ListItem button key={name}>
-                        <Avatar>AP</Avatar>
-                        <FriendName>{name}</FriendName>
+                {list.friends.map((friend) => (
+                    <ListItem button key={friend._id}>
+                        <Avatar>{friend.displayName[0]}</Avatar>
+                        <FriendName>{friend.displayName}</FriendName>
                     </ListItem>
                 ))}
             </GenericList>
@@ -66,6 +108,7 @@ const Info = styled.div`
 
 const StyledSettingsIcon = styled(SettingsIcon)`
     margin: 1em 1em 0 0;
+    cursor: pointer;
 `;
 
 const FriendName = styled.div`

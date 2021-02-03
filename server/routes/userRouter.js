@@ -66,7 +66,11 @@ router.post('/login', async (req, res) => {
                 .json({ msg: 'Not all required fields have been entered.' });
         }
 
-        const user = await User.findOne({ email }).populate('polls');
+        const user = await User.findOne({ email })
+            .populate('polls')
+            .populate('followers')
+            .populate('followings')
+            .populate('friendsLists');
         if (!user) {
             return res
                 .status(400)
@@ -87,6 +91,9 @@ router.post('/login', async (req, res) => {
                 id: user._id,
                 displayName: user.displayName,
                 polls: user.polls,
+                followers: user.followers,
+                followings: user.followings,
+                friendsLists: user.friendsLists,
             }
         })
     } catch (err) {
@@ -127,13 +134,18 @@ router.post('/tokenIsValid', async (req, res) => {
 });
 
 router.get('/', auth, async (req, res) => {
-    const user = await User.findById(req.user).populate('polls').populate('followers').populate('followings');
+    const user = await User.findById(req.user)
+        .populate('polls')
+        .populate('followers')
+        .populate('followings')
+        .populate('friendsLists');
     res.json({
         displayName: user.displayName,
         id: user._id,
         polls: user.polls,
         followers: user.followers,
         followings: user.followings,
+        friendsLists: user.friendsLists,
     });
 });
 
