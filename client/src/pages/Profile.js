@@ -11,7 +11,6 @@ import CreatePoll from '../components/CreatePoll/index';
 import UserContext from '../context/UserContext';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
  
 export default function Profile () {   
     const { userData, reload, setReload } = useContext(UserContext);
@@ -79,7 +78,7 @@ export default function Profile () {
             err.response.data.msg && setUpdatedUser({ ...updatedUser, error: err.response.data.msg });
         }
     };
-console.log(updatedUser)
+
     return (
         <StyledPage>
             {userData.user ? (

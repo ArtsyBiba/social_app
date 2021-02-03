@@ -10,13 +10,18 @@ export default function Poll ({ poll }) {
     const { userData, reload, setReload } = useContext(UserContext);
     
     const handleDeletePoll = async () => {
+        let token = localStorage.getItem('auth-token');
+        
         try {
-            await axios.delete('http://localhost:5000/polls/delete', {
-                data: {
-                    pollId: poll._id,
-                    userId: userData.user.id,
-                }
-            })
+            await axios.delete('http://localhost:5000/polls/delete', 
+                { 
+                    data: {
+                        pollId: poll._id,
+                        userId: userData.user.id,
+                    }, 
+                    headers: { 'x-auth-token': token },
+                }, 
+            )
             .then(setReload(!reload))
         } catch (err) {
             console.log(err);

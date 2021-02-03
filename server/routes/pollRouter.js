@@ -2,10 +2,12 @@ const router = require('express').Router();
 const { cloudinary } = require('../utils/cloudinary');
 const Poll = require('../models/pollModel');
 const User = require('../models/userModel');
+const auth = require('../middleware/auth');
 
-router.post('/upload', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
-        const { imageOne, imageTwo, question, friendlist, userId } = req.body.newPollForUpload;
+        const { imageOne, imageTwo, question, friendlist } = req.body.newPollForUpload;
+        const userId = req.user;
 
         if (!question || !friendlist) {
             return res
@@ -38,7 +40,7 @@ router.post('/upload', async (req, res) => {
         });
         const savedPoll = await newPoll.save();
         
-        const updatedUser = await User.findOne({ _id: userId });
+        const updatedUser = await User.findById(req.user);
         updatedUser.polls.push(newPoll);
         await updatedUser.save();
 
@@ -48,14 +50,14 @@ router.post('/upload', async (req, res) => {
     }
 });
 
-router.delete('/delete', async (req, res) => {
+router.delete('/delete', auth, async (req, res) => {
     try {
-        const { pollId, userId } = req.body;
+        const { pollId } = req.body;
         
-        const deletedPoll = await Poll.findByIdAndDelete(pollId);
+        const deletedPoll = await Poll.findByIdAndDelete(req.user);
 
         await User.updateOne(
-            { '_id': userId }, 
+            { '_id': req.user }, 
             { $pull: { 'polls' : pollId } }
         );
 
