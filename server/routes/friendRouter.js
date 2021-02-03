@@ -4,10 +4,8 @@ const User = require('../models/userModel');
 router.get('/usersList', async (req, res) => {
     try {
         const { currentUserId } = req.query;
-        console.log(currentUserId)
         const users = await User.find({});
         const filteredUsers = users.filter((user) => user._id != currentUserId);
-        console.log(filteredUsers)
         res.json({
             filteredUsers: filteredUsers,
         });
