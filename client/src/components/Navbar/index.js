@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,13 +9,23 @@ import Icon from './Icon';
 import UserMenu from './UserMenu';
 
 export default function Navbar ({ setOpenCreatePoll }) {
+    const history = useHistory();
+    
     const handleCreatePoll = () => {
         setOpenCreatePoll(true);
+    };
+
+    const handleOpenFriends = () => {
+        history.push('/friends');
+    };
+
+    const handleOpenProfile = () => {
+        history.push('/profile');
     };
     
     return (
         <StyledToolbar>
-            <AppName>
+            <AppName onClick={handleOpenProfile}>
                 <Icon>💬 </Icon>
                 <Typography 
                     component='h1' 
@@ -26,7 +37,7 @@ export default function Navbar ({ setOpenCreatePoll }) {
                 </Typography>
             </AppName>
             <IconsWrapper>
-                <IconButton color='inherit'>
+                <IconButton color='inherit' onClick={handleOpenFriends}>
                     <Typography component='p'>
                         Friends
                     </Typography>
@@ -56,6 +67,7 @@ const AppName = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
 `;
 
 const IconsWrapper = styled.div`

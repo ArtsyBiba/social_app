@@ -7,12 +7,11 @@ import AppBar from '@material-ui/core/AppBar';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
-import Polls from '../components/Polls/index';
-import FriendsList from '../components/FriendsList/index';
 import CreatePoll from '../components/CreatePoll/index';
+import FriendsDashboard from '../components/FriendsDashboard/index';
 
  
-export default function Profile () {   
+export default function Friends () {   
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
@@ -27,8 +26,7 @@ export default function Profile () {
                     <Sidebar /> 
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Polls setOpenCreatePoll={setOpenCreatePoll} />
-                        <FriendsList />
+                        <FriendsDashboard />
                     </main>
                     <CreatePoll 
                         openCreatePoll={openCreatePoll}
@@ -47,4 +45,3 @@ const StyledPage = styled.div`
     background-color: #fafafa;
     height: 100%;
 `;
-

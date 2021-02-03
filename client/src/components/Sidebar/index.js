@@ -1,4 +1,4 @@
-import useStyles from '../../themes/theme.profile';
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -7,8 +7,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 
+import UserContext from '../../context/UserContext';
+import useStyles from '../../themes/theme.profile';
+
 export default function Sidebar () {
+    const { userData } = useContext(UserContext);
     const classes = useStyles();
+
+    const followings = userData.user.followings;
 
     return (
         <Drawer
@@ -21,12 +27,14 @@ export default function Sidebar () {
             <Toolbar />
             <div className={classes.drawerContainer}>
                 <List>
-                    {['Friend 1', 'Friend 2', 'Friend 3', 'Friend 4'].map((name) => (
-                        <ListItem button key={name}>
-                            <Avatar>AP</Avatar>
-                            <Name>{name}</Name>
-                        </ListItem>
-                    ))}
+                    {followings.length > 0 && 
+                        followings.map((user) => (
+                            <ListItem button key={user._id}>
+                                <Avatar>{user.displayName[0]}</Avatar>
+                                <Name>{user.displayName}</Name>
+                            </ListItem>
+                        ))
+                    }
                 </List>
             </div>
         </Drawer>
