@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true, minlength: 6 },
     displayName: { type: String },
     polls: [{ type: mongoose.Schema.Types.ObjectId, ref: 'poll' }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+    followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
 });
 
 module.exports = User = mongoose.model('user', userSchema);
