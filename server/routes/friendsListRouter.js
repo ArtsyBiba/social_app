@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../models/userModel');
 const FriendsList = require('../models/friendsListModel');
 
-router.post('/upload', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { listName, friends, userId } = req.body.newFriendsList;
 
