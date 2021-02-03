@@ -12,10 +12,7 @@ export default function User ({ user, newFriendsList, setNewFriendsList }) {
     useEffect(() => {
         const checkIfAdded = () => {
             return (
-                newFriendsList.friends.length > 0 && 
-                    newFriendsList.friends.some(e => e._id === user._id) 
-                            ? setAdded(true)
-                            : setAdded(false)
+                setAdded(newFriendsList.friends.some(e => e._id === user._id))
             )
         };
 
