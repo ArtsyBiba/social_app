@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Friends from './pages/Friends';
 import Opinions from './pages/Opinions';
 import Profile from './pages/Profile';
+import PollsForReview from './pages/PollsForReview';
 import UserContext from './context/UserContext';
 
 import './App.css';
@@ -18,10 +19,6 @@ function App() {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
-    polls: undefined,
-    followers: undefined,
-    followings: undefined,
-    avatar: undefined,
   });
   const [reload, setReload] = useState(true);
 
@@ -69,6 +66,9 @@ function App() {
               </Route>
               <Route exact path='/friends'>
                 <Friends />
+              </Route>
+              <Route exact path='/review'>
+                <PollsForReview />
               </Route>
               <Route exact path='/opinions'>
                 <Opinions />

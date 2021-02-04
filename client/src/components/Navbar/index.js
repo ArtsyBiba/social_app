@@ -26,6 +26,10 @@ export default function Navbar ({ setOpenCreatePoll }) {
     const handleOpenOpinions = () => {
         history.push('/opinions');
     };
+
+    const handleOpenReview = () => {
+        history.push('/review');
+    };
     
     return (
         <StyledToolbar>
@@ -46,7 +50,7 @@ export default function Navbar ({ setOpenCreatePoll }) {
                         Friends
                     </Typography>
                 </IconButton>
-                <IconButton color='inherit'>
+                <IconButton color='inherit' onClick={handleOpenReview}>
                     <Typography>
                         Friends posts
                     </Typography>
