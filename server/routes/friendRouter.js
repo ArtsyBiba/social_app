@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const User = require('../models/userModel');
+const auth = require('../middleware/auth');
 
-router.get('/usersList', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
-        const { currentUserId } = req.query;
         const users = await User.find({});
-        const filteredUsers = users.filter((user) => user._id != currentUserId);
+        const filteredUsers = users.filter((user) => user._id != req.user);
         res.json({
             filteredUsers: filteredUsers,
         });
@@ -14,16 +14,16 @@ router.get('/usersList', async (req, res) => {
     }
 });
 
-router.put('/follow', async (req, res) => {
+router.put('/follow', auth, async (req, res) => {
     try {
-        const { userToFollow, currentUser } = req.body;
+        const { userToFollow } = req.body;
         
-        const updatedCurrentUser = await User.findOne({ _id: currentUser.id });
+        const updatedCurrentUser = await User.findById(req.user);
         updatedCurrentUser.followings.push(userToFollow);
         const savedUserOne = await updatedCurrentUser.save();
 
         const updatedUserToFollow = await User.findOne({ _id: userToFollow._id });
-        updatedUserToFollow.followers.push(currentUser.id);
+        updatedUserToFollow.followers.push(req.user);
         const savedUserTwo = await updatedUserToFollow.save();
 
         res.json(savedUserOne);
@@ -32,18 +32,18 @@ router.put('/follow', async (req, res) => {
     }
 });
 
-router.put('/unfollow', async (req, res) => {
+router.put('/unfollow', auth, async (req, res) => {
     try {
-        const { userToUnfollow, currentUser } = req.body;
-
+        const { userToUnfollow } = req.body;
+console.log(req.user)
         const updatedCurrentUser = await User.updateOne(
-            { '_id': currentUser.id }, 
+            { '_id': req.user }, 
             { $pull: { 'followings' : userToUnfollow._id } }
         );
 
         const updatedUserToFollow = await User.updateOne(
             { '_id': userToUnfollow._id }, 
-            { $pull: { 'followers' : currentUser.id } }
+            { $pull: { 'followers' : req.user } }
         );
         
         res.json(updatedCurrentUser);

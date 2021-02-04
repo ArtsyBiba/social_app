@@ -7,7 +7,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import UserContext from '../../context/UserContext';
 
 export default function Poll ({ poll }) {
-    const { userData, reload, setReload } = useContext(UserContext);
+    const { reload, setReload } = useContext(UserContext);
     
     const handleDeletePoll = async () => {
         let token = localStorage.getItem('auth-token');
@@ -17,7 +17,6 @@ export default function Poll ({ poll }) {
                 { 
                     data: {
                         pollId: poll._id,
-                        userId: userData.user.id,
                     }, 
                     headers: { 'x-auth-token': token },
                 }, 
