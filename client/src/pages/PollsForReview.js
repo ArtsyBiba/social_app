@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import CreatePoll from '../components/CreatePoll/index';
-import OpinionsPoll from '../components/Opinions/OpinionsPoll';
+import ReviewPoll from '../components/PollsForReview/ReviewPoll';
 import UserContext from '../context/UserContext';
  
 export default function PollsForReview () {   
@@ -29,7 +29,7 @@ export default function PollsForReview () {
                         <PollsWrapper>
                             {savedPolls
                                 ? savedPolls.map((poll, index) => (
-                                    <OpinionsPoll 
+                                    <ReviewPoll 
                                         poll={poll} 
                                         key={index}
                                     />
