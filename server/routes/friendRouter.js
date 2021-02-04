@@ -35,7 +35,7 @@ router.put('/follow', auth, async (req, res) => {
 router.put('/unfollow', auth, async (req, res) => {
     try {
         const { userToUnfollow } = req.body;
-console.log(req.user)
+
         const updatedCurrentUser = await User.updateOne(
             { '_id': req.user }, 
             { $pull: { 'followings' : userToUnfollow._id } }

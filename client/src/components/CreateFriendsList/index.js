@@ -22,7 +22,6 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
         listName: '', 
         friends: [],
         error: null,
-        userId: userData.user.id,
     };
 
     const [newFriendsList, setNewFriendsList] = useState(initialFriendsList);
@@ -53,10 +52,13 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
     };
     
     const createFriendsList = async (newFriendsList) => {
+        let token = localStorage.getItem('auth-token');
+        
         try {
-            await axios.post('http://localhost:5000/friendsList/', {
-                newFriendsList,
-            })
+            await axios.post('http://localhost:5000/friendsList', 
+                { newFriendsList },
+                { headers: { 'x-auth-token': token } },
+            )
         } catch (err) {
             err.response.data.msg && setNewFriendsList({ ...newFriendsList, error: err.response.data.msg });
         }

@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const User = require('../models/userModel');
 const FriendsList = require('../models/friendsListModel');
+const auth = require('../middleware/auth');
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
-        const { listName, friends, userId } = req.body.newFriendsList;
+        const { listName, friends } = req.body.newFriendsList;
 
         if (!listName) {
             return res
@@ -20,11 +21,11 @@ router.post('/', async (req, res) => {
         const newFriendsList = new FriendsList({
             listName,
             friends,
-            userId,
+            userId: req.user,
         });
         const savedFriendsList = await newFriendsList.save();
         
-        const updatedUser = await User.findOne({ _id: userId });
+        const updatedUser = await User.findById(req.user);
         updatedUser.friendsLists.push(newFriendsList);
         await updatedUser.save();
 
@@ -36,12 +37,12 @@ router.post('/', async (req, res) => {
 
 router.delete('/delete', async (req, res) => {
     try {
-        const { friendsListId, userId } = req.body;
+        const { friendsListId } = req.body;
         
         const deletedFriendsList = await FriendsList.findByIdAndDelete(friendsListId);
 
         await User.updateOne(
-            { '_id': userId }, 
+            { '_id': req.user }, 
             { $pull: { 'friendsLists' : friendsListId } }
         );
 
