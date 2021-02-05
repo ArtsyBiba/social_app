@@ -3,6 +3,7 @@ const { cloudinary } = require('../utils/cloudinary');
 const Poll = require('../models/pollModel');
 const User = require('../models/userModel');
 const auth = require('../middleware/auth');
+const FriendsList = require('../models/friendsListModel');
 
 router.post('/', auth, async (req, res) => {
     try {
@@ -49,6 +50,12 @@ router.post('/', auth, async (req, res) => {
         updatedUser.polls.push(newPoll);
         await updatedUser.save();
 
+        for (let friend of friendlist.friends) {
+            const updatedFriend = await User.findById(friend._id);
+            updatedFriend.pollsForReview.push(newPoll);
+            await updatedFriend.save();
+        };
+
         res.json(savedPoll);
     } catch (err) {
         res.status(500).json({ msg: err.message });
@@ -57,14 +64,21 @@ router.post('/', auth, async (req, res) => {
 
 router.delete('/delete', auth, async (req, res) => {
     try {
-        const { pollId } = req.body;
-        
-        const deletedPoll = await Poll.findByIdAndDelete(req.user);
+        const { pollId, friendListId } = req.body;
+        const friendList = await FriendsList.findById(friendListId).populate('friendsLists');
+        const deletedPoll = await Poll.findByIdAndDelete(pollId);
 
         await User.updateOne(
             { '_id': req.user }, 
             { $pull: { 'polls' : pollId } }
         );
+
+        for (let friend of friendList.friends) {
+            await User.updateOne(
+                { '_id': friend._id }, 
+                { $pull: { 'pollsForReview' : pollId } }
+            );
+        };
 
         res.json(deletedPoll);
     } catch (err) {

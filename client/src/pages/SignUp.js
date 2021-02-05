@@ -56,7 +56,7 @@ export default function SignUp() {
             });
             localStorage.setItem('auth-token', loginRes.data.token);
 
-            history.push('/profile');
+            history.push('/dashboard');
         } catch (err) {
             err.response.data.msg && setUser({ ...user, error: err.response.data.msg });
         }

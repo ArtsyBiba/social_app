@@ -17,6 +17,7 @@ export default function Poll ({ poll }) {
                 { 
                     data: {
                         pollId: poll._id,
+                        friendListId: poll.friendlist,
                     }, 
                     headers: { 'x-auth-token': token },
                 }, 

@@ -71,7 +71,8 @@ router.post('/login', async (req, res) => {
             .populate('polls')
             .populate('followers')
             .populate('followings')
-            .populate('friendsLists');
+            .populate('friendsLists')
+            .populate('pollsForReview');
         if (!user) {
             return res
                 .status(400)
@@ -162,7 +163,8 @@ router.get('/', auth, async (req, res) => {
         .populate('polls')
         .populate('followers')
         .populate('followings')
-        .populate('friendsLists');
+        .populate('friendsLists')
+        .populate('pollsForReview');
     
         res.json({
             displayName: user.displayName,
