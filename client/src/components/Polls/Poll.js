@@ -1,9 +1,11 @@
 import styled from 'styled-components';
-import Image from './Image';
 import axios from 'axios';
 import { useContext } from 'react';
 
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
+import ImageOneOpinions from '../Opinions/ImageOneOpinions';
+import ImageTwoOpinions from '../Opinions/ImageTwoOpinions';
 import UserContext from '../../context/UserContext';
 
 export default function Poll ({ poll }) {
@@ -36,8 +38,8 @@ export default function Poll ({ poll }) {
             </Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <Image source={poll.imageOneUrl} alt='imageOne' />
-                <Image source={poll.imageTwoUrl} alt='imageTwo' />
+                <ImageOneOpinions poll={poll} />
+                <ImageTwoOpinions poll={poll} />
             </Images>
         </PollCard>
     )
