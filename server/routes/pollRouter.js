@@ -33,6 +33,7 @@ router.post('/', auth, async (req, res) => {
         const imageOneVotes = 0;
         const imageTwoUrl = uploadedResponseTwo.secure_url;
         const imageTwoVotes = 0;
+        const voted = [];
 
         const newPoll = new Poll({
             question,
@@ -43,6 +44,7 @@ router.post('/', auth, async (req, res) => {
             imageTwoVotes,
             userId,
             author,
+            voted,
         });
         const savedPoll = await newPoll.save();
         

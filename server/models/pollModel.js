@@ -9,6 +9,7 @@ const pollSchema = new mongoose.Schema({
     imageTwoVotes: { type: Number },
     userId: { type: String, required: true },
     author: { type: String, required: true },
+    voted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
 });
 
 module.exports = Poll = mongoose.model('poll', pollSchema);

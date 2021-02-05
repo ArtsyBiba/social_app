@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Image from '../Polls/Image';
+import Image from './Image';
 
 export default function ReviewPoll ({ poll }) {   
     return (
@@ -27,7 +27,6 @@ const PollCard = styled.div`
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 2px;
     margin-right: 1em;
-    cursor: pointer;
 `;
 
 const Header = styled.div`
