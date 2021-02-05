@@ -14,7 +14,7 @@ export default function PollsForReview () {
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
-    const savedPolls = userData.user.polls;
+    const savedPolls = userData.user.pollsForReview;
 
     return (
         <StyledPage>
