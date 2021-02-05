@@ -89,6 +89,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
             imageTwo: previewSourceTwo,
             question: newPoll.question,
             friendlist: newPoll.friendlist,
+            author: userData.user.displayName,
         }
 
         await createPoll(newPollForUpload);

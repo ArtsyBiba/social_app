@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 
 router.post('/', auth, async (req, res) => {
     try {
-        const { imageOne, imageTwo, question, friendlist } = req.body.newPollForUpload;
+        const { imageOne, imageTwo, question, friendlist, author } = req.body.newPollForUpload;
         const userId = req.user;
 
         if (!question || !friendlist) {
@@ -29,14 +29,19 @@ router.post('/', auth, async (req, res) => {
         });
         
         const imageOneUrl = uploadedResponseOne.secure_url;
+        const imageOneVotes = 0;
         const imageTwoUrl = uploadedResponseTwo.secure_url;
+        const imageTwoVotes = 0;
 
         const newPoll = new Poll({
             question,
             friendlist,
             imageOneUrl,
+            imageOneVotes,
             imageTwoUrl,
+            imageTwoVotes,
             userId,
+            author,
         });
         const savedPoll = await newPoll.save();
         

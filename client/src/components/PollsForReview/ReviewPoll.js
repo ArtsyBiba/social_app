@@ -8,7 +8,7 @@ export default function ReviewPoll ({ poll }) {
             <Header>
                 <Question>{poll.question}</Question>
             </Header>
-            <Subheader>Created by</Subheader>
+            <Subheader>Created by {poll.author}</Subheader>
             <Images>
                 <Image source={poll.imageOneUrl} alt='imageOne' />
                 <Image source={poll.imageTwoUrl} alt='imageTwo' />

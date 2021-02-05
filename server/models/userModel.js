@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     displayName: { type: String },
     avatar: { type: String },
     polls: [{ type: mongoose.Schema.Types.ObjectId, ref: 'poll' }],
+    pollsForReview: [{ type: mongoose.Schema.Types.ObjectId, ref: 'poll' }],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     friendsLists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'friendsList' }],
