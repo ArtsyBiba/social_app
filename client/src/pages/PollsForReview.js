@@ -15,6 +15,7 @@ export default function PollsForReview () {
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const savedPolls = userData.user.pollsForReview;
+    const userId = userData.user.id;
 
     return (
         <StyledPage>
@@ -32,6 +33,7 @@ export default function PollsForReview () {
                                     <ReviewPoll 
                                         poll={poll} 
                                         key={index}
+                                        userId={userId}
                                     />
                                 )) : (
                                     <div>Create your first poll</div>

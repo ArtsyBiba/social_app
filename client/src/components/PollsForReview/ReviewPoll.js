@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-import Image from './Image';
+import ImageOne from './ImageOne';
+import ImageTwo from './ImageTwo';
 
-export default function ReviewPoll ({ poll }) {   
+export default function ReviewPoll ({ poll, userId }) {   
     return (
         <PollCard>
             <Header>
@@ -10,8 +11,14 @@ export default function ReviewPoll ({ poll }) {
             </Header>
             <Subheader>Created by {poll.author}</Subheader>
             <Images>
-                <Image source={poll.imageOneUrl} alt='imageOne' />
-                <Image source={poll.imageTwoUrl} alt='imageTwo' />
+                <ImageOne 
+                    poll={poll}
+                    userId={userId}
+                />
+                <ImageTwo 
+                    poll={poll}
+                    userId={userId}
+                />
             </Images>
         </PollCard>
     )
