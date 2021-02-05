@@ -33,7 +33,8 @@ router.post('/', auth, async (req, res) => {
         const imageOneVotes = 0;
         const imageTwoUrl = uploadedResponseTwo.secure_url;
         const imageTwoVotes = 0;
-        const voted = [];
+        const votedForImageOne = [];
+        const votedForImageTwo = [];
 
         const newPoll = new Poll({
             question,
@@ -44,7 +45,8 @@ router.post('/', auth, async (req, res) => {
             imageTwoVotes,
             userId,
             author,
-            voted,
+            votedForImageOne,
+            votedForImageTwo,
         });
         const savedPoll = await newPoll.save();
         
@@ -88,13 +90,13 @@ router.delete('/delete', auth, async (req, res) => {
     }
 });
 
-router.put('/vote-one', auth, async (req, res) => {
+router.put('/vote-one-add', auth, async (req, res) => {
     try {
         const { pollId, imageOneVotes } = req.body;
 
         const updatedPoll = await Poll.findById(pollId);
         updatedPoll.imageOneVotes++;
-        updatedPoll.voted.push(req.user);
+        updatedPoll.votedForImageOne.push(req.user);
         await updatedPoll.save();
 
         res.json(updatedPoll);
@@ -103,14 +105,52 @@ router.put('/vote-one', auth, async (req, res) => {
     }
 });
 
-router.put('/vote-two', auth, async (req, res) => {
+router.put('/vote-one-remove', auth, async (req, res) => {
+    try {
+        const { pollId, imageOneVotes } = req.body;
+
+        const updatedPoll = await Poll.findById(pollId);
+        updatedPoll.imageOneVotes--;
+        await updatedPoll.save();
+
+        await Poll.updateOne(
+            { '_id': pollId }, 
+            { $pull: { 'votedForImageOne' : req.user } }
+        );
+
+        res.json(updatedPoll);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.put('/vote-two-add', auth, async (req, res) => {
     try {
         const { pollId, imageTwoVotes } = req.body;
 
         const updatedPoll = await Poll.findById(pollId);
         updatedPoll.imageTwoVotes++;
-        updatedPoll.voted.push(req.user);
+        updatedPoll.votedForImageTwo.push(req.user);
         await updatedPoll.save();
+
+        res.json(updatedPoll);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.put('/vote-two-remove', auth, async (req, res) => {
+    try {
+        const { pollId, imageTwoVotes } = req.body;
+
+        const updatedPoll = await Poll.findById(pollId);
+        updatedPoll.imageTwoVotes--;
+        await updatedPoll.save();
+
+        await Poll.updateOne(
+            { '_id': pollId }, 
+            { $pull: { 'votedForImageTwo' : req.user } }
+        );
 
         res.json(updatedPoll);
     } catch (err) {

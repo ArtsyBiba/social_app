@@ -9,12 +9,15 @@ import UserContext from '../../context/UserContext';
 
 export default function ImageTwo ({ userId, poll }) {
     const { reload, setReload } = useContext(UserContext);
-    const { imageTwoUrl, imageTwoVotes, voted } = poll;
+    const { imageTwoUrl, imageTwoVotes, votedForImageOne, votedForImageTwo } = poll;
     const pollId = poll._id;
 
-    const handleAddVote = async () => {
-        if (voted && voted.includes(userId)) return
-        await addVote();
+    const handleVote = async () => {
+        if (votedForImageOne && votedForImageOne.includes(userId)) {
+            return
+        } else if (votedForImageTwo && votedForImageTwo.includes(userId)) {
+            await removeVote();
+        } else await addVote();
 
         setReload(!reload);
     };
@@ -23,7 +26,20 @@ export default function ImageTwo ({ userId, poll }) {
         let token = localStorage.getItem('auth-token');
         
         try {
-            await axios.put('http://localhost:5000/polls/vote-two', 
+            await axios.put('http://localhost:5000/polls/vote-two-add', 
+                { pollId, imageTwoVotes }, 
+                { headers: { 'x-auth-token': token } },
+            )
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const removeVote = async () => {
+        let token = localStorage.getItem('auth-token');
+        
+        try {
+            await axios.put('http://localhost:5000/polls/vote-two-remove', 
                 { pollId, imageTwoVotes }, 
                 { headers: { 'x-auth-token': token } },
             )
@@ -37,8 +53,8 @@ export default function ImageTwo ({ userId, poll }) {
             <StyledImage src={imageTwoUrl} alt='pollImage' />
             <Likes>
                 {imageTwoVotes
-                    ? <StyledFavoriteIcon /> 
-                    : <StyledFavoriteBorderIcon onClick={handleAddVote} />
+                    ? <StyledFavoriteIcon onClick={handleVote} /> 
+                    : <StyledFavoriteBorderIcon onClick={handleVote} />
                 }
                 {imageTwoVotes}
             </Likes>
