@@ -103,4 +103,19 @@ router.put('/vote-one', auth, async (req, res) => {
     }
 });
 
+router.put('/vote-two', auth, async (req, res) => {
+    try {
+        const { pollId, imageTwoVotes } = req.body;
+
+        const updatedPoll = await Poll.findById(pollId);
+        updatedPoll.imageTwoVotes++;
+        updatedPoll.voted.push(req.user);
+        await updatedPoll.save();
+
+        res.json(updatedPoll);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

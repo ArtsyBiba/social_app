@@ -13,6 +13,7 @@ export default function ImageTwo ({ userId, poll }) {
     const pollId = poll._id;
 
     const handleAddVote = async () => {
+        if (voted && voted.includes(userId)) return
         await addVote();
 
         setReload(!reload);
@@ -35,7 +36,7 @@ export default function ImageTwo ({ userId, poll }) {
         <ImageWrapper>
             <StyledImage src={imageTwoUrl} alt='pollImage' />
             <Likes>
-                {voted && voted.includes(userId) 
+                {imageTwoVotes
                     ? <StyledFavoriteIcon /> 
                     : <StyledFavoriteBorderIcon onClick={handleAddVote} />
                 }
