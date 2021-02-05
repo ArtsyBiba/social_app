@@ -14,7 +14,6 @@ export default function Opinions () {
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
-    const savedPolls = userData.user.polls;
 
     return (
         <StyledPage>
@@ -27,8 +26,8 @@ export default function Opinions () {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <PollsWrapper>
-                            {savedPolls
-                                ? savedPolls.map((poll, index) => (
+                            {userData.user.polls
+                                ? userData.user.polls.map((poll, index) => (
                                     <OpinionsPoll 
                                         poll={poll} 
                                         key={index}

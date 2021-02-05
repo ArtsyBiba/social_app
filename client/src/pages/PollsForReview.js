@@ -14,8 +14,6 @@ export default function PollsForReview () {
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
-    const savedPolls = userData.user.pollsForReview;
-    const userId = userData.user.id;
 
     return (
         <StyledPage>
@@ -28,12 +26,12 @@ export default function PollsForReview () {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <PollsWrapper>
-                            {savedPolls
-                                ? savedPolls.map((poll, index) => (
+                            {userData.user.pollsForReview
+                                ? userData.user.pollsForReview.map((poll, index) => (
                                     <ReviewPoll 
                                         poll={poll} 
                                         key={index}
-                                        userId={userId}
+                                        userId={userData.user.id}
                                     />
                                 )) : (
                                     <div>Create your first poll</div>
