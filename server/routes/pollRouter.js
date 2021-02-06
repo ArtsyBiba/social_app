@@ -110,7 +110,7 @@ router.put('/vote-add', auth, async (req, res) => {
 
 router.put('/vote-remove', auth, async (req, res) => {
     try {
-        const { pollId, imageVotes, image } = req.body;
+        const { pollId, image } = req.body;
 
         const updatedPoll = await Poll.findById(pollId);
         if (image === 'one') {

@@ -4,8 +4,7 @@ const auth = require('../middleware/auth');
 
 router.get('/', auth, async (req, res) => {
     try {
-        const users = await User.find({});
-        const filteredUsers = users.filter((user) => user._id != req.user);
+        const filteredUsers = await User.find({ '_id': { '$ne': req.user } });
         res.json({
             filteredUsers: filteredUsers,
         });
