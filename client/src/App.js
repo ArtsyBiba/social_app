@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import io from 'socket.io-client';
 
 import { theme } from './themes/theme';
 import SignIn from './pages/SignIn'; 
@@ -13,8 +12,9 @@ import Opinions from './pages/Opinions';
 import Profile from './pages/Profile';
 import PollsForReview from './pages/PollsForReview';
 import UserContext from './context/UserContext';
-
+import { SocketProvider } from './context/SocketProvider';
 import './App.css';
+
 
 function App() {
   const [userData, setUserData] = useState({
@@ -51,38 +51,40 @@ function App() {
     checkLoggedIn();
   }, [reload]);
 
-  const socket = io();
+  const token = localStorage.getItem('auth-token');
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <Router>
-        <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
-          <Switch>
-              <Route exact path='/'>
-                <SignIn />
-              </Route>
-              <Route exact path='/signup'>
-                <SignUp />
-              </Route>
-              <Route exact path='/dashboard'>
-                <Dashboard />
-              </Route>
-              <Route exact path='/friends'>
-                <Friends />
-              </Route>
-              <Route exact path='/review'>
-                <PollsForReview />
-              </Route>
-              <Route exact path='/opinions'>
-                <Opinions />
-              </Route>
-              <Route exact path='/profile'>
-                <Profile />
-              </Route>
-            </Switch>
-          </UserContext.Provider>
-      </Router>
-    </MuiThemeProvider>
+    // <SocketProvider token={token}>
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
+            <Switch>
+                <Route exact path='/'>
+                  <SignIn />
+                </Route>
+                <Route exact path='/signup'>
+                  <SignUp />
+                </Route>
+                <Route exact path='/dashboard'>
+                  <Dashboard />
+                </Route>
+                <Route exact path='/friends'>
+                  <Friends />
+                </Route>
+                <Route exact path='/review'>
+                  <PollsForReview />
+                </Route>
+                <Route exact path='/opinions'>
+                  <Opinions />
+                </Route>
+                <Route exact path='/profile'>
+                  <Profile />
+                </Route>
+              </Switch>
+            </UserContext.Provider>
+        </Router>
+      </MuiThemeProvider>
+    // </SocketProvider>
   );
 }
 

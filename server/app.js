@@ -38,6 +38,8 @@ app.use('/friendsList', require('./routes/friendsListRouter'));
 const io = socket(server);
 
 io.on('connection', (socket) => {
+  const token = socket.handshake.query.token;
+  socket.join(token);
   console.log('a user connected');
 
   socket.on('disconnect', () => {
