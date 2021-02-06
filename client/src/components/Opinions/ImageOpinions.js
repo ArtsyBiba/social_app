@@ -3,18 +3,16 @@ import styled from 'styled-components';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
-export default function ImageTwo ({ poll }) {
-    const { imageOneUrl, imageOneVotes } = poll;
-    
+export default function ImageOpinions ({ imageUrl, imageVotes }) {
     return (
         <ImageWrapper>
-            <StyledImage src={imageOneUrl} alt='pollImage' />
+            <StyledImage src={imageUrl} alt='pollImage' />
             <Likes>
-                {imageOneVotes
+                {imageVotes
                     ? <FavoriteIcon /> 
                     : <FavoriteBorderIcon />
                 }
-                {imageOneVotes}
+                {imageVotes}
             </Likes>
         </ImageWrapper>
     )

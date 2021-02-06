@@ -4,8 +4,7 @@ import { useContext } from 'react';
 
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
-import ImageOneOpinions from '../Opinions/ImageOneOpinions';
-import ImageTwoOpinions from '../Opinions/ImageTwoOpinions';
+import ImageOpinions from '../Opinions/ImageOpinions';
 import UserContext from '../../context/UserContext';
 
 export default function Poll ({ poll }) {
@@ -38,8 +37,8 @@ export default function Poll ({ poll }) {
             </Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <ImageOneOpinions poll={poll} />
-                <ImageTwoOpinions poll={poll} />
+                <ImageOpinions imageUrl={poll.imageOneUrl} imageVotes={poll.imageOneVotes} />
+                <ImageOpinions imageUrl={poll.imageTwoUrl} imageVotes={poll.imageTwoVotes} />
             </Images>
         </PollCard>
     )

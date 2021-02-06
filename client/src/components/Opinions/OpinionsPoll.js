@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import ImageOneOpinions from './ImageOneOpinions';
-import ImageTwoOpinions from './ImageTwoOpinions';
+import ImageOpinions from './ImageOpinions';
 
 export default function OpinionsPoll ({ poll }) {   
     return (
@@ -11,8 +10,8 @@ export default function OpinionsPoll ({ poll }) {
             </Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <ImageOneOpinions poll={poll} />
-                <ImageTwoOpinions poll={poll} />
+                <ImageOpinions imageUrl={poll.imageOneUrl} imageVotes={poll.imageOneVotes} />
+                <ImageOpinions imageUrl={poll.imageTwoUrl} imageVotes={poll.imageTwoVotes} />
             </Images>
         </PollCard>
     )
