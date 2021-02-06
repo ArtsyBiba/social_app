@@ -52,7 +52,7 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
     };
     
     const createFriendsList = async (newFriendsList) => {
-        let token = localStorage.getItem('auth-token');
+        const token = localStorage.getItem('auth-token');
         
         try {
             await axios.post('http://localhost:5000/friendsList', 
