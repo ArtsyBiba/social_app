@@ -9,6 +9,7 @@ router.post('/', auth, async (req, res) => {
     try {
         const { imageOne, imageTwo, question, friendlist, author } = req.body.newPollForUpload;
         const DEFAULT_VOTES = 0;
+        const DEFAULT_VOTED_FOR = [];
         const userId = req.user;
 
         if (!question || !friendlist) {
@@ -32,12 +33,6 @@ router.post('/', auth, async (req, res) => {
         
         const imageOneUrl = uploadedResponseOne.secure_url;
         const imageTwoUrl = uploadedResponseTwo.secure_url;
-<<<<<<< HEAD
-        const imageTwoVotes = 0;
-        const votedForImageOne = [];
-        const votedForImageTwo = [];
-=======
->>>>>>> feature/polls_review
 
         const newPoll = new Poll({
             question,
@@ -48,8 +43,8 @@ router.post('/', auth, async (req, res) => {
             imageTwoVotes: DEFAULT_VOTES,
             userId,
             author,
-            votedForImageOne,
-            votedForImageTwo,
+            votedForImageOne: DEFAULT_VOTED_FOR,
+            votedForImageTwo: DEFAULT_VOTED_FOR,
         });
         const savedPoll = await newPoll.save();
         

@@ -17,7 +17,7 @@ export default function User ({ user, newFriendsList, setNewFriendsList }) {
         };
 
         checkIfAdded();
-    }, []);
+    }, [newFriendsList.friends, user._id]);
 
     const handleAddButton = () => {  
         setNewFriendsList(prevList => {
