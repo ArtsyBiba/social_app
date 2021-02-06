@@ -32,12 +32,6 @@ router.post('/', auth, async (req, res) => {
         
         const imageOneUrl = uploadedResponseOne.secure_url;
         const imageTwoUrl = uploadedResponseTwo.secure_url;
-<<<<<<< HEAD
-        const imageTwoVotes = 0;
-        const votedForImageOne = [];
-        const votedForImageTwo = [];
-=======
->>>>>>> feature/polls_review
 
         const newPoll = new Poll({
             question,
@@ -48,8 +42,6 @@ router.post('/', auth, async (req, res) => {
             imageTwoVotes: DEFAULT_VOTES,
             userId,
             author,
-            votedForImageOne,
-            votedForImageTwo,
         });
         const savedPoll = await newPoll.save();
         
@@ -88,52 +80,6 @@ router.delete('/delete', auth, async (req, res) => {
         };
 
         res.json(deletedPoll);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-router.put('/vote-add', auth, async (req, res) => {
-    try {
-        const { pollId, image } = req.body;
-
-        const updatedPoll = await Poll.findById(pollId);
-        if (image === 'one') {
-            updatedPoll.imageOneVotes++;
-            updatedPoll.votedForImageOne.push(req.user);
-        } else {
-            updatedPoll.imageTwoVotes++;
-            updatedPoll.votedForImageTwo.push(req.user);
-        }
-        await updatedPoll.save();
-
-        res.json(updatedPoll);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-router.put('/vote-remove', auth, async (req, res) => {
-    try {
-        const { pollId, imageVotes, image } = req.body;
-
-        const updatedPoll = await Poll.findById(pollId);
-        if (image === 'one') {
-            updatedPoll.imageOneVotes--;
-            await Poll.updateOne(
-                { '_id': pollId }, 
-                { $pull: { 'votedForImageOne' : req.user } }
-            );
-        } else {
-            updatedPoll.imageTwoVotes--;
-            await Poll.updateOne(
-                { '_id': pollId }, 
-                { $pull: { 'votedForImageTwo' : req.user } }
-            );
-        }
-        await updatedPoll.save();
-
-        res.json(updatedPoll);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

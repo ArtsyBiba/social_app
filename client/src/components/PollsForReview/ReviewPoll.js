@@ -1,17 +1,33 @@
 import styled from 'styled-components';
 
-import ImageOpinions from './ImageOpinions';
+import ImageReview from './ImageReview';
 
-export default function OpinionsPoll ({ poll }) {   
+export default function ReviewPoll ({ poll, userId }) {   
     return (
         <PollCard>
             <Header>
                 <Question>{poll.question}</Question>
             </Header>
-            <Subheader># of answers</Subheader>
+            <Subheader>Created by {poll.author}</Subheader>
             <Images>
-                <ImageOpinions imageUrl={poll.imageOneUrl} imageVotes={poll.imageOneVotes} />
-                <ImageOpinions imageUrl={poll.imageTwoUrl} imageVotes={poll.imageTwoVotes} />
+                <ImageReview 
+                    imageUrl={poll.imageOneUrl}
+                    imageVotes={poll.imageOneVotes}
+                    votedForThisImage={poll.votedForImageOne}
+                    votedForOtherImage={poll.votedForImageTwo}
+                    image='one'
+                    pollId={poll._id}
+                    userId={userId}
+                />
+                <ImageReview 
+                    imageUrl={poll.imageTwoUrl}
+                    imageVotes={poll.imageTwoVotes}
+                    votedForThisImage={poll.votedForImageTwo}
+                    votedForOtherImage={poll.votedForImageOne}
+                    image='two'
+                    pollId={poll._id}
+                    userId={userId}
+                />
             </Images>
         </PollCard>
     )
@@ -27,7 +43,6 @@ const PollCard = styled.div`
     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.1);
     border-radius: 2px;
     margin-right: 1em;
-    cursor: pointer;
 `;
 
 const Header = styled.div`

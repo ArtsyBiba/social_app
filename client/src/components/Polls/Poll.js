@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import Image from './Image';
 import axios from 'axios';
 import { useContext } from 'react';
 
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
+import ImageOpinions from '../Opinions/ImageOpinions';
 import UserContext from '../../context/UserContext';
 
 export default function Poll ({ poll }) {
@@ -17,6 +18,7 @@ export default function Poll ({ poll }) {
                 { 
                     data: {
                         pollId: poll._id,
+                        friendListId: poll.friendlist,
                     }, 
                     headers: { 'x-auth-token': token },
                 }, 
@@ -35,8 +37,8 @@ export default function Poll ({ poll }) {
             </Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <Image source={poll.imageOneUrl} alt='imageOne' />
-                <Image source={poll.imageTwoUrl} alt='imageTwo' />
+                <ImageOpinions imageUrl={poll.imageOneUrl} imageVotes={poll.imageOneVotes} />
+                <ImageOpinions imageUrl={poll.imageTwoUrl} imageVotes={poll.imageTwoVotes} />
             </Images>
         </PollCard>
     )
