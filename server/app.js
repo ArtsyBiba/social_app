@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const socket = require('socket.io');
 require('dotenv').config();
 
 // set up express
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`the server has started on port: ${PORT}`));
+const server = app.listen(PORT, () => console.log(`the server has started on port: ${PORT}`));
 
 // set up mongoose
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
@@ -32,3 +33,15 @@ app.use('/users', require('./routes/userRouter'));
 app.use('/polls', require('./routes/pollRouter'));
 app.use('/friends', require('./routes/friendRouter'));
 app.use('/friendsList', require('./routes/friendsListRouter'));
+
+// set up socket
+const io = socket(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('disconnected');
+  });
+});
+
