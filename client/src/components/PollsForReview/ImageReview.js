@@ -7,15 +7,13 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 import UserContext from '../../context/UserContext';
 
-export default function ImageTwo ({ userId, poll }) {
+export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, votedForThisImage, votedForOtherImage, image }) {
     const { reload, setReload } = useContext(UserContext);
-    const { imageTwoUrl, imageTwoVotes, votedForImageOne, votedForImageTwo } = poll;
-    const pollId = poll._id;
 
     const handleVote = async () => {
-        if (votedForImageOne && votedForImageOne.includes(userId)) {
+        if (votedForOtherImage && votedForOtherImage.includes(userId)) {
             return
-        } else if (votedForImageTwo && votedForImageTwo.includes(userId)) {
+        } else if (votedForThisImage && votedForThisImage.includes(userId)) {
             await removeVote();
         } else await addVote();
 
@@ -26,8 +24,8 @@ export default function ImageTwo ({ userId, poll }) {
         let token = localStorage.getItem('auth-token');
         
         try {
-            await axios.put('http://localhost:5000/polls/vote-two-add', 
-                { pollId, imageTwoVotes }, 
+            await axios.put('http://localhost:5000/polls/vote-add', 
+                { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
         } catch (err) {
@@ -39,8 +37,8 @@ export default function ImageTwo ({ userId, poll }) {
         let token = localStorage.getItem('auth-token');
         
         try {
-            await axios.put('http://localhost:5000/polls/vote-two-remove', 
-                { pollId, imageTwoVotes }, 
+            await axios.put('http://localhost:5000/polls/vote-remove', 
+                { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
         } catch (err) {
@@ -50,13 +48,13 @@ export default function ImageTwo ({ userId, poll }) {
     
     return (
         <ImageWrapper>
-            <StyledImage src={imageTwoUrl} alt='pollImage' />
+            <StyledImage src={imageUrl} alt='pollImage' />
             <Likes>
-                {imageTwoVotes
+                {votedForThisImage && votedForThisImage.includes(userId)
                     ? <StyledFavoriteIcon onClick={handleVote} /> 
                     : <StyledFavoriteBorderIcon onClick={handleVote} />
                 }
-                {imageTwoVotes}
+                {imageVotes}
             </Likes>
         </ImageWrapper>
     )

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import ImageOne from './ImageOne';
-import ImageTwo from './ImageTwo';
+import ImageReview from './ImageReview';
 
 export default function ReviewPoll ({ poll, userId }) {   
     return (
@@ -11,12 +10,22 @@ export default function ReviewPoll ({ poll, userId }) {
             </Header>
             <Subheader>Created by {poll.author}</Subheader>
             <Images>
-                <ImageOne 
-                    poll={poll}
+                <ImageReview 
+                    imageUrl={poll.imageOneUrl}
+                    imageVotes={poll.imageOneVotes}
+                    votedForThisImage={poll.votedForImageOne}
+                    votedForOtherImage={poll.votedForImageTwo}
+                    image='one'
+                    pollId={poll._id}
                     userId={userId}
                 />
-                <ImageTwo 
-                    poll={poll}
+                <ImageReview 
+                    imageUrl={poll.imageTwoUrl}
+                    imageVotes={poll.imageTwoVotes}
+                    votedForThisImage={poll.votedForImageTwo}
+                    votedForOtherImage={poll.votedForImageOne}
+                    image='two'
+                    pollId={poll._id}
                     userId={userId}
                 />
             </Images>
