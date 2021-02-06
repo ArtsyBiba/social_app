@@ -7,10 +7,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import CreatePoll from '../components/CreatePoll/index';
-import OpinionsPoll from '../components/Opinions/OpinionsPoll';
+import ReviewPoll from '../components/PollsForReview/ReviewPoll';
 import UserContext from '../context/UserContext';
  
-export default function Opinions () {   
+export default function PollsForReview () {   
     const { userData } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
@@ -26,11 +26,12 @@ export default function Opinions () {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <PollsWrapper>
-                            {userData.user.polls
-                                ? userData.user.polls.map((poll, index) => (
-                                    <OpinionsPoll 
+                            {userData.user.pollsForReview
+                                ? userData.user.pollsForReview.map((poll, index) => (
+                                    <ReviewPoll 
                                         poll={poll} 
                                         key={index}
+                                        userId={userData.user.id}
                                     />
                                 )) : (
                                     <div>Create your first poll</div>

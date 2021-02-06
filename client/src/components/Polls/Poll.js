@@ -1,22 +1,28 @@
 import styled from 'styled-components';
-import Image from './Image';
 import axios from 'axios';
 import { useContext } from 'react';
 
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
+import ImageOpinions from '../Opinions/ImageOpinions';
 import UserContext from '../../context/UserContext';
 
 export default function Poll ({ poll }) {
-    const { userData, reload, setReload } = useContext(UserContext);
+    const { reload, setReload } = useContext(UserContext);
     
     const handleDeletePoll = async () => {
+        let token = localStorage.getItem('auth-token');
+        
         try {
-            await axios.delete('http://localhost:5000/polls/delete', {
-                data: {
-                    pollId: poll._id,
-                    userId: userData.user.id,
-                }
-            })
+            await axios.delete('http://localhost:5000/polls/delete', 
+                { 
+                    data: {
+                        pollId: poll._id,
+                        friendListId: poll.friendlist,
+                    }, 
+                    headers: { 'x-auth-token': token },
+                }, 
+            )
             .then(setReload(!reload))
         } catch (err) {
             console.log(err);
@@ -31,8 +37,8 @@ export default function Poll ({ poll }) {
             </Header>
             <Subheader># of answers</Subheader>
             <Images>
-                <Image source={poll.imageOneUrl} alt='imageOne' />
-                <Image source={poll.imageTwoUrl} alt='imageTwo' />
+                <ImageOpinions imageUrl={poll.imageOneUrl} imageVotes={poll.imageOneVotes} />
+                <ImageOpinions imageUrl={poll.imageTwoUrl} imageVotes={poll.imageTwoVotes} />
             </Images>
         </PollCard>
     )

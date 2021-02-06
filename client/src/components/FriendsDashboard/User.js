@@ -35,12 +35,14 @@ export default function Suggestions ({ user }) {
         setReload(!reload);
     };
 
+    let token = localStorage.getItem('auth-token');
+
     const uploadFollower = async () => {
         try {
-            await axios.put('http://localhost:5000/friends/follow', {
-                userToFollow: user,
-                currentUser: userData.user,
-            })
+            await axios.put('http://localhost:5000/friends/follow', 
+                { userToFollow: user }, 
+                { headers: { 'x-auth-token': token } },
+            )
         } catch (err) {
             console.log(err.response.data.msg);
         }
@@ -48,10 +50,10 @@ export default function Suggestions ({ user }) {
 
     const removeFollower = async () => {
         try {
-            await axios.put('http://localhost:5000/friends/unfollow', {
-                userToUnfollow: user,
-                currentUser: userData.user,
-            })
+            await axios.put('http://localhost:5000/friends/unfollow',
+                { userToUnfollow: user }, 
+                { headers: { 'x-auth-token': token } },
+            )
         } catch (err) {
             console.log(err.response.data.msg);
         }

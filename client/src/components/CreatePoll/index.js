@@ -17,14 +17,13 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     
     const initialPoll = {
         question: '', 
-        friendlist: '',
+        friendlist: {},
         error: null,
-        userId: userData.user.id,
     };
 
     const allFriendsLists = userData.user.friendsLists;
     const [newPoll, setNewPoll] = useState(initialPoll);
-    const [friendList, setFriendList] = useState(allFriendsLists[0]);
+    const [friendList, setFriendList] = useState('');
     const [previewSourceOne, setPreviewSourceOne] = useState();
     const [previewSourceTwo, setPreviewSourceTwo] = useState();
     const fileInputStateOne = '';
@@ -45,11 +44,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     };
 
     const handleSelect = (e) => {
-        const { name, value } = e.target;
         setNewPoll(prevPoll => {
             return { 
                 ...prevPoll, 
-                [name]: value, 
+                friendlist: e.target.value, 
             }
         });
 
@@ -91,10 +89,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
             imageTwo: previewSourceTwo,
             question: newPoll.question,
             friendlist: newPoll.friendlist,
-            userId: newPoll.userId,
+            author: userData.user.displayName,
         }
 
-        await uploadPoll(newPollForUpload);
+        await createPoll(newPollForUpload);
         setReload(!reload);
         
         setPreviewSourceOne('');
@@ -103,11 +101,14 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         setNewPoll(initialPoll);
     };
     
-    const uploadPoll = async (newPollForUpload) => {
+    const createPoll = async (newPollForUpload) => {
+        let token = localStorage.getItem('auth-token');
+        
         try {
-            await axios.post('http://localhost:5000/polls/upload', {
-                newPollForUpload
-            })
+            await axios.post('http://localhost:5000/polls/', 
+                { newPollForUpload },
+                { headers: { 'x-auth-token': token } },
+            )
         } catch (err) {
             err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
         }

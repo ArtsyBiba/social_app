@@ -1,26 +1,23 @@
 import styled from 'styled-components';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import SearchArea from './SearchArea';
 import axios from 'axios';
 
 import List from '@material-ui/core/List';
 
 import User from './User';
-import UserContext from '../../context/UserContext';
 
 export default function Suggestions () {
-    const { userData } = useContext(UserContext);
-    
     const [users, setUsers] = useState('');
     const [query, setQuery] = useState('');
 
     useEffect(() => {
         const getUsers = async () => {
+            let token = localStorage.getItem('auth-token');
+            
             try {
-                await axios.get('http://localhost:5000/friends/usersList', {
-                    params: {
-                        currentUserId: userData.user.id,
-                    }
+                await axios.get('http://localhost:5000/friends/', {
+                    headers: { 'x-auth-token': token }
                 })
                 .then(
                     resp => {
@@ -32,7 +29,7 @@ export default function Suggestions () {
         };
         
         getUsers();
-    }, [userData.user.id]);
+    }, []);
 
     return (
         <Dashboard>

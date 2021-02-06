@@ -71,7 +71,8 @@ router.post('/login', async (req, res) => {
             .populate('polls')
             .populate('followers')
             .populate('followings')
-            .populate('friendsLists');
+            .populate('friendsLists')
+            .populate('pollsForReview');
         if (!user) {
             return res
                 .status(400)
@@ -92,6 +93,7 @@ router.post('/login', async (req, res) => {
                 id: user._id,
                 displayName: user.displayName,
                 polls: user.polls,
+                pollsForReview: user.pollsForReview,
                 followers: user.followers,
                 followings: user.followings,
                 friendsLists: user.friendsLists,
@@ -135,9 +137,9 @@ router.post('/tokenIsValid', async (req, res) => {
     }
 });
 
-router.put('/update', async (req, res) => {
+router.put('/update', auth, async (req, res) => {
     try {
-        const { displayName, avatar, userId } = req.body.updatedUserForUpload;
+        const { displayName, avatar } = req.body.updatedUserForUpload;
 
         const uploadedResponse = await cloudinary.uploader.upload(avatar, {
             upload_preset: 'social_app'
@@ -145,7 +147,7 @@ router.put('/update', async (req, res) => {
         
         const imageUrl = uploadedResponse.secure_url;
 
-        const updatedUser = await User.findOne({ _id: userId });
+        const updatedUser = await User.findById(req.user);
         updatedUser.avatar = imageUrl;
         updatedUser.displayName = displayName;
         await updatedUser.save();
@@ -161,16 +163,19 @@ router.get('/', auth, async (req, res) => {
         .populate('polls')
         .populate('followers')
         .populate('followings')
-        .populate('friendsLists');
-    res.json({
-        displayName: user.displayName,
-        id: user._id,
-        polls: user.polls,
-        followers: user.followers,
-        followings: user.followings,
-        friendsLists: user.friendsLists,
-        avatar: user.avatar,
-    });
+        .populate('friendsLists')
+        .populate('pollsForReview');
+    
+        res.json({
+            displayName: user.displayName,
+            id: user._id,
+            polls: user.polls,
+            pollsForReview: user.pollsForReview,
+            followers: user.followers,
+            followings: user.followings,
+            friendsLists: user.friendsLists,
+            avatar: user.avatar,
+        });
 });
 
 module.exports = router;

@@ -13,16 +13,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import UserContext from '../../context/UserContext';
 
 export default function List ({ list }) {
-    const { userData, reload, setReload } = useContext(UserContext);
+    const { reload, setReload } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = useState(null);
     
     const handleDelete = async () => {
+        let token = localStorage.getItem('auth-token');
+        
         try {
             await axios.delete('http://localhost:5000/friendsList/delete', {
                 data: {
                     friendsListId: list._id,
-                    userId: userData.user.id,
-                }
+                },
+                headers: { 'x-auth-token': token },
             })
             .then(setReload(!reload))
         } catch (err) {
