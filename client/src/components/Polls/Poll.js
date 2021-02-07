@@ -35,7 +35,7 @@ export default function Poll ({ poll }) {
                 <Question>{poll.question}</Question>
                 <StyledDeleteOutlinedIcon onClick={handleDeletePoll} />
             </Header>
-            <Subheader># of answers</Subheader>
+            <Subheader>{poll.votedForImageOne.length + poll.votedForImageTwo.length} answers</Subheader>
             <Images>
                 <ImageOpinions imageUrl={poll.imageOneUrl} imageVotes={poll.imageOneVotes} />
                 <ImageOpinions imageUrl={poll.imageTwoUrl} imageVotes={poll.imageTwoVotes} />
