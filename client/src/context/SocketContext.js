@@ -8,7 +8,7 @@ const getSocket = () => {
 
     if (token) {
         return io.connect('http://localhost:5000/', {
-            query: 'token=' + token,
+            query: token,
             withCredentials: true,
             extraHeaders: {
               'x-auth-token': token,

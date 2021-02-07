@@ -61,7 +61,6 @@ io.use((socket, next) => {
             .json({ msg: 'Token verification failed, authorization denied' });
     }
 
-    socket.user = verified.id;
     next();
   } catch (err) {
       res.status(500).json({ error: err.message });
