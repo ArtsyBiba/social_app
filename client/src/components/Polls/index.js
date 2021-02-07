@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 
 import Button from '@material-ui/core/Button';
+import GridList from '@material-ui/core/GridList';
 
 import Poll from './Poll';
 import UserContext from '../../context/UserContext';
@@ -23,16 +24,18 @@ export default function Pools ({ setOpenCreatePoll }) {
                 </SyledButton>
             </HeaderWrapper>
             <PollsWrapper>
-                {savedPolls
-                    ? savedPolls.map((poll, index) => (
-                        <Poll 
-                            poll={poll} 
-                            key={index}
-                        />
-                    )) : (
-                        <div>Create your first poll</div>
-                    )
-                }
+                <StyledGridList>
+                    {savedPolls
+                        ? savedPolls.map((poll, index) => (
+                            <Poll 
+                                poll={poll} 
+                                key={index}
+                            />
+                        )) : (
+                            <div>Create your first poll</div>
+                        )
+                    }
+                </StyledGridList>
             </PollsWrapper>
         </Container>
     )
@@ -62,5 +65,15 @@ const SyledButton = styled(Button)`
 
 const PollsWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
     margin: 1em;
+    width: 110vh;
+    height: 44vh;
+`;
+
+const StyledGridList = styled(GridList)`
+    flex-wrap: nowrap;
+    transform: translateZ(0);    
 `;
