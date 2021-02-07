@@ -6,13 +6,13 @@ export const SocketContext = createContext();
 const getSocket = () => {
     const token = localStorage.getItem('auth-token');
 
-    if (token) {
+    try {
         return io.connect('http://localhost:5000/', {
             query: 'token=' + token,
         });
+    } catch (err) {
+        console.log(err);
     }
-    
-    return io.connect('http://localhost:5000/');
 };
 
 export const socket = getSocket();
