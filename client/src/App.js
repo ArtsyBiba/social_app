@@ -12,7 +12,7 @@ import Opinions from './pages/Opinions';
 import Profile from './pages/Profile';
 import PollsForReview from './pages/PollsForReview';
 import UserContext from './context/UserContext';
-import { SocketProvider } from './context/SocketProvider';
+import { SocketContext, socket } from './context/SocketContext';
 import './App.css';
 
 
@@ -51,10 +51,8 @@ function App() {
     checkLoggedIn();
   }, [reload]);
 
-  const token = localStorage.getItem('auth-token');
-
   return (
-    // <SocketProvider token={token}>
+    <SocketContext.Provider value={socket}>
       <MuiThemeProvider theme={theme}>
         <Router>
           <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
@@ -84,7 +82,7 @@ function App() {
             </UserContext.Provider>
         </Router>
       </MuiThemeProvider>
-    // </SocketProvider>
+    </SocketContext.Provider>
   );
 }
 

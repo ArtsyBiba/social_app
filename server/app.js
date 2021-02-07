@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const socket = require('socket.io');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 // set up express
@@ -35,11 +36,39 @@ app.use('/friends', require('./routes/friendRouter'));
 app.use('/friendsList', require('./routes/friendsListRouter'));
 
 // set up socket
-const io = socket(server);
+const io = socket(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT'],
+    allowedHeaders: ['x-auth-token'],
+    credentials: true,
+  }
+});
+
+io.use((socket, next) => {
+  try {
+    const { token } = socket.handshake.query;
+    if (!token) {
+        return res
+            .status(401)
+            .json({ msg: 'No authentication token, authorization denied' });
+    }
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) {
+        return res
+            .status(401)
+            .json({ msg: 'Token verification failed, authorization denied' });
+    }
+
+    socket.user = verified.id;
+    next();
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 
 io.on('connection', (socket) => {
-  const token = socket.handshake.query.token;
-  socket.join(token);
   console.log('a user connected');
 
   socket.on('disconnect', () => {
