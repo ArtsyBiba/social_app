@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useContext } from 'react';
 
 import Button from '@material-ui/core/Button';
+import GridList from '@material-ui/core/GridList';
 
 import List from './List';
 import UserContext from '../../context/UserContext';
@@ -23,16 +24,18 @@ export default function FriendsList ({ setOpenCreateFriendsList }) {
                 </SyledButton>
             </HeaderWrapper>
             <ListsWrapper>
-                {savedLists
-                    ? savedLists.map((list, index) => (
-                        <List 
-                            list={list} 
-                            key={index}
-                        />
-                    )) : (
-                        <div>Create your first poll</div>
-                    )
-                }
+                <StyledGridList>
+                    {savedLists
+                        ? savedLists.map((list, index) => (
+                            <List 
+                                list={list} 
+                                key={index}
+                            />
+                        )) : (
+                            <div>Create your first poll</div>
+                        )
+                    }
+                </StyledGridList>
             </ListsWrapper>
         </Container>
     )
@@ -62,5 +65,14 @@ const SyledButton = styled(Button)`
 
 const ListsWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: hidden;
     margin: 1em;
+    width: 110vh;
+`;
+
+const StyledGridList = styled(GridList)`
+    flex-wrap: nowrap;
+    transform: translateZ(0);    
 `;
