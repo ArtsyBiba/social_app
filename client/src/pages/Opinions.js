@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useStyles from '../themes/theme.profile';
 
 import AppBar from '@material-ui/core/AppBar';
+import GridList from '@material-ui/core/GridList';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
@@ -26,16 +27,18 @@ export default function Opinions () {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <PollsWrapper>
-                            {userData.user.polls
-                                ? userData.user.polls.map((poll, index) => (
-                                    <OpinionsPoll 
-                                        poll={poll} 
-                                        key={index}
-                                    />
-                                )) : (
-                                    <div>Create your first poll</div>
-                                )
-                            }
+                            <StyledGridList>
+                                {userData.user.polls
+                                    ? userData.user.polls.map((poll, index) => (
+                                        <OpinionsPoll 
+                                            poll={poll} 
+                                            key={index}
+                                        />
+                                    )) : (
+                                        <div>Create your first poll</div>
+                                    )
+                                }
+                            </StyledGridList>
                         </PollsWrapper>
                     </main>
                     <CreatePoll 
@@ -58,5 +61,15 @@ const StyledPage = styled.div`
 
 const PollsWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: hidden;
     margin: 1em;
+    width: 110vh;
+    height: 44vh;
+`;
+
+const StyledGridList = styled(GridList)`
+    flex-wrap: nowrap;
+    transform: translateZ(0);    
 `;

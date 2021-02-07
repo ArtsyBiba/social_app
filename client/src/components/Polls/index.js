@@ -66,7 +66,7 @@ const SyledButton = styled(Button)`
 const PollsWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     overflow: hidden;
     margin: 1em;
     width: 110vh;

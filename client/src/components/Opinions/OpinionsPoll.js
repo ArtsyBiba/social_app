@@ -42,7 +42,6 @@ const Question = styled.div`
     width: 40vh;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
-    margin-left: 1em;
 `;
 
 const Subheader = styled.span`
