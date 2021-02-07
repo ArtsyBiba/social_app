@@ -38,10 +38,7 @@ app.use('/friendsList', require('./routes/friendsListRouter'));
 // set up socket
 const io = socket(server, {
   cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT'],
-    allowedHeaders: ['x-auth-token'],
-    credentials: true,
+    origin: '*',
   }
 });
 
