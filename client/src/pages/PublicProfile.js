@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import useStyles from '../themes/theme.profile';
 import { useHistory } from 'react-router-dom';
@@ -9,16 +9,19 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import CreatePoll from '../components/CreatePoll/index';
 import Avatar from '@material-ui/core/Avatar';
+
+import UserContext from '../context/UserContext';
  
 export default function PublicProfile () {   
     const classes = useStyles();
+    const { userData } = useContext(UserContext);
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const history = useHistory();
     const { user } = history.location.state;
 
     return (
         <StyledPage>
-            {user ? (
+            {user && userData.user.followings.some(e => e._id === user._id) ? (
                 <>
                     <AppBar position='fixed' className={classes.appBar}>
                         <Navbar setOpenCreatePoll={setOpenCreatePoll} />
@@ -40,7 +43,7 @@ export default function PublicProfile () {
                     />
                 </>
             ) : (
-                <div>Not authorized</div>
+                <div>You can only view profiles of users that you follow</div>
             )}
         </StyledPage>
     )
