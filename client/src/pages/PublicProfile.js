@@ -1,27 +1,25 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import useStyles from '../themes/theme.profile';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar/index';
 import CreatePoll from '../components/CreatePoll/index';
-import UserContext from '../context/UserContext';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
  
 export default function PublicProfile () {   
-    const { userData, reload, setReload } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
-    const [previewSource, setPreviewSource] = useState();
-    const fileInputState = '';
+    const history = useHistory();
+    const { user } = history.location.state;
 
     return (
         <StyledPage>
-            {userData.user ? (
+            {user ? (
                 <>
                     <AppBar position='fixed' className={classes.appBar}>
                         <Navbar setOpenCreatePoll={setOpenCreatePoll} />
@@ -30,7 +28,7 @@ export default function PublicProfile () {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <UserInputForm>
-                            PublicProfile
+                            {user.displayName}
                         </UserInputForm>
                     </main>
                     <CreatePoll 
