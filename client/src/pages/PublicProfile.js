@@ -19,7 +19,6 @@ export default function PublicProfile () {
     const [previewSource, setPreviewSource] = useState();
     const fileInputState = '';
 
-
     return (
         <StyledPage>
             {userData.user ? (

@@ -11,6 +11,7 @@ import Friends from './pages/Friends';
 import Opinions from './pages/Opinions';
 import Profile from './pages/Profile';
 import PollsForReview from './pages/PollsForReview';
+import PublicProfile from './pages/PublicProfile';
 import UserContext from './context/UserContext';
 
 import './App.css';
@@ -75,6 +76,9 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile />
+              </Route>
+              <Route exact path='/:userId/profile'>
+                <PublicProfile />
               </Route>
             </Switch>
           </UserContext.Provider>

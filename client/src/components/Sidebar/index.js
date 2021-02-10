@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,8 +14,14 @@ import useStyles from '../../themes/theme.profile';
 export default function Sidebar () {
     const { userData } = useContext(UserContext);
     const classes = useStyles();
+    const history = useHistory();
 
     const followings = userData.user.followings;
+
+    const goToProfile = (user) => {
+        console.log(user)
+        history.push(`/${user._id}/profile`);
+    };
 
     return (
         <Drawer
@@ -29,8 +36,8 @@ export default function Sidebar () {
                 <List>
                     {followings.length > 0 && 
                         followings.map((user) => (
-                            <ListItem button key={user._id}>
-                                <Avatar src={user.avatar} />
+                            <ListItem button key={user._id} onClick={() => goToProfile(user)}>
+                                <Avatar src={user.avatar}/>
                                 <Name>{user.displayName}</Name>
                             </ListItem>
                         ))
