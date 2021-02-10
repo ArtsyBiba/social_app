@@ -41,7 +41,7 @@ export default function Sidebar () {
                     {followings.length > 0 && 
                         followings.map((user) => (
                             <ListItem button key={user._id} onClick={() => goToProfile(user)}>
-                                <Avatar src={user.avatar}/>
+                                <Avatar src={user.avatar} alt={user.displayName}/>
                                 <Name>{user.displayName}</Name>
                             </ListItem>
                         ))
