@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useContext, useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Divider } from '@material-ui/core';
@@ -15,6 +16,7 @@ import UserContext from '../../context/UserContext';
 export default function List ({ list }) {
     const { reload, setReload } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const history = useHistory();
     
     const handleDelete = async () => {
         let token = localStorage.getItem('auth-token');
@@ -30,6 +32,15 @@ export default function List ({ list }) {
         } catch (err) {
             console.log(err);
         }
+    };
+
+    const goToProfile = (user) => {
+        setReload(!reload)
+        
+        history.push({
+            pathname: `/${user._id}/profile`,
+            state: { user }
+        });
     };
 
     const openUserMenu = (e) => {
@@ -63,7 +74,7 @@ export default function List ({ list }) {
             <Divider />
             <GenericList>
                 {list.friends.map((friend) => (
-                    <ListItem button key={friend._id}>
+                    <ListItem button key={friend._id} onClick={() => goToProfile(friend)}>
                         <Avatar src={friend.avatar} />
                         <FriendName>{friend.displayName}</FriendName>
                     </ListItem>
