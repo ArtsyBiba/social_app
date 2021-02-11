@@ -15,7 +15,6 @@ import UserContext from './context/UserContext';
 import { SocketContext, socket } from './context/SocketContext';
 import './App.css';
 
-
 function App() {
   const [userData, setUserData] = useState({
     token: undefined,

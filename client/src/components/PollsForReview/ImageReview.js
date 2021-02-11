@@ -6,9 +6,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 import UserContext from '../../context/UserContext';
+import { SocketContext } from '../../context/SocketContext';
 
 export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, votedForThisImage, votedForOtherImage, image }) {
     const { reload, setReload } = useContext(UserContext);
+    const socketContext = useContext(SocketContext);
 
     const handleVote = async () => {
         if (votedForOtherImage && votedForOtherImage.includes(userId)) {
@@ -28,6 +30,7 @@ export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, vot
                 { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
+            socketContext.emit('user-add-vote', { pollId });
         } catch (err) {
             console.log(err);
         }

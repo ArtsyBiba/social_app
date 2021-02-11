@@ -16,8 +16,6 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () => console.log(`the server has started on port: ${PORT}`));
-
 // set up mongoose
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
   useNewUrlParser: true, 
@@ -34,6 +32,8 @@ app.use('/users', require('./routes/userRouter'));
 app.use('/polls', require('./routes/pollRouter'));
 app.use('/friends', require('./routes/friendRouter'));
 app.use('/friendsList', require('./routes/friendsListRouter'));
+
+const server = app.listen(PORT, () => console.log(`the server has started on port: ${PORT}`));
 
 // set up socket
 const io = socket(server, {
@@ -66,6 +66,12 @@ io.use((socket, next) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  // listeners
+  socket.on('user-add-vote', (pollId) => {
+    console.log(pollId)
+    socket.broadcast.emit('uservoted', pollId)
+  })
 
   socket.on('disconnect', () => {
     console.log('disconnected');

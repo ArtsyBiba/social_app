@@ -1,18 +1,22 @@
 import { createContext } from 'react';
 import io from 'socket.io-client';
 
-export const SocketContext = createContext();
-
 const getSocket = () => {
     const token = localStorage.getItem('auth-token');
 
     try {
-        return io.connect('http://localhost:5000/', {
+        const socket = io.connect('http://localhost:5000/', {
             query: 'token=' + token,
         });
+        socket.on('uservoted', (data) => {
+           console.log(data)
+        });
+        return socket
     } catch (err) {
         console.log(err);
     }
 };
 
 export const socket = getSocket();
+
+export const SocketContext = createContext({ socket: getSocket() });

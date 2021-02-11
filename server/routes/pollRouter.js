@@ -4,6 +4,7 @@ const Poll = require('../models/pollModel');
 const User = require('../models/userModel');
 const auth = require('../middleware/auth');
 const FriendsList = require('../models/friendsListModel');
+const io = require('../app');
 
 router.post('/', auth, async (req, res) => {
     try {
@@ -101,6 +102,12 @@ router.put('/vote-add', auth, async (req, res) => {
             updatedPoll.votedForImageTwo.push(req.user);
         }
         await updatedPoll.save();
+
+        // io.emit('uservoted', {
+        //     id: pollId,
+        //     imageOneVotes: updatedPoll.imageOneVotes,
+        //     imageTwoVotes: updatedPoll.imageTwoVotes,
+        // }); 
 
         res.json(updatedPoll);
     } catch (err) {
