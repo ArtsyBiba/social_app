@@ -12,18 +12,17 @@ import UserContext from '../../context/UserContext';
 import useStyles from '../../themes/theme.profile';
 
 export default function Sidebar () {
-    const { userData, reload, setReload } = useContext(UserContext);
+    const { userData, setSelectedUser } = useContext(UserContext);
     const classes = useStyles();
     const history = useHistory();
 
     const followings = userData.user.followings;
 
     const goToProfile = (user) => {
-        setReload(!reload)
+        setSelectedUser(user);
         
         history.push({
             pathname: `/${user._id}/profile`,
-            state: { user }
         });
     };
 

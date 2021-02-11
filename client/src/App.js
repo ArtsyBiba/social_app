@@ -22,6 +22,7 @@ function App() {
     user: undefined,
   });
   const [reload, setReload] = useState(true);
+  const [selectedUser, setSelectedUser] = useState();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -54,7 +55,7 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
-        <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
+        <UserContext.Provider value={{ userData, setUserData, reload, setReload, selectedUser, setSelectedUser}}>
           <Switch>
               <Route exact path='/'>
                 <SignIn />

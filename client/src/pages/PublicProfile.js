@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import useStyles from '../themes/theme.profile';
-import { useHistory } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 
@@ -14,14 +13,12 @@ import UserContext from '../context/UserContext';
  
 export default function PublicProfile () {   
     const classes = useStyles();
-    const { userData } = useContext(UserContext);
+    const { userData, selectedUser } = useContext(UserContext);
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
-    const history = useHistory();
-    const { user } = history.location.state;
 
     return (
         <StyledPage>
-            {user && userData.user.followings.some(e => e._id === user._id) ? (
+            {selectedUser && userData.user.followings.some(e => e._id === selectedUser._id) ? (
                 <>
                     <AppBar position='fixed' className={classes.appBar}>
                         <Navbar setOpenCreatePoll={setOpenCreatePoll} />
@@ -31,10 +28,10 @@ export default function PublicProfile () {
                         <div className={classes.toolbar} />
                         <UserDataWrapper>
                             <StyledAvatar 
-                                alt={user.displayName} 
-                                src={user.avatar}
+                                alt={selectedUser.displayName} 
+                                src={selectedUser.avatar}
                             />
-                            <h2>{user.displayName}</h2>
+                            <h2>{selectedUser.displayName}</h2>
                         </UserDataWrapper>
                     </main>
                     <CreatePoll 
