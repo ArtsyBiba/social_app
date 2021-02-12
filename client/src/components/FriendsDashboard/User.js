@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import UserContext from '../../context/UserContext';
 
 export default function Suggestions ({ user }) {
-    const { userData, reload, setReload } = useContext(UserContext);
+    const { userData, reload, setReload, setSelectedUser } = useContext(UserContext);
     const [followed, setFollowed] = useState(false);
     const history = useHistory();
     
@@ -62,11 +62,10 @@ export default function Suggestions ({ user }) {
     };
 
     const goToProfile = () => {
-        setReload(!reload)
+        setSelectedUser(user);
         
         history.push({
             pathname: `/${user._id}/profile`,
-            state: { user }
         });
     };
     

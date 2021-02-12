@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import UserContext from '../../context/UserContext';
 
 export default function List ({ list }) {
-    const { reload, setReload } = useContext(UserContext);
+    const { reload, setReload, setSelectedUser } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const history = useHistory();
     
@@ -35,11 +35,10 @@ export default function List ({ list }) {
     };
 
     const goToProfile = (user) => {
-        setReload(!reload)
+        setSelectedUser(user);
         
         history.push({
             pathname: `/${user._id}/profile`,
-            state: { user }
         });
     };
 
