@@ -8,8 +8,8 @@ const getSocket = () => {
         const socket = io.connect('http://localhost:5000/', {
             query: 'token=' + token,
         });
-        socket.on('uservoted', (data) => {
-           console.log(data)
+        socket.on('uservoted', ({ pollId }) => {
+           console.log(pollId)
         });
         return socket
     } catch (err) {

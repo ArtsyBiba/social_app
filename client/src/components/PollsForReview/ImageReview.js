@@ -11,6 +11,7 @@ import { SocketContext } from '../../context/SocketContext';
 export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, votedForThisImage, votedForOtherImage, image }) {
     const { reload, setReload } = useContext(UserContext);
     const socketContext = useContext(SocketContext);
+    console.log(socketContext)
 
     const handleVote = async () => {
         if (votedForOtherImage && votedForOtherImage.includes(userId)) {
@@ -30,7 +31,7 @@ export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, vot
                 { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
-            socketContext.emit('user-add-vote', { pollId });
+            socketContext.emit('user-add-vote', { pollId, image });
         } catch (err) {
             console.log(err);
         }

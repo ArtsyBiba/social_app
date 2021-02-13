@@ -70,8 +70,8 @@ io.on('connection', (socket) => {
   // listeners
   socket.on('user-add-vote', (pollId) => {
     console.log(pollId)
-    socket.broadcast.emit('uservoted', pollId)
-  })
+    socket.broadcast.emit('uservoted', { pollId });
+  });
 
   socket.on('disconnect', () => {
     console.log('disconnected');
