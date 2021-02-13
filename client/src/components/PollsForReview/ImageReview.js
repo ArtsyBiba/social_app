@@ -11,7 +11,6 @@ import { SocketContext } from '../../context/SocketContext';
 export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, votedForThisImage, votedForOtherImage, image }) {
     const { reload, setReload } = useContext(UserContext);
     const socketContext = useContext(SocketContext);
-    console.log(socketContext)
 
     const handleVote = async () => {
         if (votedForOtherImage && votedForOtherImage.includes(userId)) {
