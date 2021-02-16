@@ -1,18 +1,27 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Button from '@material-ui/core/Button';
 
 import Poll from './Poll';
 import UserContext from '../../context/UserContext';
+import { SocketContext } from '../../context/SocketContext';
 
 export default function Pools ({ setOpenCreatePoll }) {
     const { userData } = useContext(UserContext);
+    const socketContext = useContext(SocketContext);
     const savedPolls = userData.user.polls;
+    console.log(savedPolls)
     
     const handleCreatePoll = () => {
         setOpenCreatePoll(true);
     };
+
+    useEffect(() => {
+        socketContext.on('uservoted', ({ pollId }) => {
+            console.log(pollId)
+         });
+    }, [socketContext])
     
     return (
         <Container>
