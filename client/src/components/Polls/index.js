@@ -24,6 +24,10 @@ export default function Pools ({ setOpenCreatePoll }) {
         socketContext.on('uservoted', () => {
             handleVote();
          });
+
+         socketContext.on('userunvoted', () => {
+            handleVote();
+         });
     }, [socketContext, handleVote])
     
     return (

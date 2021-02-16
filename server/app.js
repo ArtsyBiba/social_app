@@ -68,9 +68,12 @@ io.on('connection', (socket) => {
   console.log('a user connected');
 
   // listeners
-  socket.on('user-add-vote', (pollId) => {
-    console.log(pollId)
-    socket.broadcast.emit('uservoted', { pollId });
+  socket.on('user-add-vote', () => {
+    socket.broadcast.emit('uservoted');
+  });
+
+  socket.on('user-remove-vote', () => {
+    socket.broadcast.emit('userunvoted');
   });
 
   socket.on('disconnect', () => {
