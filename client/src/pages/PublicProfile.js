@@ -1,6 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import useStyles from '../themes/theme.profile';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
 
@@ -13,12 +15,31 @@ import UserContext from '../context/UserContext';
  
 export default function PublicProfile () {   
     const classes = useStyles();
-    const { userData, selectedUser } = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
+    const [selectedUser, setSelectedUser] = useState('');
+    const location = useLocation();
+    
+    const userId = location.pathname.split('/')[1];
+
+    useEffect(() => {
+        const getUser = async () => {
+            let token = localStorage.getItem('auth-token');
+            
+            const userRes = await axios.post(
+                'http://localhost:5000/users/getone',
+                { userId },
+                { headers: { 'x-auth-token': token } },
+            );
+            setSelectedUser(userRes.data);
+        }
+
+        getUser();
+    }, [userId]);
 
     return (
         <StyledPage>
-            {selectedUser && userData.user.followings.some(e => e._id === selectedUser._id) ? (
+            {selectedUser && userData.user.followings.some(e => e._id === userId) ? (
                 <>
                     <AppBar position='fixed' className={classes.appBar}>
                         <Navbar setOpenCreatePoll={setOpenCreatePoll} />

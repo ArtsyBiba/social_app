@@ -159,6 +159,7 @@ router.put('/update', auth, async (req, res) => {
 });
 
 router.get('/', auth, async (req, res) => {
+    console.log(req.user)
     const user = await User.findById(req.user)
         .populate('polls')
         .populate('followers')
@@ -174,6 +175,22 @@ router.get('/', auth, async (req, res) => {
             followers: user.followers,
             followings: user.followings,
             friendsLists: user.friendsLists,
+            avatar: user.avatar,
+        });
+});
+
+router.post('/getone', auth, async (req, res) => {
+    const user = await User.findById(req.body.userId)
+        .populate('polls')
+        .populate('followers')
+        .populate('followings')
+    
+        res.json({
+            displayName: user.displayName,
+            id: user._id,
+            polls: user.polls,
+            followers: user.followers,
+            followings: user.followings,
             avatar: user.avatar,
         });
 });
