@@ -15,7 +15,7 @@ import UserContext from '../context/UserContext';
  
 export default function PublicProfile () {   
     const classes = useStyles();
-    const { userData } = useContext(UserContext);
+    const { userData, setUserData } = useContext(UserContext);
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const [selectedUser, setSelectedUser] = useState('');
     const location = useLocation();
@@ -23,7 +23,7 @@ export default function PublicProfile () {
     const userId = location.pathname.split('/')[1];
 
     useEffect(() => {
-        const getUser = async () => {
+        const getSelectedUser = async () => {
             let token = localStorage.getItem('auth-token');
             
             const userRes = await axios.post(
@@ -34,8 +34,25 @@ export default function PublicProfile () {
             setSelectedUser(userRes.data);
         }
 
-        getUser();
+        getSelectedUser();
     }, [userId]);
+
+    if (!userData.user) {
+        let token = localStorage.getItem('auth-token');
+
+        const getUser = async () => {
+            const userRes = await axios.get(
+                'http://localhost:5000/users/',
+                { headers: { 'x-auth-token': token } },
+            );
+            setUserData({
+                token,
+                user: userRes.data,
+            });
+        };
+
+        getUser();
+    }
 
     return (
         <StyledPage>

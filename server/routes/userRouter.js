@@ -159,7 +159,6 @@ router.put('/update', auth, async (req, res) => {
 });
 
 router.get('/', auth, async (req, res) => {
-    console.log(req.user)
     const user = await User.findById(req.user)
         .populate('polls')
         .populate('followers')
