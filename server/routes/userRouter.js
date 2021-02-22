@@ -178,7 +178,7 @@ router.get('/', auth, async (req, res) => {
         });
 });
 
-router.post('/getone', auth, async (req, res) => {
+router.post('/getUserProfile', auth, async (req, res) => {
     const user = await User.findById(req.body.userId)
         .populate('polls')
         .populate('followers')

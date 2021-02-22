@@ -27,7 +27,7 @@ export default function PublicProfile () {
             const token = localStorage.getItem('auth-token');
             
             const userRes = await axios.post(
-                'http://localhost:5000/users/getone',
+                'http://localhost:5000/users/getUserProfile',
                 { userId },
                 { headers: { 'x-auth-token': token } },
             );
