@@ -24,7 +24,7 @@ export default function PublicProfile () {
 
     useEffect(() => {
         const getSelectedUser = async () => {
-            let token = localStorage.getItem('auth-token');
+            const token = localStorage.getItem('auth-token');
             
             const userRes = await axios.post(
                 'http://localhost:5000/users/getone',
@@ -38,7 +38,7 @@ export default function PublicProfile () {
     }, [userId]);
 
     if (!userData.user) {
-        let token = localStorage.getItem('auth-token');
+        const token = localStorage.getItem('auth-token');
 
         const getUser = async () => {
             const userRes = await axios.get(
