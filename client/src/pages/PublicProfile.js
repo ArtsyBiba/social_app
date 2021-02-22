@@ -35,7 +35,7 @@ export default function PublicProfile () {
         }
 
         getSelectedUser();
-    }, [userId]);
+    }, [ userId ]);
 
     if (!userData.user) {
         const token = localStorage.getItem('auth-token');
