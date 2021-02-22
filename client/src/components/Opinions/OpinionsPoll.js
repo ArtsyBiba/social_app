@@ -33,6 +33,9 @@ const PollCard = styled.div`
 const Header = styled.div`
     display: flex;
     align-items: center;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
 `;
 
 const Question = styled.div`

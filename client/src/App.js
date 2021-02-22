@@ -11,6 +11,7 @@ import Friends from './pages/Friends';
 import Opinions from './pages/Opinions';
 import Profile from './pages/Profile';
 import PollsForReview from './pages/PollsForReview';
+import PublicProfile from './pages/PublicProfile';
 import UserContext from './context/UserContext';
 
 import './App.css';
@@ -21,6 +22,7 @@ function App() {
     user: undefined,
   });
   const [reload, setReload] = useState(true);
+  const [selectedUser, setSelectedUser] = useState();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -53,7 +55,7 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
-        <UserContext.Provider value={{ userData, setUserData, reload, setReload}}>
+        <UserContext.Provider value={{ userData, setUserData, reload, setReload, selectedUser, setSelectedUser}}>
           <Switch>
               <Route exact path='/'>
                 <SignIn />
@@ -75,6 +77,9 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile />
+              </Route>
+              <Route exact path='/:userId/profile'>
+                <PublicProfile />
               </Route>
             </Switch>
           </UserContext.Provider>
