@@ -7,7 +7,7 @@ import Poll from './Poll';
 import UserContext from '../../context/UserContext';
 import { SocketContext } from '../../context/SocketContext';
 
-export default function Pools ({ setOpenCreatePoll }) {
+export default function Polls ({ setOpenCreatePoll }) {
     const { userData, reload, setReload } = useContext(UserContext);
     const socketContext = useContext(SocketContext);
     const savedPolls = userData.user.polls;

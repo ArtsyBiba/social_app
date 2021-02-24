@@ -102,13 +102,7 @@ router.put('/vote-add', auth, async (req, res) => {
             updatedPoll.votedForImageTwo.push(req.user);
         }
         await updatedPoll.save();
-
-        // io.emit('uservoted', {
-        //     id: pollId,
-        //     imageOneVotes: updatedPoll.imageOneVotes,
-        //     imageTwoVotes: updatedPoll.imageTwoVotes,
-        // }); 
-
+        
         res.json(updatedPoll);
     } catch (err) {
         res.status(500).json({ error: err.message });
