@@ -67,7 +67,7 @@ export default function Profile () {
     };
 
     const updateUser = async (updatedUserForUpload) => {
-        let token = localStorage.getItem('auth-token');
+        const token = localStorage.getItem('auth-token');
         
         try {
             await axios.put('http://localhost:5000/users/update', 

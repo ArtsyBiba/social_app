@@ -19,7 +19,7 @@ export default function List ({ list }) {
     const history = useHistory();
     
     const handleDelete = async () => {
-        let token = localStorage.getItem('auth-token');
+        const token = localStorage.getItem('auth-token');
         
         try {
             await axios.delete('http://localhost:5000/friendsList/delete', {

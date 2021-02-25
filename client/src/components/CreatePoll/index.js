@@ -102,7 +102,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     };
     
     const createPoll = async (newPollForUpload) => {
-        let token = localStorage.getItem('auth-token');
+        const token = localStorage.getItem('auth-token');
         
         try {
             await axios.post('http://localhost:5000/polls/', 

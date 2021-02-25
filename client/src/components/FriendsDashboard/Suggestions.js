@@ -13,7 +13,7 @@ export default function Suggestions () {
 
     useEffect(() => {
         const getUsers = async () => {
-            let token = localStorage.getItem('auth-token');
+            const token = localStorage.getItem('auth-token');
             
             try {
                 await axios.get('http://localhost:5000/friends/', {
