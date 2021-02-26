@@ -21,8 +21,7 @@ function App() {
     token: undefined,
     user: undefined,
   });
-  const [reload, setReload] = useState(true);
-  const [selectedUser, setSelectedUser] = useState();
+  const [reload, setReload] = useState(true); 
   const [polls, setPolls] = useState('');
 
   useEffect(() => {
@@ -55,38 +54,40 @@ function App() {
   }, [reload]);
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <Router>
-        <UserContext.Provider value={{ userData, setUserData, reload, setReload, selectedUser, setSelectedUser}}>
-          <Switch>
-              <Route exact path='/'>
-                <SignIn />
-              </Route>
-              <Route exact path='/signup'>
-                <SignUp />
-              </Route>
-              <Route exact path='/dashboard'>
-                <Dashboard />
-              </Route>
-              <Route exact path='/friends'>
-                <Friends />
-              </Route>
-              <Route exact path='/review'>
-                <PollsForReview />
-              </Route>
-              <Route exact path='/opinions'>
-                <Opinions />
-              </Route>
-              <Route exact path='/profile'>
-                <Profile />
-              </Route>
-              <Route exact path='/:userId/profile'>
-                <PublicProfile />
-              </Route>
-            </Switch>
-          </UserContext.Provider>
-      </Router>
-    </MuiThemeProvider>
+    <SocketContext.Provider value={socket}>
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <UserContext.Provider value={{ userData, setUserData, reload, setReload, polls, setPolls}}>
+            <Switch>
+                <Route exact path='/'>
+                  <SignIn />
+                </Route>
+                <Route exact path='/signup'>
+                  <SignUp />
+                </Route>
+                <Route exact path='/dashboard'>
+                  <Dashboard />
+                </Route>
+                <Route exact path='/friends'>
+                  <Friends />
+                </Route>
+                <Route exact path='/review'>
+                  <PollsForReview />
+                </Route>
+                <Route exact path='/opinions'>
+                  <Opinions />
+                </Route>
+                <Route exact path='/profile'>
+                  <Profile />
+                </Route>
+                <Route exact path='/:userId/profile'>
+                  <PublicProfile />
+                </Route>
+              </Switch>
+            </UserContext.Provider>
+        </Router>
+      </MuiThemeProvider>
+    </SocketContext.Provider>
   );
 }
 
