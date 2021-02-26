@@ -114,7 +114,7 @@ const Name = styled.div`
 `;
 
 const Info = styled.div`
-    margin-left: 1em;
+    margin-left: 1.2em;
     color: lightgray;
     font-size: 0.8em;
 `;
