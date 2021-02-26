@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
 import Button from '@material-ui/core/Button';
@@ -6,14 +6,40 @@ import GridList from '@material-ui/core/GridList';
 
 import Poll from './Poll';
 import UserContext from '../../context/UserContext';
+import { SocketContext } from '../../context/SocketContext';
 
-export default function Pools ({ setOpenCreatePoll }) {
-    const { userData } = useContext(UserContext);
+export default function Polls ({ setOpenCreatePoll }) {
+    const { userData, polls, setPolls } = useContext(UserContext);
+    const socketContext = useContext(SocketContext);
     const savedPolls = userData.user.polls;
     
     const handleCreatePoll = () => {
         setOpenCreatePoll(true);
     };
+
+    const handleVote = useCallback(({ data }) => {
+        let pollForUpdate = polls.find(poll => poll._id === data.pollId);
+        
+        data.image === 'one' ?
+            pollForUpdate.imageOneVotes =  pollForUpdate.imageOneVotes + 1
+            : pollForUpdate.imageTwoVotes =  pollForUpdate.imageTwoVotes + 1;
+        
+        setPolls(prevPolls => (
+            prevPolls.map(poll => (
+                poll._id === pollForUpdate._id ? pollForUpdate : poll
+            ))
+        ));
+    }, [polls, setPolls]);
+
+    useEffect(() => {
+        socketContext.on('uservoted', (data) => {
+            handleVote(data);
+         });
+
+        //  socketContext.on('userunvoted', (data) => {
+        //     handleVote(data);
+        //  });
+    }, [socketContext, handleVote])
     
     return (
         <Container>

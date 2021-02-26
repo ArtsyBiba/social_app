@@ -13,7 +13,7 @@ import Profile from './pages/Profile';
 import PollsForReview from './pages/PollsForReview';
 import PublicProfile from './pages/PublicProfile';
 import UserContext from './context/UserContext';
-
+import { SocketContext, socket } from './context/SocketContext';
 import './App.css';
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
   });
   const [reload, setReload] = useState(true);
   const [selectedUser, setSelectedUser] = useState();
+  const [polls, setPolls] = useState('');
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -46,6 +47,7 @@ function App() {
           token,
           user: userRes.data,
         });
+        setPolls(userRes.data.polls);
       }
     };
 

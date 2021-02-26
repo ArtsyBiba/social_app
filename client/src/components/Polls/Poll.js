@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import { useContext } from 'react';
+import axios from 'axios';
 
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
@@ -9,7 +9,7 @@ import UserContext from '../../context/UserContext';
 
 export default function Poll ({ poll }) {
     const { reload, setReload } = useContext(UserContext);
-    
+
     const handleDeletePoll = async () => {
         const token = localStorage.getItem('auth-token');
         
