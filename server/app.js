@@ -72,8 +72,8 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('uservoted', { data });
   });
 
-  socket.on('user-remove-vote', () => {
-    socket.broadcast.emit('userunvoted');
+  socket.on('user-remove-vote', (data) => {
+    socket.broadcast.emit('userunvoted', { data });
   });
 
   socket.on('disconnect', () => {

@@ -8,7 +8,7 @@ import UserContext from '../../context/UserContext';
 import { SocketContext } from '../../context/SocketContext';
 
 export default function Polls ({ setOpenCreatePoll }) {
-    const { userData, reload, setReload } = useContext(UserContext);
+    const { userData, polls, setPolls } = useContext(UserContext);
     const socketContext = useContext(SocketContext);
     const savedPolls = userData.user.polls;
     
@@ -16,19 +16,30 @@ export default function Polls ({ setOpenCreatePoll }) {
         setOpenCreatePoll(true);
     };
 
-    const handleVote = useCallback(() => {
-        setReload(!reload);
-    }, [setReload, reload]);
+    const handleVote = useCallback(({ data }) => {
+        let pollForUpdate = polls.find(poll => poll._id === data.pollId);
+        
+        data.image === 'one' ?
+            pollForUpdate.imageOneVotes =  pollForUpdate.imageOneVotes + 1
+            : pollForUpdate.imageTwoVotes =  pollForUpdate.imageTwoVotes + 1;
+        console.log(pollForUpdate)
+        setPolls(prevPolls => (
+            prevPolls.map(poll => (
+                poll._id === pollForUpdate._id ? pollForUpdate : poll
+            ))
+        ));
+
+        console.log(polls)
+    }, [polls, setPolls]);
 
     useEffect(() => {
         socketContext.on('uservoted', (data) => {
-            console.log(data)
-            handleVote();
+            handleVote(data);
          });
 
-         socketContext.on('userunvoted', () => {
-            handleVote();
-         });
+        //  socketContext.on('userunvoted', (data) => {
+        //     handleVote(data);
+        //  });
     }, [socketContext, handleVote])
     
     return (
