@@ -22,14 +22,12 @@ export default function Polls ({ setOpenCreatePoll }) {
         data.image === 'one' ?
             pollForUpdate.imageOneVotes =  pollForUpdate.imageOneVotes + 1
             : pollForUpdate.imageTwoVotes =  pollForUpdate.imageTwoVotes + 1;
-        console.log(pollForUpdate)
+        
         setPolls(prevPolls => (
             prevPolls.map(poll => (
                 poll._id === pollForUpdate._id ? pollForUpdate : poll
             ))
         ));
-
-        console.log(polls)
     }, [polls, setPolls]);
 
     useEffect(() => {
