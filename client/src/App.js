@@ -22,6 +22,7 @@ function App() {
     user: undefined,
   });
   const [reload, setReload] = useState(true); 
+  const [selectedUser, setSelectedUser] = useState();
   const [polls, setPolls] = useState('');
 
   useEffect(() => {
@@ -51,13 +52,13 @@ function App() {
     };
 
     checkLoggedIn();
-  }, []);
+  }, [reload]);
 
   return (
     <SocketContext.Provider value={socket}>
       <MuiThemeProvider theme={theme}>
         <Router>
-          <UserContext.Provider value={{ userData, setUserData, reload, setReload, polls, setPolls }}>
+          <UserContext.Provider value={{ userData, setUserData, reload, setReload, polls, setPolls, selectedUser, setSelectedUser }}>
             <Switch>
                 <Route exact path='/'>
                   <SignIn />
