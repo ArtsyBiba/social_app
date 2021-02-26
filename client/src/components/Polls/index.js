@@ -21,7 +21,8 @@ export default function Polls ({ setOpenCreatePoll }) {
     }, [setReload, reload]);
 
     useEffect(() => {
-        socketContext.on('uservoted', () => {
+        socketContext.on('uservoted', (data) => {
+            console.log(data)
             handleVote();
          });
 
@@ -40,10 +41,10 @@ export default function Polls ({ setOpenCreatePoll }) {
             </HeaderWrapper>
             <PollsWrapper>
                 {savedPolls
-                    ? savedPolls.map((poll, index) => (
+                    ? savedPolls.map((poll) => (
                         <Poll 
                             poll={poll} 
-                            key={index}
+                            key={poll._id}
                         />
                     )) : (
                         <div>Create your first poll</div>

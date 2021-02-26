@@ -30,7 +30,7 @@ export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, vot
                 { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
-            socketContext.emit('user-add-vote');
+            socketContext.emit('user-add-vote', { pollId, imageVotes, image });
         } catch (err) {
             console.log(err);
         }
