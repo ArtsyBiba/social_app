@@ -69,11 +69,11 @@ io.on('connection', (socket) => {
 
   // listeners
   socket.on('user-add-vote', (data) => {
-    socket.broadcast.emit('uservoted', { data });
+    socket.broadcast.emit('uservoted');
   });
 
   socket.on('user-remove-vote', (data) => {
-    socket.broadcast.emit('userunvoted', { data });
+    socket.broadcast.emit('userunvoted');
   });
 
   socket.on('disconnect', () => {

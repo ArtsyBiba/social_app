@@ -30,7 +30,7 @@ export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, vot
                 { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
-            socketContext.emit('user-add-vote', { pollId, image });
+            socketContext.emit('user-add-vote');
         } catch (err) {
             console.log(err);
         }
@@ -44,7 +44,7 @@ export default function ImageReview ({ userId, pollId, imageUrl, imageVotes, vot
                 { pollId, imageVotes, image }, 
                 { headers: { 'x-auth-token': token } },
             )
-            socketContext.emit('user-remove-vote', { pollId, image });
+            socketContext.emit('user-remove-vote');
         } catch (err) {
             console.log(err);
         }
