@@ -51,13 +51,13 @@ function App() {
     };
 
     checkLoggedIn();
-  }, [reload]);
+  }, []);
 
   return (
     <SocketContext.Provider value={socket}>
       <MuiThemeProvider theme={theme}>
         <Router>
-          <UserContext.Provider value={{ userData, setUserData, reload, setReload, polls, setPolls}}>
+          <UserContext.Provider value={{ userData, setUserData, reload, setReload, polls, setPolls }}>
             <Switch>
                 <Route exact path='/'>
                   <SignIn />
