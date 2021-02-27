@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const socket = require('socket.io');
 const jwt = require('jsonwebtoken');
@@ -9,6 +10,12 @@ require('dotenv').config();
 // set up express
 const app = express();
 app.use(cors());
+
+// let Express server know to serve the React project
+// app.use(express.static(path.join(__dirname, 'build')));
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 // set up configuration for uploading files
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -26,6 +33,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
   if (err) throw err;
   console.log('MongoDB connection established');
 });
+
 
 // set up routes
 app.use('/users', require('./routes/userRouter'));
@@ -80,4 +88,6 @@ io.on('connection', (socket) => {
     console.log('disconnected');
   });
 });
+
+module.exports = app;
 
