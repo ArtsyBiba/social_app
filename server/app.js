@@ -12,10 +12,10 @@ const app = express();
 app.use(cors());
 
 // let Express server know to serve the React project
-// app.use(express.static(path.join(__dirname, 'build')));
-// app.get('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // set up configuration for uploading files
 app.use(bodyParser.json({ limit: '50mb' }));
