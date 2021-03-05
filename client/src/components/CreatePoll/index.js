@@ -192,9 +192,11 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                             </StyledForm>
                         </ImagesWrapper>
                     </PollData>
-                    <Typography color='secondary'>
-                        {newPoll.error ? newPoll.error : ''}
-                    </Typography>
+                    <TypographyContainer>
+                        <Typography color='secondary'>
+                            {error ? error : ''}
+                        </Typography>
+                    </TypographyContainer>
                     <SyledButton variant='outlined' onClick={handleSubmitPoll}>
                         Create Poll
                     </SyledButton>
@@ -285,4 +287,11 @@ const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
     align-content: center;
+`;
+
+const TypographyContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
 `;
