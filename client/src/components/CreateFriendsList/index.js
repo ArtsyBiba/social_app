@@ -21,10 +21,10 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
     const initialFriendsList = {
         listName: '', 
         friends: [],
-        error: null,
     };
 
     const [newFriendsList, setNewFriendsList] = useState(initialFriendsList);
+    const [error, setError] = useState(null);
 
     const handleClose = () => {
         setOpenCreateFriendsList(false);
@@ -45,10 +45,12 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
         e.preventDefault();
 
         await createFriendsList(newFriendsList);
-        setReload(!reload);
-        
-        setNewFriendsList(initialFriendsList);
-        setOpenCreateFriendsList(false);
+       
+        if(error === null) {
+            setOpenCreateFriendsList(false);
+            setReload(!reload);
+            setNewFriendsList(initialFriendsList);
+        }
     };
     
     const createFriendsList = async (newFriendsList) => {
@@ -59,8 +61,11 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
                 { newFriendsList },
                 { headers: { 'x-auth-token': token } },
             )
+            setError(null);
+            console.log('set error to null')
         } catch (err) {
-            err.response.data.msg && setNewFriendsList({ ...newFriendsList, error: err.response.data.msg });
+            setError(err.response.data.msg);
+            console.log('got an error')
         }
     };
 
@@ -106,9 +111,11 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
                             </List>
                         </FriendsContainer>
                     </PollData>
-                    <Typography color='secondary'>
-                        {newFriendsList.error ? newFriendsList.error : ''}
-                    </Typography>
+                    <TypographyContainer>
+                        <Typography color='secondary'>
+                            {error ? error : ''}
+                        </Typography>
+                    </TypographyContainer>
                     <SyledButton variant='outlined' onClick={handleSubmitFriendsList}>
                         Create List
                     </SyledButton>
@@ -166,4 +173,11 @@ const InputsWrapper = styled.div`
     margin: auto;
     margin-top: 1em;
     margin-bottom: 1em;
+`;
+
+const TypographyContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
 `;
