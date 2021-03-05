@@ -29,6 +29,7 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
     const handleClose = () => {
         setOpenCreateFriendsList(false);
         setNewFriendsList(initialFriendsList);
+        setError(null);
     };
 
     const handleChange = (e) => {
@@ -45,12 +46,12 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
         e.preventDefault();
 
         await createFriendsList(newFriendsList);
-       
-        if(error === null) {
-            setOpenCreateFriendsList(false);
-            setReload(!reload);
-            setNewFriendsList(initialFriendsList);
-        }
+    };
+
+    const closeModal = () => {
+        setOpenCreateFriendsList(false);
+        setReload(!reload);
+        setNewFriendsList(initialFriendsList);
     };
     
     const createFriendsList = async (newFriendsList) => {
@@ -61,11 +62,10 @@ export default function CreateFriendsList ({ openCreateFriendsList, setOpenCreat
                 { newFriendsList },
                 { headers: { 'x-auth-token': token } },
             )
-            setError(null);
-            console.log('set error to null')
+            .then(setError(null))
+            .then(closeModal)
         } catch (err) {
             setError(err.response.data.msg);
-            console.log('got an error')
         }
     };
 
