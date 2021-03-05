@@ -17,8 +17,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     
     const initialPoll = {
         question: '', 
-        friendlist: {},
-        error: null,
+        friendlist: {}
     };
 
     const allFriendsLists = userData.user.friendsLists;
@@ -26,6 +25,7 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     const [friendList, setFriendList] = useState('');
     const [previewSourceOne, setPreviewSourceOne] = useState();
     const [previewSourceTwo, setPreviewSourceTwo] = useState();
+    const [error, setError] = useState(null);
     const fileInputStateOne = '';
     const fileInputStateTwo = '';
 
