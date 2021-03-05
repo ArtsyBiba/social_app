@@ -93,8 +93,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
         }
 
         await createPoll(newPollForUpload);
+    };
+
+    const closeModal = () => {
         setReload(!reload);
-        
         setPreviewSourceOne('');
         setPreviewSourceTwo('');
         setOpenCreatePoll(false);
@@ -109,8 +111,10 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                 { newPollForUpload },
                 { headers: { 'x-auth-token': token } },
             )
+            .then(setError(null))
+            .then(closeModal)
         } catch (err) {
-            err.response.data.msg && setNewPoll({ ...newPoll, error: err.response.data.msg });
+            setError(err.response.data.msg);
         }
     };
 
