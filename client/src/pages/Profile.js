@@ -60,8 +60,10 @@ export default function Profile () {
         }
 
         await updateUser(updatedUserForUpload);
-        setReload(!reload);
+    };
 
+    const resetData = () => {
+        setReload(!reload);
         setPreviewSource('');
         setUpdatedUser(dataToUpdate);
     };
@@ -74,8 +76,10 @@ export default function Profile () {
                 { updatedUserForUpload }, 
                 { headers: { 'x-auth-token': token } },
             )
+            .then(setError(null))
+            .then(resetData)
         } catch (err) {
-            err.response.data.msg && setUpdatedUser({ ...updatedUser, error: err.response.data.msg });
+            setError(err.response.data.msg);
         }
     };
 
