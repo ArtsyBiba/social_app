@@ -17,12 +17,12 @@ export default function Profile () {
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const [previewSource, setPreviewSource] = useState();
+    const [error, setError] = useState(null);
     const fileInputState = '';
 
     const dataToUpdate = {
         displayName: '',
         avatar: '',
-        error: null,
     };
 
     const [updatedUser, setUpdatedUser] = useState(dataToUpdate);
