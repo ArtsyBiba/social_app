@@ -12,6 +12,7 @@ import UserContext from '../context/UserContext';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
  
 export default function Profile () {   
     const { userData, reload, setReload } = useContext(UserContext);
@@ -109,7 +110,7 @@ export default function Profile () {
                             <ImageUploader>
                                 {previewSource ? (
                                     <ImageContainer>
-                                        <Image src={previewSource} alt='chosenOne' />
+                                        <StyledAvatar src={previewSource} alt='chosenOne' />
                                     </ImageContainer>
                                 ) : (
                                     <Prompt>Select Your Avatar</Prompt>
@@ -178,16 +179,16 @@ const SavedData = styled.div`
     text-align: center;
 `;
 
-const Image = styled.img`
-    height: 70px;
-    width: 70px;
+const StyledAvatar = styled(Avatar)`
+    height: 80px;
+    width: 80px;
 `;
 
 const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
-    align-content: center;
-    margin-top: 2em;
+    align-items: center;
+    margin-top: 0.5em;
 `;
 
 const StyledForm = styled.div`
@@ -214,6 +215,7 @@ const Prompt = styled.div`
 const ImageUploader = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 1em;
 `;
 
