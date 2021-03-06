@@ -19,7 +19,6 @@ export default function Profile () {
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const [previewSource, setPreviewSource] = useState();
-    const fileInputState = '';
 
     const dataToUpdate = {
         displayName: '',
@@ -120,7 +119,6 @@ export default function Profile () {
                                         type='file' 
                                         name='imageOne' 
                                         onChange={handleFileInputChange}
-                                        value={fileInputState}
                                     />
                                 </StyledForm>
                             </ImageUploader>

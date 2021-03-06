@@ -26,8 +26,6 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
     const [previewSourceOne, setPreviewSourceOne] = useState();
     const [previewSourceTwo, setPreviewSourceTwo] = useState();
     const [error, setError] = useState(null);
-    const fileInputStateOne = '';
-    const fileInputStateTwo = '';
 
     const handleClose = () => {
         setOpenCreatePoll(false);
@@ -172,7 +170,6 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                                     type='file' 
                                     name='imageOne' 
                                     onChange={handleFileInputChangeOne}
-                                    value={fileInputStateOne}
                                 />
                             </StyledForm>
                             {previewSourceTwo ? (
@@ -187,7 +184,6 @@ export default function CreatePoll ({ openCreatePoll, setOpenCreatePoll }) {
                                     type='file' 
                                     name='imageTwo' 
                                     onChange={handleFileInputChangeTwo}
-                                    value={fileInputStateTwo}
                                 />
                             </StyledForm>
                         </ImagesWrapper>
