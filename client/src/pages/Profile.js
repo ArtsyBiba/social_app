@@ -11,13 +11,13 @@ import CreatePoll from '../components/CreatePoll/index';
 import UserContext from '../context/UserContext';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
  
 export default function Profile () {   
     const { userData, reload, setReload } = useContext(UserContext);
     const classes = useStyles();
     const [openCreatePoll, setOpenCreatePoll] = useState(false);
     const [previewSource, setPreviewSource] = useState();
-    const [error, setError] = useState(null);
     const fileInputState = '';
 
     const dataToUpdate = {
@@ -26,6 +26,7 @@ export default function Profile () {
     };
 
     const [updatedUser, setUpdatedUser] = useState(dataToUpdate);
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -79,7 +80,7 @@ export default function Profile () {
             .then(setError(null))
             .then(resetData)
         } catch (err) {
-            setError(err.response.data.msg);
+            setError(err.response.data.error);
         }
     };
 
@@ -122,6 +123,11 @@ export default function Profile () {
                                     />
                                 </StyledForm>
                             </ImageUploader>
+                            <TypographyContainer>
+                                <Typography color='secondary'>
+                                    {error ? error : ''}
+                                </Typography>
+                            </TypographyContainer>
                             <SyledButton variant='outlined' onClick={handleUpdateProfile}>
                                 Update Profile
                             </SyledButton>
@@ -218,4 +224,11 @@ const SyledButton = styled(Button)`
     margin: auto;
     margin-top: 1.5em;
     margin-bottom: 0;
+`;
+
+const TypographyContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
 `;
